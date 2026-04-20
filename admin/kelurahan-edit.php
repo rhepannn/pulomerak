@@ -8,7 +8,7 @@ $k=$stmt->get_result()->fetch_assoc();if(!$k)redirect(SITE_URL.'/admin/kelurahan
 $pageTitle='Edit Kelurahan';
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
-    $nama=trim($_POST['nama']??'');$deskripsi=$_POST['deskripsi']??'';
+    $nama=trim($_POST['nama']??'');$ketua_pkk=trim($_POST['ketua_pkk']??'');$deskripsi=$_POST['deskripsi']??'';
     $inovasi=$_POST['inovasi']??'';$jumlah_rw=(int)($_POST['jumlah_rw']??0);
     $jumlah_rt=(int)($_POST['jumlah_rt']??0);$penduduk=(int)($_POST['penduduk']??0);
     $gambar=$k['gambar'];
@@ -18,8 +18,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             $up=uploadFile($_FILES['gambar'],'../uploads/kegiatan');
             if($up){if($gambar&&file_exists('../uploads/kegiatan/'.$gambar))unlink('../uploads/kegiatan/'.$gambar);$gambar=$up;}
         }
-        $stmt=$conn->prepare("UPDATE kelurahan SET nama=?,deskripsi=?,inovasi=?,gambar=?,jumlah_rw=?,jumlah_rt=?,penduduk=? WHERE id=?");
-        $stmt->bind_param('ssssiii' . 'i',$nama,$deskripsi,$inovasi,$gambar,$jumlah_rw,$jumlah_rt,$penduduk,$id);
+        $stmt=$conn->prepare("UPDATE kelurahan SET nama=?,ketua_pkk=?,deskripsi=?,inovasi=?,gambar=?,jumlah_rw=?,jumlah_rt=?,penduduk=? WHERE id=?");
+        $stmt->bind_param('sssssiiii',$nama,$ketua_pkk,$deskripsi,$inovasi,$gambar,$jumlah_rw,$jumlah_rt,$penduduk,$id);
         if($stmt->execute()){setFlash('success','Data kelurahan berhasil diperbarui!');redirect(SITE_URL.'/admin/kelurahan.php');}
         else $error='Gagal: '.$conn->error;
     }
@@ -36,6 +36,10 @@ include 'header.php';
                 <div class="form-group">
                     <label class="form-label">Nama Kelurahan / RW <span>*</span></label>
                     <input type="text" name="nama" class="form-control" required value="<?=e($_POST['nama']??$k['nama'])?>">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nama Ketua TP PKK</label>
+                    <input type="text" name="ketua_pkk" class="form-control" value="<?=e($_POST['ketua_pkk']??$k['ketua_pkk']??'')?>">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Foto Wilayah</label>

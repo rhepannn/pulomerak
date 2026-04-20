@@ -6,11 +6,13 @@ $pageTitle = 'Tambah Kelurahan';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama       = trim($_POST['nama'] ?? '');
+    $ketua_pkk  = trim($_POST['ketua_pkk'] ?? '');
     $deskripsi  = trim($_POST['deskripsi'] ?? '');
     $inovasi    = trim($_POST['inovasi'] ?? '');
     $jumlah_rw  = (int)($_POST['jumlah_rw'] ?? 0);
     $jumlah_rt  = (int)($_POST['jumlah_rt'] ?? 0);
     $penduduk   = (int)($_POST['penduduk'] ?? 0);
+
 
     if (empty($nama)) {
         $error = 'Nama kelurahan wajib diisi!';
@@ -20,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $up = uploadFile($_FILES['gambar'], '../uploads/kegiatan');
             if ($up) $gambar = $up;
         }
-        $stmt = $conn->prepare("INSERT INTO kelurahan (nama, deskripsi, inovasi, gambar, jumlah_rw, jumlah_rt, penduduk) VALUES (?,?,?,?,?,?,?)");
-        $stmt->bind_param('ssssiii', $nama, $deskripsi, $inovasi, $gambar, $jumlah_rw, $jumlah_rt, $penduduk);
+        $stmt = $conn->prepare("INSERT INTO kelurahan (nama, ketua_pkk, deskripsi, inovasi, gambar, jumlah_rw, jumlah_rt, penduduk) VALUES (?,?,?,?,?,?,?,?)");
+        $stmt->bind_param('sssssiii', $nama, $ketua_pkk, $deskripsi, $inovasi, $gambar, $jumlah_rw, $jumlah_rt, $penduduk);
         if ($stmt->execute()) {
             setFlash('success', 'Data kelurahan berhasil ditambahkan!');
             redirect(SITE_URL . '/admin/kelurahan.php');
@@ -47,6 +49,10 @@ include 'header.php';
                 <div class="form-group">
                     <label class="form-label">Nama Kelurahan / RW <span>*</span></label>
                     <input type="text" name="nama" class="form-control" required value="<?= e($_POST['nama'] ?? '') ?>" placeholder="Contoh: RW 01 Kampung Merak">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nama Ketua TP PKK</label>
+                    <input type="text" name="ketua_pkk" class="form-control" value="<?= e($_POST['ketua_pkk'] ?? '') ?>" placeholder="Masukkan nama ketua TP PKK...">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Foto Wilayah</label>

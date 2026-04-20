@@ -66,6 +66,88 @@ include 'include/header.php';
     </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════
+     DAFTAR KETUA TP PKK
+═══════════════════════════════════════════════════════ -->
+<section class="section" style="background-color: var(--light-gray);">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label"><i class="fas fa-sitemap"></i> Struktur Organisasi</div>
+            <h2 class="section-title">Ketua TP PKK <span>Wilayah</span></h2>
+            <p class="section-desc">Daftar Ketua TP PKK Tingkat Kecamatan dan Kelurahan se-Pulomerak.</p>
+        </div>
+
+        <style>
+            .pkk-leader-top { display: flex; justify-content: center; margin-bottom: 2rem; }
+            .leader-card {
+                background: white; border-radius: 16px; overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                text-align: center; padding: 40px 20px;
+                border: 1px solid rgba(0,0,0,0.03);
+            }
+            .leader-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+            .leader-card.kec-card { max-width: 450px; width: 100%; border-top: 5px solid var(--accent); }
+            .kel-card-leader { border-top: 5px solid var(--primary); }
+            .leader-avatar {
+                width: 120px; height: 120px; border-radius: 50%;
+                margin: 0 auto 25px; background: #f8f9fa;
+                display: flex; align-items: center; justify-content: center;
+                overflow: hidden; border: 4px solid white;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            }
+            .leader-avatar img { width: 100%; height: 100%; object-fit: cover; }
+            .avatar-placeholder { font-size: 3.5rem; color: #cbd5e1; }
+            .leader-info .leader-title { font-size: 0.95rem; color: var(--text-light); margin-bottom: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+            .leader-info .leader-name { font-size: 1.4rem; color: var(--primary); font-weight: 700; margin: 0; }
+            .pkk-leaders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+        </style>
+
+        <!-- KECAMATAN -->
+        <div class="pkk-leader-top">
+            <div class="leader-card kec-card reveal">
+                <div class="leader-avatar">
+                   <!-- <img src="<?= SITE_URL ?>/assets/img/placeholder.jpg" alt="Ny. Ma'nawiyah"> -->
+                   <div class="avatar-placeholder"><i class="fas fa-user-tie"></i></div>
+                </div>
+                <div class="leader-info">
+                    <div class="leader-title">Ketua TP PKK Kecamatan Pulomerak</div>
+                    <h3 class="leader-name">Ny. Ma'nawiyah</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- KELURAHAN -->
+        <div class="pkk-leaders-grid">
+            <?php 
+            if($list->num_rows > 0) {
+                mysqli_data_seek($list, 0);
+                $delay = 1;
+                while ($k = $list->fetch_assoc()):
+            ?>
+            <div class="leader-card kel-card-leader reveal animate-delay-<?= $delay++ ?>">
+                <div class="leader-avatar">
+                   <?php if (!empty($k['gambar'])): ?>
+                       <img src="<?= getImg($k['gambar'], 'kegiatan') ?>" alt="<?= e($k['nama']) ?>">
+                   <?php else: ?>
+                       <div class="avatar-placeholder"><i class="fas fa-user"></i></div>
+                   <?php endif; ?>
+                </div>
+                <div class="leader-info">
+                    <div class="leader-title">Ketua TP PKK<br><?= e($k['nama']) ?></div>
+                    <h3 class="leader-name" <?= empty($k['ketua_pkk']) ? 'style="color:#94a3b8; font-style:italic; font-size:1.1rem; margin-top:10px;"' : 'style="margin-top:10px;"' ?>>
+                        <?= e($k['ketua_pkk'] ?: '[Belum Diatur]') ?>
+                    </h3>
+                </div>
+            </div>
+            <?php 
+                endwhile;
+            } 
+            ?>
+        </div>
+    </div>
+</section>
+
 <!-- INOVASI SECTION ANCHOR -->
 <section class="section section-alt" id="inovasi">
     <div class="container">

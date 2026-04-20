@@ -19,31 +19,32 @@ include 'include/header.php';
 <!-- ═══════════════════════════════════════════════════════
      HERO SECTION
 ═══════════════════════════════════════════════════════ -->
-<section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-shapes">
-        <div class="shape shape1"></div>
-        <div class="shape shape2"></div>
-        <div class="shape shape3"></div>
-    </div>
+<section class="hero" style="background-image: url('<?= SITE_URL ?>/assets/img/pkk_group.jpg');">
+    <div class="hero-overlay"></div>
     <div class="container hero-content animate-fade-up">
         <div class="hero-badge">
             <i class="fas fa-star"></i>
-            Portal Resmi Kelurahan Pulomerak — Kota Cilegon
+            Portal Resmi Tim Penggerak PKK Kelurahan Pulomerak
         </div>
-        <h1>Selamat Datang di<br><span>Kelurahan Pulomerak</span></h1>
+        <h1>Bersama Membangun Keluarga<br><span>Sejahtera & Mandiri</span></h1>
         <p>
-            Pusat informasi masyarakat Pulomerak yang menampilkan berita terkini,
-            laporan kegiatan, inovasi kelurahan, dan layanan masyarakat berbasis digital.
+            Pusat informasi kegiatan, program inovasi, dan dinamika masyarakat
+            yang mendukung pemberdayaan dan kesejahteraan keluarga di Kelurahan Pulomerak, Kota Cilegon.
         </p>
         <div class="hero-actions">
             <a href="profil.php" class="btn btn-primary">
-                <i class="fas fa-landmark"></i> Profil Kelurahan
+                <i class="fas fa-landmark"></i> Profil Organisasi
             </a>
-            <a href="berita.php" class="btn btn-outline">
-                <i class="fas fa-newspaper"></i> Baca Berita
+            <a href="kegiatan.php" class="btn btn-outline">
+                <i class="fas fa-camera"></i> Galeri Kegiatan
             </a>
         </div>
+    </div>
+</section>
+
+<!-- STATISTIK STRIP (Moved under hero to be flat) -->
+<div class="hero-stats-strip">
+    <div class="container">
         <div class="hero-stats">
             <div class="hero-stat">
                 <span class="hero-stat-num" data-count="12450">0</span>
@@ -51,11 +52,11 @@ include 'include/header.php';
             </div>
             <div class="hero-stat">
                 <span class="hero-stat-num" data-count="8">0</span>
-                <span class="hero-stat-label">RW Aktif</span>
+                <span class="hero-stat-label">Rukun Warga (RW)</span>
             </div>
             <div class="hero-stat">
                 <span class="hero-stat-num" data-count="32">0</span>
-                <span class="hero-stat-label">RT Aktif</span>
+                <span class="hero-stat-label">Rukun Tetangga (RT)</span>
             </div>
             <div class="hero-stat">
                 <span class="hero-stat-num" data-count="5">0</span>
@@ -63,17 +64,7 @@ include 'include/header.php';
             </div>
         </div>
     </div>
-    <!-- Visual Kanan TP PKK -->
-    <div class="hero-image-right reveal animate-fade-left">
-        <div class="glass-frame">
-            <div class="img-backdrop"></div>
-            <img src="<?= SITE_URL ?>/assets/img/pkk_group.jpg" alt="Kegiatan Kader PKK Pulomerak">
-            <div class="glass-caption">
-                <i class="fas fa-camera" style="color: var(--accent); margin-right: 6px;"></i> Kader TP-PKK Kelurahan Pulomerak
-            </div>
-        </div>
-    </div>
-</section>
+</div>
 
 <!-- ═══════════════════════════════════════════════════════
      SHORTCUT MENU
@@ -258,30 +249,32 @@ include 'include/header.php';
             <h2 class="section-title">Layanan <span>Unggulan</span></h2>
             <p class="section-desc">Berbagai layanan dan program unggulan Kelurahan Pulomerak untuk masyarakat.</p>
         </div>
-        <div class="grid-3">
-            <div class="service-card reveal">
-                <div class="shortcut-icon blue">
-                    <i class="fas fa-file-alt"></i>
+        <div class="layanan-list">
+            <div class="layanan-item reveal">
+                <div class="layanan-icon"><i class="fas fa-file-alt"></i></div>
+                <div class="layanan-content">
+                    <h3>Administrasi Kependudukan</h3>
+                    <p>Pelayanan surat keterangan domisili, pengantar KTP, KK, dan dokumen kependudukan lainnya secara cepat dan tertib.</p>
+                    <a href="laporan.php" class="layanan-link">Selengkapnya <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <h3>Administrasi Kependudukan</h3>
-                <p>Pelayanan surat keterangan domisili, pengantar KTP, KK, dan dokumen kependudukan lainnya secara cepat dan tertib.</p>
-                <a href="laporan.php" class="card-link" style="margin-top:auto;">Selengkapnya <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="service-card reveal animate-delay-1">
-                <div class="shortcut-icon green">
-                    <i class="fas fa-lightbulb"></i>
+            
+            <div class="layanan-item reveal animate-delay-1">
+                <div class="layanan-icon"><i class="fas fa-lightbulb"></i></div>
+                <div class="layanan-content">
+                    <h3>Program Inovasi Kelurahan</h3>
+                    <p>Berbagai program inovasi untuk meningkatkan kualitas hidup dan pemberdayaan masyarakat Pulomerak yang berkelanjutan.</p>
+                    <a href="kelurahan.php#inovasi" class="layanan-link">Selengkapnya <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <h3>Program Inovasi Kelurahan</h3>
-                <p>Berbagai program inovasi untuk meningkatkan kualitas hidup dan pemberdayaan masyarakat Pulomerak yang berkelanjutan.</p>
-                <a href="kelurahan.php#inovasi" class="card-link" style="margin-top:auto;">Selengkapnya <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="service-card reveal animate-delay-2">
-                <div class="shortcut-icon purple">
-                    <i class="fas fa-book-open"></i>
+            
+            <div class="layanan-item reveal animate-delay-2">
+                <div class="layanan-icon"><i class="fas fa-book-open"></i></div>
+                <div class="layanan-content">
+                    <h3>Perpustakaan Digital</h3>
+                    <p>Akses dokumen, arsip, dan referensi digital yang dapat diunduh oleh masyarakat secara gratis dan mudah.</p>
+                    <a href="perpustakaan.php" class="layanan-link">Selengkapnya <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <h3>Perpustakaan Digital</h3>
-                <p>Akses dokumen, arsip, dan referensi digital yang dapat diunduh oleh masyarakat secara gratis dan mudah.</p>
-                <a href="perpustakaan.php" class="card-link" style="margin-top:auto;">Selengkapnya <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </div>

@@ -15,11 +15,11 @@ include 'header.php';
     <div class="table-responsive">
         <table>
             <thead>
-                <tr><th>#</th><th>Gambar</th><th>Nama</th><th>RW</th><th>RT</th><th>Penduduk</th><th>Aksi</th></tr>
+                <tr><th>#</th><th>Gambar</th><th>Nama Kelurahan</th><th>Ketua TP PKK</th><th>RW</th><th>RT</th><th>Penduduk</th><th>Aksi</th></tr>
             </thead>
             <tbody>
             <?php if ($list->num_rows === 0): ?>
-                <tr><td colspan="7" style="text-align:center;padding:32px;color:var(--gray)">Belum ada data kelurahan.</td></tr>
+                <tr><td colspan="8" style="text-align:center;padding:32px;color:var(--gray)">Belum ada data kelurahan.</td></tr>
             <?php else: $no = 1; while ($k = $list->fetch_assoc()): ?>
                 <tr>
                     <td><?= $no++ ?></td>
@@ -30,6 +30,7 @@ include 'header.php';
                             <p><i class="fas fa-lightbulb"></i> Ada program inovasi</p>
                         <?php endif; ?>
                     </td>
+                    <td><?= e($k['ketua_pkk'] ?: 'Belum diatur') ?></td>
                     <td><?= e($k['jumlah_rw'] ?? '-') ?></td>
                     <td><?= e($k['jumlah_rt'] ?? '-') ?></td>
                     <td><?= !empty($k['penduduk']) ? number_format($k['penduduk']) . ' jiwa' : '-' ?></td>
