@@ -11,14 +11,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tgl_post = $_POST['tgl_post'] ?? date('Y-m-d');
     $url_src  = trim($_POST['url_sumber'] ?? '');
 
-    if (empty($judul) || empty($isi)) {
-        $error = 'Judul dan isi berita wajib diisi!';
+    if (empty($judul)) {
+        $error = 'Judul berita wajib diisi!';
     } else {
+        $isi = ''; // Set empty string for content
         $gambar = '';
         if (!empty($_FILES['gambar']['tmp_name'])) {
             $up = uploadFile($_FILES['gambar'], '../uploads/berita');
-            if (!$up) { $error = 'Gagal upload gambar. Pastikan format JPG/PNG/WEBP dan ukuran < 5MB.'; }
-            else $gambar = $up;
+            if (is_array($up) && isset($up['error'])) {
+                $error = $up['error'];
+            } else {
+                $gambar = $up;
+            }
         }
         if (empty($error)) {
             $stmt = $conn->prepare("INSERT INTO berita (judul, isi, kategori, gambar, tgl_post, url_sumber) VALUES (?,?,?,?,?,?)");
@@ -85,15 +89,11 @@ include 'header.php';
                     <p class="form-hint">Link ke sumber berita asli (jika ada)</p>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="form-label">Isi Berita <span>*</span></label>
-                <textarea name="isi" class="form-control" rows="10" required
-                          placeholder="Tulis isi berita di sini..."><?= e($_POST['isi'] ?? '') ?></textarea>
-            </div>
+
             <div class="form-group">
                 <label class="form-label">Gambar Berita</label>
                 <input type="file" name="gambar" class="form-control" accept="image/*" data-preview="previewImg">
-                <p class="form-hint">Format: JPG, PNG, WEBP. Maks 5MB.</p>
+                <p class="form-hint">Format: JPG, JPEG, PNG, WEBP. Maks 5MB.</p>
                 <img id="previewImg" src="" alt="Preview" class="current-img" style="display:none;margin-top:10px;">
             </div>
             <div class="form-actions">

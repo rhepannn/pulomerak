@@ -16,7 +16,12 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     else{
         if(!empty($_FILES['gambar']['tmp_name'])){
             $up=uploadFile($_FILES['gambar'],'../uploads/kegiatan');
-            if($up){if($gambar&&file_exists('../uploads/kegiatan/'.$gambar))unlink('../uploads/kegiatan/'.$gambar);$gambar=$up;}
+            if(is_array($up) && isset($up['error'])){
+                $error = $up['error'];
+            } else {
+                if($gambar&&file_exists('../uploads/kegiatan/'.$gambar))unlink('../uploads/kegiatan/'.$gambar);
+                $gambar=$up;
+            }
         }
         $stmt=$conn->prepare("UPDATE kelurahan SET nama=?,ketua_pkk=?,deskripsi=?,inovasi=?,gambar=?,jumlah_rw=?,jumlah_rt=?,penduduk=? WHERE id=?");
         $stmt->bind_param('sssssiiii',$nama,$ketua_pkk,$deskripsi,$inovasi,$gambar,$jumlah_rw,$jumlah_rt,$penduduk,$id);

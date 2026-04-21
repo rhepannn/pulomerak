@@ -11,7 +11,14 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     if(empty($judul)||empty($isi)){$error='Judul dan isi wajib diisi!';}
     else{
         $gambar='';
-        if(!empty($_FILES['gambar']['tmp_name'])){$up=uploadFile($_FILES['gambar'],'../uploads/kegiatan');if($up)$gambar=$up;}
+        if(!empty($_FILES['gambar']['tmp_name'])) {
+            $up=uploadFile($_FILES['gambar'],'../uploads/kegiatan');
+            if (is_array($up) && isset($up['error'])) {
+                $error = $up['error'];
+            } else {
+                $gambar=$up;
+            }
+        }
         $stmt=$conn->prepare("INSERT INTO dinamika (judul,isi,kategori,penulis,gambar,tgl_post) VALUES (?,?,?,?,?,?)");
         $stmt->bind_param('ssssss',$judul,$isi,$kategori,$penulis,$gambar,$tgl_post);
         if($stmt->execute()){setFlash('success','Artikel berhasil ditambahkan!');redirect(SITE_URL.'/admin/dinamika.php');}

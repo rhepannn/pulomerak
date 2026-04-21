@@ -22,13 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $url_src  = trim($_POST['url_sumber'] ?? '');
     $gambar   = $berita['gambar'];
 
-    if (empty($judul) || empty($isi)) {
-        $error = 'Judul dan isi wajib diisi!';
+    if (empty($judul)) {
+        $error = 'Judul wajib diisi!';
     } else {
+        $isi = ''; // Set empty string as we are removing the content box
         if (!empty($_FILES['gambar']['tmp_name'])) {
             $up = uploadFile($_FILES['gambar'], '../uploads/berita');
-            if (!$up) $error = 'Gagal upload gambar! Format JPG/PNG/WEBP, maks 5MB.';
-            else {
+            if (is_array($up) && isset($up['error'])) {
+                $error = $up['error'];
+            } else {
                 // Hapus gambar lama
                 if ($gambar && file_exists('../uploads/berita/' . $gambar)) unlink('../uploads/berita/' . $gambar);
                 $gambar = $up;
@@ -97,10 +99,7 @@ include 'header.php';
                            value="<?= e($_POST['url_sumber'] ?? $berita['url_sumber']) ?>">
                 </div>
             </div>
-            <div class="form-group">
-                <label class="form-label">Isi Berita <span>*</span></label>
-                <textarea name="isi" class="form-control" rows="10" required><?= e($_POST['isi'] ?? $berita['isi']) ?></textarea>
-            </div>
+
             <div class="form-group">
                 <label class="form-label">Gambar Berita</label>
                 <?php if (!empty($berita['gambar'])): ?>
@@ -110,7 +109,7 @@ include 'header.php';
                 <?php endif; ?>
                 <input type="file" name="gambar" class="form-control" accept="image/*"
                        data-preview="previewImg" style="margin-top:8px;">
-                <p class="form-hint">Biarkan kosong jika tidak ingin mengganti gambar. Maks 5MB.</p>
+                <p class="form-hint">Biarkan kosong jika tidak ingin mengganti gambar. JPG/JPEG/PNG/WEBP. Maks 5MB.</p>
             </div>
             <div class="form-actions">
                 <button type="submit" class="btn-submit"><i class="fas fa-save"></i> Perbarui Berita</button>

@@ -20,8 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $gambar = '';
         if (!empty($_FILES['gambar']['tmp_name'])) {
             $up = uploadFile($_FILES['gambar'], '../uploads/kegiatan');
-            if (!$up) $error = 'Gagal upload gambar!';
-            else $gambar = $up;
+            if (is_array($up) && isset($up['error'])) {
+                $error = $up['error'];
+            } else {
+                $gambar = $up;
+            }
         }
         if (empty($error)) {
             $stmt = $conn->prepare("INSERT INTO kegiatan (judul, deskripsi, kategori, gambar, tgl_kegiatan, lokasi, kelurahan_id) VALUES (?,?,?,?,?,?,?)");
@@ -89,7 +92,7 @@ include 'header.php';
             <div class="form-group">
                 <label class="form-label">Foto Kegiatan</label>
                 <input type="file" name="gambar" class="form-control" accept="image/*" data-preview="prevImg">
-                <p class="form-hint">Format JPG/PNG/WEBP, maks 5MB.</p>
+                <p class="form-hint">Format JPG, JPEG, PNG, WEBP, maks 5MB.</p>
                 <img id="prevImg" src="" class="current-img" style="display:none;margin-top:8px" alt="">
             </div>
             <div class="form-actions">

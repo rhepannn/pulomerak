@@ -17,10 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($nama)) {
         $error = 'Nama kelurahan wajib diisi!';
     } else {
-        $gambar = '';
         if (!empty($_FILES['gambar']['tmp_name'])) {
             $up = uploadFile($_FILES['gambar'], '../uploads/kegiatan');
-            if ($up) $gambar = $up;
+            if (is_array($up) && isset($up['error'])) {
+                $error = $up['error'];
+            } else {
+                $gambar = $up;
+            }
         }
         $stmt = $conn->prepare("INSERT INTO kelurahan (nama, ketua_pkk, deskripsi, inovasi, gambar, jumlah_rw, jumlah_rt, penduduk) VALUES (?,?,?,?,?,?,?,?)");
         $stmt->bind_param('sssssiii', $nama, $ketua_pkk, $deskripsi, $inovasi, $gambar, $jumlah_rw, $jumlah_rt, $penduduk);

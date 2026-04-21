@@ -90,7 +90,7 @@ include 'include/header.php';
                             <h3 class="card-title">
                                 <a href="berita-detail.php?id=<?= $b['id'] ?>"><?= e($b['judul']) ?></a>
                             </h3>
-                            <p class="card-text"><?= truncate($b['isi'], 130) ?></p>
+
                         </div>
                         <div class="card-footer">
                             <a href="berita-detail.php?id=<?= $b['id'] ?>" class="card-link">

@@ -12,8 +12,11 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         $file='';
         if(!empty($_FILES['file']['tmp_name'])){
             $up=uploadDoc($_FILES['file'],'../uploads/perpustakaan');
-            if(!$up)$error='Gagal upload file! Format PDF/DOC/XLS, maks 5MB.';
-            else $file=$up;
+            if(is_array($up) && isset($up['error'])) {
+                $error = $up['error'];
+            } else {
+                $file=$up;
+            }
         }
         if(empty($error)){
             $stmt=$conn->prepare("INSERT INTO perpustakaan (judul,deskripsi,kategori,file,tgl_upload) VALUES (?,?,?,?,?)");

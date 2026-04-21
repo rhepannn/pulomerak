@@ -15,11 +15,15 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                    'tmp_name'=>$_FILES['gambar']['tmp_name'][$i],'error'=>$_FILES['gambar']['error'][$i],
                    'size'=>$_FILES['gambar']['size'][$i]];
             $up=uploadFile($file,'../uploads/galeri');
-            if($up){
+            if(is_array($up) && isset($up['error'])){
+                $errors[]=$up['error'] . " ($name)";
+            } elseif($up){
                 $tit=$judul?:pathinfo($name,PATHINFO_FILENAME);
                 $stmt=$conn->prepare("INSERT INTO galeri (judul,keterangan,gambar) VALUES (?,?,?)");
                 $stmt->bind_param('sss',$tit,$keterangan,$up);$stmt->execute();$uploaded++;
-            } else $errors[]="Gagal upload: $name";
+            } else {
+                $errors[]="Gagal upload: $name";
+            }
         }
         if($uploaded>0){setFlash('success',"$uploaded foto berhasil diupload!");redirect(SITE_URL.'/admin/galeri.php');}
         else $error=implode('<br>',$errors)?:'Tidak ada file yang berhasil diupload.';

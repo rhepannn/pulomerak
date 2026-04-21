@@ -15,7 +15,12 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     else{
         if(!empty($_FILES['gambar']['tmp_name'])){
             $up=uploadFile($_FILES['gambar'],'../uploads/kegiatan');
-            if($up){if($gambar&&file_exists('../uploads/kegiatan/'.$gambar))unlink('../uploads/kegiatan/'.$gambar);$gambar=$up;}
+            if(is_array($up) && isset($up['error'])){
+                $error = $up['error'];
+            } else {
+                if($gambar&&file_exists('../uploads/kegiatan/'.$gambar))unlink('../uploads/kegiatan/'.$gambar);
+                $gambar=$up;
+            }
         }
         $stmt=$conn->prepare("UPDATE dinamika SET judul=?,isi=?,kategori=?,penulis=?,gambar=?,tgl_post=? WHERE id=?");
         $stmt->bind_param('ssssssi',$judul,$isi,$kategori,$penulis,$gambar,$tgl_post,$id);

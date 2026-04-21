@@ -54,12 +54,21 @@ function createSlug($str) {
 function uploadFile($file, $dir, $allowedTypes = ['jpg','jpeg','png','gif','webp']) {
     if (!isset($file['tmp_name']) || empty($file['tmp_name'])) return false;
     $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    if (!in_array($ext, $allowedTypes)) return false;
-    if ($file['size'] > 5 * 1024 * 1024) return false; // Max 5MB
+    if (!in_array($ext, $allowedTypes)) {
+        $types = strtoupper(implode(', ', $allowedTypes));
+        return ['error' => "Format file tidak didukung. Gunakan $types."];
+    }
+    if ($file['size'] > 5 * 1024 * 1024) {
+        return ['error' => 'Ukuran file terlalu besar. Maksimal 5MB.'];
+    }
     $filename = time() . '_' . uniqid() . '.' . $ext;
     $dest = $dir . '/' . $filename;
+    
+    // Pastikan folder tujuan ada
+    if (!is_dir($dir)) mkdir($dir, 0755, true);
+
     if (move_uploaded_file($file['tmp_name'], $dest)) return $filename;
-    return false;
+    return ['error' => 'Gagal memindahkan file ke server.'];
 }
 
 /**

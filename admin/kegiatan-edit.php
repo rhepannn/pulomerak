@@ -26,8 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     else {
         if (!empty($_FILES['gambar']['tmp_name'])) {
             $up = uploadFile($_FILES['gambar'], '../uploads/kegiatan');
-            if (!$up) $error = 'Gagal upload gambar!';
-            else {
+            if (is_array($up) && isset($up['error'])) {
+                $error = $up['error'];
+            } else {
                 if ($gambar && file_exists('../uploads/kegiatan/'.$gambar)) unlink('../uploads/kegiatan/'.$gambar);
                 $gambar = $up;
             }

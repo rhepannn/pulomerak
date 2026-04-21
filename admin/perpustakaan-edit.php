@@ -14,8 +14,12 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     else{
         if(!empty($_FILES['file']['tmp_name'])){
             $up=uploadDoc($_FILES['file'],'../uploads/perpustakaan');
-            if(!$up)$error='Gagal upload!';
-            else{if($file&&file_exists('../uploads/perpustakaan/'.$file))unlink('../uploads/perpustakaan/'.$file);$file=$up;}
+            if(is_array($up) && isset($up['error'])){
+                $error = $up['error'];
+            } else {
+                if($file&&file_exists('../uploads/perpustakaan/'.$file))unlink('../uploads/perpustakaan/'.$file);
+                $file=$up;
+            }
         }
         if(empty($error)){
             $stmt=$conn->prepare("UPDATE perpustakaan SET judul=?,deskripsi=?,kategori=?,file=?,tgl_upload=? WHERE id=?");

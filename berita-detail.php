@@ -69,9 +69,7 @@ include 'include/header.php';
                     <?php endif; ?>
                 </div>
 
-                <div class="detail-body">
-                    <?= nl2br(e($berita['isi'])) ?>
-                </div>
+
 
                 <!-- Share -->
                 <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
