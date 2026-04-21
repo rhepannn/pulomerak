@@ -5,12 +5,27 @@ $pageTitle = 'Profil Kecamatan';
 include 'include/header.php';
 ?>
 
-<!-- PAGE HERO -->
-<style>
-    .page-hero.with-bg::before, .page-hero.with-bg::after { display: none !important; }
-</style>
-<div class="page-hero with-bg" style="background-image: url('<?= SITE_URL ?>/assets/img/foto-profil.jpg'); background-size: cover; background-position: center; position: relative; min-height: 400px;">
-</div>
+<!-- ═══════════════════════════════════════════════════════
+     HERO SECTION
+═══════════════════════════════════════════════════════ -->
+<section class="hero" style="background-image: url('<?= SITE_URL ?>/assets/img/foto-profil.jpg');">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content animate-fade-up">
+        <h1>Mewujudkan Masyarakat<br><span>Maju & Sejahtera</span></h1>
+        <p>
+            Mengenal lebih dekat visi, misi, dan struktur organisasi 
+            Pemerintah Kecamatan Pulomerak dalam melayani masyarakat Kota Cilegon.
+        </p>
+        <div class="hero-actions">
+            <a href="#visi-misi" class="btn btn-primary">
+                <i class="fas fa-bullseye"></i> Visi & Misi
+            </a>
+            <a href="#struktur" class="btn btn-outline">
+                <i class="fas fa-sitemap"></i> Struktur Organisasi
+            </a>
+        </div>
+    </div>
+</section>
 
 <!-- TENTANG PULOMERAK -->
 <section class="section">
@@ -35,15 +50,15 @@ include 'include/header.php';
                 </p>
                 <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;">
                     <div style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--gray);">
-                        <i class="fas fa-map-marker-alt" style="color:var(--primary)"></i>
+                        <i class="fas fa-map-marker-alt" style="color:var(--primary, #0054A6)"></i>
                         Kec. Pulomerak, Kota Cilegon
                     </div>
                     <div style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--gray);">
-                        <i class="fas fa-expand-arrows-alt" style="color:var(--primary)"></i>
+                        <i class="fas fa-expand-arrows-alt" style="color:var(--primary, #0054A6)"></i>
                         Luas ±3,2 km²
                     </div>
                     <div style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--gray);">
-                        <i class="fas fa-users" style="color:var(--primary)"></i>
+                        <i class="fas fa-users" style="color:var(--primary, #0054A6)"></i>
                         ±12.450 Jiwa
                     </div>
                 </div>
@@ -53,24 +68,24 @@ include 'include/header.php';
 </section>
 
 <!-- VISI & MISI -->
-<section class="section section-alt">
+<section class="section section-alt" id="visi-misi">
     <div class="container">
         <div class="section-header">
-            <div class="section-label"><i class="fas fa-star"></i> Arah & Tujuan</div>
+            <div class="section-label">Arah & Tujuan</div>
             <h2 class="section-title">Visi & <span>Misi</span></h2>
             <p class="section-desc">Panduan dan komitmen Kecamatan Pulomerak dalam melayani masyarakat.</p>
         </div>
         <div class="visi-misi reveal">
-            <div class="vm-card">
-                <div class="vm-icon blue"><i class="fas fa-eye"></i></div>
+                <div class="vm-card">
+                    <div class="vm-icon"><i class="fas fa-eye"></i></div>
                 <h3>Visi</h3>
                 <p>
                     <strong>"Terwujudnya Kecamatan Pulomerak yang Maju, Bersih, dan Sejahtera
                     Melalui Pelayanan Prima Berbasis Teknologi dan Partisipasi Masyarakat."</strong>
                 </p>
             </div>
-            <div class="vm-card">
-                <div class="vm-icon green"><i class="fas fa-rocket"></i></div>
+                <div class="vm-card">
+                    <div class="vm-icon"><i class="fas fa-rocket"></i></div>
                 <h3>Misi</h3>
                 <ul>
                     <li>Meningkatkan kualitas pelayanan administrasi yang cepat, tepat, and transparan.</li>
@@ -86,7 +101,7 @@ include 'include/header.php';
 </section>
 
 <!-- STRUKTUR ORGANISASI -->
-<section class="section">
+<section class="section" id="struktur">
     <div class="container">
         <div class="section-header">
             <div class="section-label"><i class="fas fa-sitemap"></i> Organisasi</div>
@@ -107,7 +122,7 @@ include 'include/header.php';
 
             <!-- Level 2: Sekretaris Camat -->
             <div class="org-level">
-                <div class="org-card" style="border-color:var(--secondary);">
+                <div class="org-card" style="border-color:var(--primary-light, #2563EB);">
                     <div class="org-avatar"><i class="fas fa-user"></i></div>
                     <div class="org-name">Drs. Suharno</div>
                     <div class="org-role">Sekretaris Camat</div>
@@ -144,7 +159,7 @@ include 'include/header.php';
         <div class="grid-4" style="margin-top:52px;">
             <div class="card reveal">
                 <div class="card-body" style="text-align:center;">
-                    <div class="shortcut-icon blue" style="margin:0 auto 14px;width:52px;height:52px;font-size:1.3rem">
+                    <div class="shortcut-icon" style="margin:0 auto 14px;width:52px;height:52px;font-size:1.3rem">
                         <i class="fas fa-map"></i>
                     </div>
                     <h3 style="font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:6px">Batas Utara</h3>
@@ -153,7 +168,7 @@ include 'include/header.php';
             </div>
             <div class="card reveal animate-delay-1">
                 <div class="card-body" style="text-align:center;">
-                    <div class="shortcut-icon green" style="margin:0 auto 14px;width:52px;height:52px;font-size:1.3rem">
+                    <div class="shortcut-icon" style="margin:0 auto 14px;width:52px;height:52px;font-size:1.3rem">
                         <i class="fas fa-map"></i>
                     </div>
                     <h3 style="font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:6px">Batas Selatan</h3>
@@ -162,7 +177,7 @@ include 'include/header.php';
             </div>
             <div class="card reveal animate-delay-2">
                 <div class="card-body" style="text-align:center;">
-                    <div class="shortcut-icon orange" style="margin:0 auto 14px;width:52px;height:52px;font-size:1.3rem">
+                    <div class="shortcut-icon" style="margin:0 auto 14px;width:52px;height:52px;font-size:1.3rem">
                         <i class="fas fa-map"></i>
                     </div>
                     <h3 style="font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:6px">Batas Barat</h3>
@@ -171,7 +186,7 @@ include 'include/header.php';
             </div>
             <div class="card reveal animate-delay-3">
                 <div class="card-body" style="text-align:center;">
-                    <div class="shortcut-icon purple" style="margin:0 auto 14px;width:52px;height:52px;font-size:1.3rem">
+                    <div class="shortcut-icon" style="margin:0 auto 14px;width:52px;height:52px;font-size:1.3rem">
                         <i class="fas fa-map"></i>
                     </div>
                     <h3 style="font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:6px">Batas Timur</h3>

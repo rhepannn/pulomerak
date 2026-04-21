@@ -55,5 +55,5 @@ AddDefaultCharset UTF-8
 </IfModule>
 
 # ── Halaman Error Custom ──────────────────────────────────────
-ErrorDocument 404 /pulomerak/404.php
-ErrorDocument 403 /pulomerak/404.php
+ErrorDocument 404 /PuloMerak/pulomerak/404.php
+ErrorDocument 403 /PuloMerak/pulomerak/404.php

@@ -76,10 +76,7 @@
                         <span>Senin–Jumat: 08.00–16.00 WIB</span>
                     </li>
                 </ul>
-                <div class="footer-badge">
-                    <i class="fas fa-shield-halved"></i>
-                    <span>Website Resmi Pemerintah</span>
-                </div>
+
             </div>
         </div>
     </div>
