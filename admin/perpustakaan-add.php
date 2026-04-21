@@ -9,18 +9,21 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $kategori=trim($_POST['kategori']??'');$tgl_upload=$_POST['tgl_upload']??date('Y-m-d');
     if(empty($judul)){$error='Judul wajib diisi!';}
     else{
-        $file='';
+        $file=''; $gambar='';
         if(!empty($_FILES['file']['tmp_name'])){
             $up=uploadDoc($_FILES['file'],'../uploads/perpustakaan');
-            if(is_array($up) && isset($up['error'])) {
-                $error = $up['error'];
-            } else {
-                $file=$up;
-            }
+            if(is_array($up) && isset($up['error'])) { $error = $up['error']; } 
+            else { $file=$up; }
         }
+        if(empty($error) && !empty($_FILES['gambar']['tmp_name'])){
+            $upImg=uploadImg($_FILES['gambar'],'../uploads/perpustakaan');
+            if(is_array($upImg) && isset($upImg['error'])) { $error = $upImg['error']; } 
+            else { $gambar=$upImg; }
+        }
+
         if(empty($error)){
-            $stmt=$conn->prepare("INSERT INTO perpustakaan (judul,deskripsi,kategori,file,tgl_upload) VALUES (?,?,?,?,?)");
-            $stmt->bind_param('sssss',$judul,$deskripsi,$kategori,$file,$tgl_upload);
+            $stmt=$conn->prepare("INSERT INTO perpustakaan (judul,deskripsi,kategori,gambar,file,tgl_upload) VALUES (?,?,?,?,?,?)");
+            $stmt->bind_param('ssssss',$judul,$deskripsi,$kategori,$gambar,$file,$tgl_upload);
             if($stmt->execute()){setFlash('success','Dokumen berhasil ditambahkan!');redirect(SITE_URL.'/admin/perpustakaan.php');}
             else $error='Gagal: '.$conn->error;
         }
@@ -52,6 +55,11 @@ include 'header.php';
             <div class="form-group">
                 <label class="form-label">Deskripsi Dokumen</label>
                 <textarea name="deskripsi" class="form-control" rows="4" placeholder="Keterangan singkat isi dokumen..."><?=e($_POST['deskripsi']??'')?></textarea>
+            </div>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label class="form-label">Sampul Dokumen / Buku (JPG/PNG)</label>
+                <input type="file" name="gambar" class="form-control" accept="image/*">
+                <p class="form-hint">Tampilkan sampul agar lebih menarik di halaman depan.</p>
             </div>
             <div class="form-group">
                 <label class="form-label">File Dokumen (PDF/DOC/XLS)</label>

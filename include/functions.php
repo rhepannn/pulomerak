@@ -129,8 +129,10 @@ function requireAdmin() {
  * Ambil gambar atau default
  */
 function getImg($file, $subdir = 'berita') {
+    if (!$file) return SITE_URL . '/assets/img/placeholder.jpg';
+    
     $path = __DIR__ . '/../uploads/' . $subdir . '/' . $file;
-    if ($file && file_exists($path)) {
+    if (file_exists($path)) {
         return SITE_URL . '/uploads/' . $subdir . '/' . $file;
     }
     return SITE_URL . '/assets/img/placeholder.jpg';

@@ -53,6 +53,9 @@ $adminName = $_SESSION['admin_name'] ?? 'Admin';
         <a href="<?= SITE_URL ?>/admin/kelurahan.php" class="sidebar-link <?= str_starts_with($adminPage,'kelurahan') ? 'active' : '' ?>">
             <i class="fas fa-city"></i> Kelurahan / RW
         </a>
+        <a href="<?= SITE_URL ?>/admin/bidang.php" class="sidebar-link <?= (str_starts_with($adminPage,'bidang') || str_starts_with($adminPage,'anggota')) ? 'active' : '' ?>">
+            <i class="fas fa-sitemap"></i> Bidang & Pengurus
+        </a>
         <a href="<?= SITE_URL ?>/admin/galeri.php" class="sidebar-link <?= str_starts_with($adminPage,'galeri') ? 'active' : '' ?>">
             <i class="fas fa-images"></i> Galeri
         </a>
@@ -98,3 +101,27 @@ $adminName = $_SESSION['admin_name'] ?? 'Admin';
 
     <div class="admin-content">
         <?= showFlash() ?>
+
+<!-- MOBILE BOTTOM NAVIGATION -->
+<div class="mobile-bottom-nav">
+    <a href="<?= SITE_URL ?>/admin/index.php" class="bottom-nav-item <?= $adminPage === 'index' ? 'active' : '' ?>">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="<?= SITE_URL ?>/admin/berita.php" class="bottom-nav-item <?= str_starts_with($adminPage,'berita') ? 'active' : '' ?>">
+        <i class="fas fa-newspaper"></i>
+        <span>Berita</span>
+    </a>
+    <a href="<?= SITE_URL ?>/admin/kegiatan.php" class="bottom-nav-item <?= str_starts_with($adminPage,'kegiatan') ? 'active' : '' ?>">
+        <i class="fas fa-calendar"></i>
+        <span>Kegiatan</span>
+    </a>
+    <a href="<?= SITE_URL ?>/admin/bidang.php" class="bottom-nav-item <?= (str_starts_with($adminPage,'bidang') || str_starts_with($adminPage,'anggota')) ? 'active' : '' ?>">
+        <i class="fas fa-sitemap"></i>
+        <span>Bidang</span>
+    </a>
+    <button class="bottom-nav-item" onclick="document.getElementById('sidebarToggle').click()">
+        <i class="fas fa-bars"></i>
+        <span>More</span>
+    </button>
+</div>

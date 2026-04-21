@@ -61,6 +61,15 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 
         <!-- MENU -->
         <ul class="nav-menu" id="navMenu">
+            <li class="nav-mobile-header">
+                <div class="navbar-brand">
+                    <img src="<?= SITE_URL ?>/assets/img/pkk_logo.png" alt="" style="height:40px">
+                    <div class="logo-text">
+                        <span class="logo-title" style="color:var(--text)">PKK Pulomerak</span>
+                    </div>
+                </div>
+                <button class="nav-close" onclick="document.getElementById('navToggle').click()"><i class="fas fa-times"></i></button>
+            </li>
             <li class="nav-item <?= $currentPage === 'index' ? 'active' : '' ?>">
                 <a href="<?= SITE_URL ?>/" class="nav-link"><i class="fas fa-home"></i> Beranda</a>
             </li>
@@ -74,7 +83,17 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                     <li><a href="<?= SITE_URL ?>/kelurahan.php#inovasi"><i class="fas fa-lightbulb"></i> Inovasi</a></li>
                 </ul>
             </li>
-            <li class="nav-item <?= $currentPage === 'berita' || $currentPage === 'berita-detail' ? 'active' : '' ?>">
+            <li class="nav-item has-dropdown <?= in_array($currentPage, ['bidang-detail']) ? 'active' : '' ?>">
+            <a href="<?= SITE_URL ?>/bidang-detail.php?slug=sekretariat" class="nav-link"><i class="fas fa-sitemap"></i> Bidang <i class="fas fa-chevron-down arrow"></i></a>
+            <ul class="dropdown">
+                <li><a href="<?= SITE_URL ?>/bidang-detail.php?slug=sekretariat"><i class="fas fa-envelope-open-text"></i> Sekretariat</a></li>
+                <li><a href="<?= SITE_URL ?>/bidang-detail.php?slug=pokja-1"><i class="fas fa-users-gear"></i> POKJA 1</a></li>
+                <li><a href="<?= SITE_URL ?>/bidang-detail.php?slug=pokja-2"><i class="fas fa-graduation-cap"></i> POKJA 2</a></li>
+                <li><a href="<?= SITE_URL ?>/bidang-detail.php?slug=pokja-3"><i class="fas fa-house-chimney"></i> POKJA 3</a></li>
+                <li><a href="<?= SITE_URL ?>/bidang-detail.php?slug=pokja-4"><i class="fas fa-heart-pulse"></i> POKJA 4</a></li>
+            </ul>
+        </li>
+        <li class="nav-item <?= $currentPage === 'berita' || $currentPage === 'berita-detail' ? 'active' : '' ?>">
                 <a href="<?= SITE_URL ?>/berita.php" class="nav-link"><i class="fas fa-newspaper"></i> Berita</a>
             </li>
             <li class="nav-item <?= $currentPage === 'kegiatan' ? 'active' : '' ?>">
@@ -89,6 +108,8 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                 </ul>
             </li>
         </ul>
+
+        <div class="nav-overlay" id="navOverlay"></div>
     </div>
 </nav>
 

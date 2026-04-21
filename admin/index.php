@@ -37,21 +37,21 @@ include 'header.php';
     <div class="stat-card">
         <div class="stat-icon blue"><i class="fas fa-newspaper"></i></div>
         <div class="stat-info">
-            <div class="stat-num"><?= $stats['berita'] ?></div>
+            <div class="stat-num" data-stat="berita"><?= $stats['berita'] ?></div>
             <div class="stat-label">Total Berita</div>
         </div>
     </div>
     <div class="stat-card">
         <div class="stat-icon green"><i class="fas fa-calendar-check"></i></div>
         <div class="stat-info">
-            <div class="stat-num"><?= $stats['kegiatan'] ?></div>
+            <div class="stat-num" data-stat="kegiatan"><?= $stats['kegiatan'] ?></div>
             <div class="stat-label">Total Kegiatan</div>
         </div>
     </div>
     <div class="stat-card">
         <div class="stat-icon orange"><i class="fas fa-file-alt"></i></div>
         <div class="stat-info">
-            <div class="stat-num"><?= $stats['laporan'] ?></div>
+            <div class="stat-num" data-stat="laporan"><?= $stats['laporan'] ?></div>
             <div class="stat-label">Total Laporan</div>
         </div>
     </div>
@@ -68,7 +68,7 @@ include 'header.php';
     <div class="stat-card">
         <div class="stat-icon red"><i class="fas fa-users"></i></div>
         <div class="stat-info">
-            <div class="stat-num"><?= $stats['dinamika'] ?></div>
+            <div class="stat-num" data-stat="dinamika"><?= $stats['dinamika'] ?></div>
             <div class="stat-label">Artikel Dinamika</div>
         </div>
     </div>

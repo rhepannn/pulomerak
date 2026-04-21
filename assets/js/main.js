@@ -17,22 +17,36 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ── MOBILE NAV TOGGLE ──────────────────────────────────
-    const navToggle = document.getElementById('navToggle');
-    const navMenu   = document.getElementById('navMenu');
+    const navToggle  = document.getElementById('navToggle');
+    const navMenu    = document.getElementById('navMenu');
+    const navOverlay = document.getElementById('navOverlay');
+
     if (navToggle && navMenu) {
-        navToggle.addEventListener('click', function () {
+        function toggleMenu() {
+            const isOpen = navMenu.classList.toggle('open');
             navToggle.classList.toggle('open');
-            navMenu.classList.toggle('open');
-            document.body.style.overflow = navMenu.classList.contains('open') ? 'hidden' : '';
-        });
-        // Close on outside click
+            if (navOverlay) navOverlay.classList.toggle('show');
+            
+            // Lock body and html scroll
+            const scrollStyle = isOpen ? 'hidden' : '';
+            document.body.style.overflow = scrollStyle;
+            document.documentElement.style.overflow = scrollStyle;
+        }
+
+        navToggle.addEventListener('click', toggleMenu);
+
+        // Close on overlay or outside click
         document.addEventListener('click', function (e) {
-            if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-                navToggle.classList.remove('open');
-                navMenu.classList.remove('open');
-                document.body.style.overflow = '';
+            if (navMenu.classList.contains('open')) {
+                if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                    toggleMenu();
+                }
             }
         });
+        
+        if (navOverlay) {
+            navOverlay.addEventListener('click', toggleMenu);
+        }
     }
 
     // ── BACK TO TOP ────────────────────────────────────────
@@ -213,5 +227,76 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
+    // ── TOAST SYSTEM ──────────────────────────────────────
+    window.showToast = function(msg, type = 'info') {
+        const toastContainer = document.getElementById('toastContainer') || (function() {
+            const c = document.createElement('div');
+            c.id = 'toastContainer';
+            c.style.cssText = 'position:fixed;top:20px;right:20px;z-index:10000;display:flex;flex-direction:column;gap:10px;pointer-events:none;';
+            document.body.appendChild(c);
+            return c;
+        })();
+
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+        toast.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> <span>${msg}</span>`;
+        toastContainer.appendChild(toast);
+
+        setTimeout(() => toast.classList.add('show'), 10);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 500);
+        }, 4000);
+    };
+
+    // ── REALTIME ENGINE ────────────────────────────────────
+    function initRealtime() {
+        const isAdmin = window.location.pathname.includes('/admin/');
+        if (!isAdmin) return;
+
+        const pollInterval = 20000; // 20 detik
+        let lastBeritaId   = localStorage.getItem('last_berita_id');
+        let lastKegiatanId = localStorage.getItem('last_kegiatan_id');
+
+        async function poll() {
+            try {
+                const res  = await fetch('../admin/api-admin.php');
+                const data = await res.json();
+                
+                if (data.status === 'success') {
+                    // Update stats if on dashboard
+                    const statNums = document.querySelectorAll('.stat-num');
+                    if (statNums.length > 0) {
+                        if(document.querySelector('.stat-label + .stat-num') === null) {
+                            // Map stats to UI if possible (simple version)
+                            // This depends on the order, we could add IDs to stat-nums
+                        }
+                    }
+
+                    // Check for new content
+                    if (lastBeritaId && data.latest.berita && data.latest.berita.id > lastBeritaId) {
+                        showToast(`Halo ka, ada berita baru nih: ${data.latest.berita.judul}`, 'success');
+                    }
+                    if (lastKegiatanId && data.latest.kegiatan && data.latest.kegiatan.id > lastKegiatanId) {
+                        showToast(`Ada info kegiatan baru lho: ${data.latest.kegiatan.judul}`, 'info');
+                    }
+
+                    // Update last seen
+                    if (data.latest.berita) localStorage.setItem('last_berita_id', data.latest.berita.id);
+                    if (data.latest.kegiatan) localStorage.setItem('last_kegiatan_id', data.latest.kegiatan.id);
+                    lastBeritaId = localStorage.getItem('last_berita_id');
+                    lastKegiatanId = localStorage.getItem('last_kegiatan_id');
+                }
+            } catch (e) { console.warn('Polling failed', e); }
+        }
+
+        // Jalankan poll pertama dan set interval
+        setTimeout(poll, 2000); // Tunggu sebentar setelah load
+        setInterval(poll, pollInterval);
+    }
+
+    initRealtime();
 
 });

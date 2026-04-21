@@ -9,25 +9,30 @@ $pageTitle='Edit Dokumen';
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
     $judul=trim($_POST['judul']??'');$deskripsi=trim($_POST['deskripsi']??'');
-    $kategori=trim($_POST['kategori']??'');$tgl_upload=$_POST['tgl_upload']??date('Y-m-d');$file=$p['file'];
-    if(empty($judul)){$error='Judul wajib diisi!';}
-    else{
+        $file=$p['file']; $gambar=$p['gambar'];
         if(!empty($_FILES['file']['tmp_name'])){
             $up=uploadDoc($_FILES['file'],'../uploads/perpustakaan');
-            if(is_array($up) && isset($up['error'])){
-                $error = $up['error'];
-            } else {
+            if(is_array($up) && isset($up['error'])){ $error = $up['error']; } 
+            else {
                 if($file&&file_exists('../uploads/perpustakaan/'.$file))unlink('../uploads/perpustakaan/'.$file);
                 $file=$up;
             }
         }
+        if(empty($error) && !empty($_FILES['gambar']['tmp_name'])){
+            $upImg=uploadImg($_FILES['gambar'],'../uploads/perpustakaan');
+            if(is_array($upImg) && isset($upImg['error'])) { $error = $upImg['error']; } 
+            else {
+                if($gambar&&file_exists('../uploads/perpustakaan/'.$gambar))unlink('../uploads/perpustakaan/'.$gambar);
+                $gambar=$upImg;
+            }
+        }
+
         if(empty($error)){
-            $stmt=$conn->prepare("UPDATE perpustakaan SET judul=?,deskripsi=?,kategori=?,file=?,tgl_upload=? WHERE id=?");
-            $stmt->bind_param('sssssi',$judul,$deskripsi,$kategori,$file,$tgl_upload,$id);
+            $stmt=$conn->prepare("UPDATE perpustakaan SET judul=?,deskripsi=?,kategori=?,gambar=?,file=?,tgl_upload=? WHERE id=?");
+            $stmt->bind_param('ssssssi',$judul,$deskripsi,$kategori,$gambar,$file,$tgl_upload,$id);
             if($stmt->execute()){setFlash('success','Dokumen berhasil diperbarui!');redirect(SITE_URL.'/admin/perpustakaan.php');}
             else $error='Gagal: '.$conn->error;
         }
-    }
 }
 include 'header.php';
 ?>
@@ -51,6 +56,16 @@ include 'header.php';
             <div class="form-group">
                 <label class="form-label">Tanggal Upload</label>
                 <input type="date" name="tgl_upload" class="form-control" value="<?=e($_POST['tgl_upload']??$p['tgl_upload'])?>" style="max-width:280px">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Sampul Dokumen (Opsional)</label>
+                <?php if(!empty($p['gambar'])): ?>
+                    <div style="margin-bottom:10px;">
+                        <img src="<?=SITE_URL?>/uploads/perpustakaan/<?=e($p['gambar'])?>" style="height:120px;border-radius:8px;border:1px solid var(--border)">
+                    </div>
+                <?php endif; ?>
+                <input type="file" name="gambar" class="form-control" accept="image/*">
+                <p class="form-hint">Kosongkan jika tidak ingin mengubah sampul.</p>
             </div>
             <div class="form-group">
                 <label class="form-label">Deskripsi</label>
