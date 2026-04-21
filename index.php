@@ -19,17 +19,17 @@ include 'include/header.php';
 <!-- ═══════════════════════════════════════════════════════
      HERO SECTION
 ═══════════════════════════════════════════════════════ -->
-<section class="hero" style="background-image: url('<?= SITE_URL ?>/assets/img/pkk_group.jpg');">
+<section class="hero" style="background-image: url('<?= SITE_URL ?>/assets/img/foto-beranda.jpg');">
     <div class="hero-overlay"></div>
     <div class="container hero-content animate-fade-up">
         <div class="hero-badge">
             <i class="fas fa-star"></i>
-            Portal Resmi Tim Penggerak PKK Kelurahan Pulomerak
+            Portal Resmi Tim Penggerak PKK Kecamatan Pulomerak
         </div>
         <h1>Bersama Membangun Keluarga<br><span>Sejahtera & Mandiri</span></h1>
         <p>
             Pusat informasi kegiatan, program inovasi, dan dinamika masyarakat
-            yang mendukung pemberdayaan dan kesejahteraan keluarga di Kelurahan Pulomerak, Kota Cilegon.
+            yang mendukung pemberdayaan dan kesejahteraan keluarga di Kecamatan Pulomerak, Kota Cilegon.
         </p>
         <div class="hero-actions">
             <a href="profil.php" class="btn btn-primary">
@@ -159,7 +159,7 @@ include 'include/header.php';
         <div class="section-header">
             <div class="section-label"><i class="fas fa-newspaper"></i> Informasi Terkini</div>
             <h2 class="section-title">Berita <span>Terbaru</span></h2>
-            <p class="section-desc">Informasi dan perkembangan terbaru seputar Kelurahan Pulomerak dan masyarakatnya.</p>
+            <p class="section-desc">Informasi dan perkembangan terbaru seputar Kecamatan Pulomerak dan masyarakatnya.</p>
         </div>
 
         <?php
@@ -258,7 +258,7 @@ include 'include/header.php';
         <div class="section-header">
             <div class="section-label"><i class="fas fa-calendar-check"></i> Aktivitas</div>
             <h2 class="section-title">Kegiatan <span>Terbaru</span></h2>
-            <p class="section-desc">Dokumentasi kegiatan dan program yang telah dilaksanakan oleh Kelurahan Pulomerak.</p>
+            <p class="section-desc">Dokumentasi kegiatan dan program yang telah dilaksanakan oleh Kecamatan Pulomerak.</p>
         </div>
 
         <?php if ($kegiatanList->num_rows === 0): ?>
@@ -298,7 +298,7 @@ include 'include/header.php';
         <div class="section-header">
             <div class="section-label"><i class="fas fa-cog"></i> Layanan</div>
             <h2 class="section-title">Layanan <span>Unggulan</span></h2>
-            <p class="section-desc">Berbagai layanan dan program unggulan Kelurahan Pulomerak untuk masyarakat.</p>
+            <p class="section-desc">Berbagai layanan dan program unggulan Kecamatan Pulomerak untuk masyarakat.</p>
         </div>
         <div class="pkk-article reveal" style="background:#fff; border-radius:16px; padding:2.5rem; box-shadow:0 10px 30px rgba(0,0,0,0.05); text-align:center;">
             

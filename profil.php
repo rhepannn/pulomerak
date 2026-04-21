@@ -1,20 +1,24 @@
 <?php
 require_once 'include/config.php';
 require_once 'include/functions.php';
-$pageTitle = 'Profil Kelurahan';
+$pageTitle = 'Profil Kecamatan';
 include 'include/header.php';
 ?>
 
 <!-- PAGE HERO -->
-<div class="page-hero">
-    <div class="container page-hero-content">
-        <div class="breadcrumb">
+<style>
+    .page-hero.with-bg::before, .page-hero.with-bg::after { display: none !important; }
+</style>
+<div class="page-hero with-bg" style="background-image: url('<?= SITE_URL ?>/assets/img/foto-profil.jpg'); background-size: cover; background-position: center; position: relative; min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center;">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(10, 25, 47, 0.6) 0%, rgba(10, 25, 47, 0.85) 100%);"></div>
+    <div class="container page-hero-content" style="position: relative; z-index: 2;">
+        <div class="breadcrumb" style="justify-content: center;">
             <a href="<?= SITE_URL ?>/">Beranda</a>
             <i class="fas fa-chevron-right"></i>
             <span>Profil</span>
         </div>
-        <h1><i class="fas fa-landmark"></i> Profil Kelurahan Pulomerak</h1>
-        <p>Mengenal lebih dekat Kelurahan Pulomerak — sejarah, visi misi, dan struktur organisasi pemerintahan.</p>
+        <h1 style="font-size: clamp(2.5rem, 6vw, 4rem);"><i class="fas fa-landmark"></i> Profil <br><span>Kecamatan Pulomerak</span></h1>
+        <p style="margin: 0 auto; font-size: 1.2rem; max-width: 700px; color: rgba(255,255,255,0.95);">Mengenal lebih dekat Kecamatan Pulomerak — sejarah, visi misi, dan struktur organisasi pemerintahan.</p>
     </div>
 </div>
 
@@ -23,26 +27,21 @@ include 'include/header.php';
     <div class="container">
         <div class="profil-intro reveal">
             <div class="profil-img">
-                <img src="<?= SITE_URL ?>/assets/img/kantor-kelurahan.jpg"
-                     alt="Kantor Kelurahan Pulomerak"
-                     onerror="this.src='https://placehold.co/600x420/1a4fa0/ffffff?text=Kelurahan+Pulomerak'">
+                <img src="<?= SITE_URL ?>/assets/img/foto-profil.jpg"
+                     alt="Kantor Kecamatan Pulomerak"
+                     onerror="this.src='https://placehold.co/600x420/1a4fa0/ffffff?text=Kecamatan+Pulomerak'">
             </div>
             <div class="profil-content">
                 <div class="section-label"><i class="fas fa-info-circle"></i> Tentang Kami</div>
-                <h2>Kelurahan <span>Pulomerak</span></h2>
+                <h2>Kecamatan <span>Pulomerak</span></h2>
                 <p>
-                    Kelurahan Pulomerak adalah salah satu kelurahan yang berada di Kecamatan Pulomerak,
-                    Kota Cilegon, Provinsi Banten. Terletak di ujung barat Pulau Jawa, Pulomerak dikenal
-                    sebagai gerbang penyeberangan utama Jawa–Sumatera melalui Pelabuhan Merak.
+                    Kecamatan Pulomerak adalah salah satu kecamatan yang berada di wilayah Kota Cilegon, Provinsi Banten. Terletak di ujung barat Pulau Jawa, Pulomerak dikenal sebagai gerbang penyeberangan utama Jawa–Sumatera melalui Pelabuhan Merak.
                 </p>
                 <p>
-                    Dengan luas wilayah sekitar 3,2 km², kelurahan ini dihuni oleh lebih dari 12.000 jiwa
-                    yang terbagi dalam 8 RW dan 32 RT. Masyarakatnya yang heterogen menjadikan Pulomerak
-                    sebagai wilayah yang dinamis dan kaya akan keberagaman budaya.
+                    Dengan luas wilayah yang strategis, kecamatan ini dihuni oleh ribuan jiwa yang terbagi dalam berbagai kelurahan dan lingkungan. Masyarakatnya yang heterogen menjadikan Pulomerak sebagai wilayah yang dinamis dan kaya akan keberagaman budaya.
                 </p>
                 <p>
-                    Pemerintah Kelurahan Pulomerak berkomitmen untuk memberikan pelayanan terbaik kepada
-                    masyarakat melalui program-program inovatif dan transparansi informasi publik.
+                    Pemerintah Kecamatan Pulomerak berkomitmen untuk memberikan pelayanan terbaik kepada masyarakat melalui program-program inovatif dan transparansi informasi publik.
                 </p>
                 <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;">
                     <div style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--gray);">
@@ -69,14 +68,14 @@ include 'include/header.php';
         <div class="section-header">
             <div class="section-label"><i class="fas fa-star"></i> Arah & Tujuan</div>
             <h2 class="section-title">Visi & <span>Misi</span></h2>
-            <p class="section-desc">Panduan dan komitmen Kelurahan Pulomerak dalam melayani masyarakat.</p>
+            <p class="section-desc">Panduan dan komitmen Kecamatan Pulomerak dalam melayani masyarakat.</p>
         </div>
         <div class="visi-misi reveal">
             <div class="vm-card">
                 <div class="vm-icon blue"><i class="fas fa-eye"></i></div>
                 <h3>Visi</h3>
                 <p>
-                    <strong>"Terwujudnya Kelurahan Pulomerak yang Maju, Bersih, dan Sejahtera
+                    <strong>"Terwujudnya Kecamatan Pulomerak yang Maju, Bersih, dan Sejahtera
                     Melalui Pelayanan Prima Berbasis Teknologi dan Partisipasi Masyarakat."</strong>
                 </p>
             </div>
@@ -84,8 +83,8 @@ include 'include/header.php';
                 <div class="vm-icon green"><i class="fas fa-rocket"></i></div>
                 <h3>Misi</h3>
                 <ul>
-                    <li>Meningkatkan kualitas pelayanan administrasi yang cepat, tepat, dan transparan.</li>
-                    <li>Mendorong partisipasi aktif masyarakat dalam pembangunan kelurahan.</li>
+                    <li>Meningkatkan kualitas pelayanan administrasi yang cepat, tepat, and transparan.</li>
+                    <li>Mendorong partisipasi aktif masyarakat dalam pembangunan kecamatan.</li>
                     <li>Mengembangkan potensi ekonomi lokal dan UMKM masyarakat Pulomerak.</li>
                     <li>Menjaga ketertiban, keamanan, dan kerukunan antar warga.</li>
                     <li>Meningkatkan kualitas lingkungan hidup yang bersih, sehat, dan nyaman.</li>
@@ -102,7 +101,7 @@ include 'include/header.php';
         <div class="section-header">
             <div class="section-label"><i class="fas fa-sitemap"></i> Organisasi</div>
             <h2 class="section-title">Struktur <span>Organisasi</span></h2>
-            <p class="section-desc">Susunan pejabat dan staf Kelurahan Pulomerak.</p>
+            <p class="section-desc">Susunan pejabat dan staf Kecamatan Pulomerak.</p>
         </div>
 
         <div class="org-chart reveal">
@@ -111,17 +110,17 @@ include 'include/header.php';
                 <div class="org-card chief">
                     <div class="org-avatar"><i class="fas fa-user-tie"></i></div>
                     <div class="org-name">H. Ahmad Fauzi, S.IP</div>
-                    <div class="org-role">Lurah Pulomerak</div>
+                    <div class="org-role">Camat Pulomerak</div>
                 </div>
             </div>
             <div class="org-connector"></div>
 
-            <!-- Level 2: Sekretaris Lurah -->
+            <!-- Level 2: Sekretaris Camat -->
             <div class="org-level">
                 <div class="org-card" style="border-color:var(--secondary);">
                     <div class="org-avatar"><i class="fas fa-user"></i></div>
                     <div class="org-name">Drs. Suharno</div>
-                    <div class="org-role">Sekretaris Lurah</div>
+                    <div class="org-role">Sekretaris Camat</div>
                 </div>
             </div>
             <div class="org-connector"></div>

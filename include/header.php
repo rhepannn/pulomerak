@@ -9,8 +9,8 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?= SITE_DESC ?>">
-    <meta name="keywords" content="Kelurahan Pulomerak, Cilegon, informasi kelurahan, berita, kegiatan masyarakat">
-    <meta name="author" content="Portal Kelurahan Pulomerak">
+    <meta name="keywords" content="Kecamatan Pulomerak, Cilegon, informasi kecamatan, berita, kegiatan masyarakat">
+    <meta name="author" content="Portal Kecamatan Pulomerak">
     <title><?= isset($pageTitle) ? e($pageTitle) . ' - ' : '' ?><?= SITE_NAME ?></title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="<?= SITE_URL ?>/assets/img/favicon.png">
@@ -29,12 +29,12 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 <div class="topbar">
     <div class="container topbar-inner">
         <div class="topbar-left">
-            <span><i class="fas fa-map-marker-alt"></i> Jl. Raya Merak, Kelurahan Pulomerak, Kota Cilegon, Banten</span>
+            <span><i class="fas fa-map-marker-alt"></i> Jl. Raya Merak, Kecamatan Pulomerak, Kota Cilegon, Banten</span>
             <span><i class="fas fa-clock"></i> Senin–Jumat: 08.00–16.00 WIB</span>
         </div>
         <div class="topbar-right">
             <a href="tel:+62-254-571234"><i class="fas fa-phone"></i> (0254) 571234</a>
-            <a href="mailto:kel.pulomerak@cilegon.go.id"><i class="fas fa-envelope"></i> kel.pulomerak@cilegon.go.id</a>
+            <a href="mailto:kec.pulomerak@cilegon.go.id"><i class="fas fa-envelope"></i> kec.pulomerak@cilegon.go.id</a>
         </div>
     </div>
 </div>
@@ -50,7 +50,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
             </div>
             <div class="logo-text">
                 <span class="logo-title">Tim Penggerak PKK</span>
-                <span class="logo-sub">Kelurahan Pulomerak</span>
+                <span class="logo-sub">Kecamatan Pulomerak</span>
             </div>
         </a>
 

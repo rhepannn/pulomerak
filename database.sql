@@ -1,5 +1,5 @@
 -- ============================================================
--- DATABASE: Portal Informasi Kelurahan Pulomerak
+-- DATABASE: Portal Informasi Kecamatan Pulomerak
 -- Versi: 1.1 (Compatible MySQL 5.7+ / MariaDB 10+)
 -- Charset: utf8mb4
 -- ============================================================
@@ -43,24 +43,24 @@ CREATE TABLE `berita` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `berita` (`judul`, `isi`, `kategori`, `gambar`, `tgl_post`) VALUES
-('Musyawarah Perencanaan Pembangunan Kelurahan Pulomerak 2025',
-'Kelurahan Pulomerak menyelenggarakan Musrenbang (Musyawarah Perencanaan Pembangunan) tingkat kelurahan untuk tahun anggaran 2025. Kegiatan ini dihadiri oleh perwakilan RW, RT, tokoh masyarakat, dan perangkat kelurahan.\r\n\r\nDalam musyawarah tersebut, warga menyampaikan berbagai usulan pembangunan infrastruktur dan program sosial yang diharapkan dapat meningkatkan kualitas hidup masyarakat Pulomerak.\r\n\r\nBeberapa usulan prioritas yang disepakati antara lain: perbaikan jalan lingkungan, pembangunan taman bermain, dan peningkatan fasilitas posyandu.',
+('Musyawarah Perencanaan Pembangunan Kecamatan Pulomerak 2025',
+'Kecamatan Pulomerak menyelenggarakan Musrenbang (Musyawarah Perencanaan Pembangunan) tingkat kelurahan untuk tahun anggaran 2025. Kegiatan ini dihadiri oleh perwakilan RW, RT, tokoh masyarakat, dan perangkat kelurahan.\r\n\r\nDalam musyawarah tersebut, warga menyampaikan berbagai usulan pembangunan infrastruktur dan program sosial yang diharapkan dapat meningkatkan kualitas hidup masyarakat Pulomerak.\r\n\r\nBeberapa usulan prioritas yang disepakati antara lain: perbaikan jalan lingkungan, pembangunan taman bermain, dan peningkatan fasilitas posyandu.',
 'Pemerintahan', NULL, '2025-03-15'),
 
 ('Pelatihan UMKM Digital untuk Warga Pulomerak',
-'Dinas Koperasi dan UMKM Kota Cilegon bersama Kelurahan Pulomerak menggelar pelatihan digitalisasi UMKM bagi pelaku usaha kecil di wilayah Pulomerak. Pelatihan ini bertujuan membantu warga memasarkan produk mereka secara online.\r\n\r\nSebanyak 45 pelaku UMKM mengikuti pelatihan ini dan mendapatkan materi tentang pembuatan toko online, fotografi produk, dan strategi pemasaran digital.',
+'Dinas Koperasi dan UMKM Kota Cilegon bersama Kecamatan Pulomerak menggelar pelatihan digitalisasi UMKM bagi pelaku usaha kecil di wilayah Pulomerak. Pelatihan ini bertujuan membantu warga memasarkan produk mereka secara online.\r\n\r\nSebanyak 45 pelaku UMKM mengikuti pelatihan ini dan mendapatkan materi tentang pembuatan toko online, fotografi produk, dan strategi pemasaran digital.',
 'Ekonomi', NULL, '2025-03-10'),
 
 ('Kampanye Kebersihan Lingkungan Pulomerak Bersih',
-'Dalam rangka memperingati Hari Peduli Sampah Nasional, Kelurahan Pulomerak menggelar kampanye kebersihan lingkungan bertajuk "Pulomerak Bersih, Pulomerak Sehat". Kegiatan ini melibatkan seluruh warga dari 8 RW yang ada.\r\n\r\nRatusan warga bergotong royong membersihkan saluran air, jalan lingkungan, dan tempat-tempat umum. Program bank sampah juga diperkenalkan kepada warga.',
+'Dalam rangka memperingati Hari Peduli Sampah Nasional, Kecamatan Pulomerak menggelar kampanye kebersihan lingkungan bertajuk "Pulomerak Bersih, Pulomerak Sehat". Kegiatan ini melibatkan seluruh warga dari 8 RW yang ada.\r\n\r\nRatusan warga bergotong royong membersihkan saluran air, jalan lingkungan, dan tempat-tempat umum. Program bank sampah juga diperkenalkan kepada warga.',
 'Lingkungan Hidup', NULL, '2025-03-05'),
 
 ('Peluncuran Layanan Administrasi Online Kelurahan',
-'Kelurahan Pulomerak resmi meluncurkan sistem layanan administrasi online yang memungkinkan warga mengajukan berbagai dokumen kependudukan secara digital. Inovasi ini merupakan bagian dari program Smart City Kota Cilegon.\r\n\r\nMelalui sistem ini, warga dapat mengajukan surat keterangan domisili, surat pengantar, dan berbagai layanan administratif lainnya tanpa harus datang langsung ke kantor kelurahan.',
+'Kecamatan Pulomerak resmi meluncurkan sistem layanan administrasi online yang memungkinkan warga mengajukan berbagai dokumen kependudukan secara digital. Inovasi ini merupakan bagian dari program Smart City Kota Cilegon.\r\n\r\nMelalui sistem ini, warga dapat mengajukan surat keterangan domisili, surat pengantar, dan berbagai layanan administratif lainnya tanpa harus datang langsung ke kantor kelurahan.',
 'Pengumuman', NULL, '2025-02-28'),
 
 ('Posyandu Terintegrasi Digital Resmi Beroperasi',
-'Program inovasi Posyandu Terintegrasi Digital di Kelurahan Pulomerak resmi beroperasi. Program ini menggunakan aplikasi khusus untuk memantau perkembangan kesehatan ibu dan anak secara real-time.\r\n\r\nKader posyandu dari 8 RW telah mendapatkan pelatihan penggunaan aplikasi sehingga dapat memberikan pelayanan yang lebih efektif dan terdata dengan baik.',
+'Program inovasi Posyandu Terintegrasi Digital di Kecamatan Pulomerak resmi beroperasi. Program ini menggunakan aplikasi khusus untuk memantau perkembangan kesehatan ibu dan anak secara real-time.\r\n\r\nKader posyandu dari 8 RW telah mendapatkan pelatihan penggunaan aplikasi sehingga dapat memberikan pelayanan yang lebih efektif dan terdata dengan baik.',
 'Kesehatan', NULL, '2025-02-20');
 
 -- ============================================================
@@ -173,11 +173,11 @@ INSERT INTO `dinamika` (`judul`, `isi`, `kategori`, `penulis`, `tgl_post`) VALUE
 'Ekonomi', 'Tim Redaksi', '2025-03-12'),
 
 ('Ibu-Ibu PKK Pulomerak Berinovasi dengan Olahan Sampah Plastik',
-'Kelompok PKK Kelurahan Pulomerak berhasil mengembangkan usaha kreatif pengolahan sampah plastik menjadi berbagai produk bernilai ekonomis seperti tas, dompet, dan aksesori rumah tangga.\r\n\r\nInovasi ini tidak hanya membantu mengurangi volume sampah plastik di lingkungan, tetapi juga memberikan tambahan penghasilan bagi ibu rumah tangga.',
+'Kelompok PKK Kecamatan Pulomerak berhasil mengembangkan usaha kreatif pengolahan sampah plastik menjadi berbagai produk bernilai ekonomis seperti tas, dompet, dan aksesori rumah tangga.\r\n\r\nInovasi ini tidak hanya membantu mengurangi volume sampah plastik di lingkungan, tetapi juga memberikan tambahan penghasilan bagi ibu rumah tangga.',
 'Sosial', 'Tim Redaksi', '2025-03-05'),
 
 ('Pemuda Pulomerak Aktif dalam Program Literasi Digital',
-'Karang Taruna Kelurahan Pulomerak menginisiasi program literasi digital bagi anak-anak dan remaja setempat. Program ini bertujuan untuk mempersiapkan generasi muda menghadapi tantangan era digital.\r\n\r\nMelalui kelas coding gratis dan pelatihan desain grafis, puluhan anak muda Pulomerak kini mulai terampil di bidang teknologi.',
+'Karang Taruna Kecamatan Pulomerak menginisiasi program literasi digital bagi anak-anak dan remaja setempat. Program ini bertujuan untuk mempersiapkan generasi muda menghadapi tantangan era digital.\r\n\r\nMelalui kelas coding gratis dan pelatihan desain grafis, puluhan anak muda Pulomerak kini mulai terampil di bidang teknologi.',
 'Pendidikan', 'Tim Redaksi', '2025-02-25');
 
 -- ============================================================
@@ -199,8 +199,8 @@ CREATE TABLE `perpustakaan` (
 INSERT INTO `perpustakaan` (`judul`, `deskripsi`, `kategori`, `tgl_upload`) VALUES
 ('Peraturan Daerah Kota Cilegon No. 5 Tahun 2022 tentang Ketertiban Umum', 'Peraturan daerah yang mengatur ketertiban dan ketentraman umum di Kota Cilegon.', 'Peraturan Daerah', '2024-01-10'),
 ('Panduan Layanan Administrasi Kelurahan', 'Panduan lengkap prosedur dan persyaratan untuk berbagai layanan administrasi di kelurahan.', 'Panduan Layanan', '2024-06-01'),
-('Profil Kelurahan Pulomerak 2024', 'Dokumen profil lengkap Kelurahan Pulomerak termasuk data kependudukan, potensi, dan program kerja.', 'Arsip Kelurahan', '2024-03-15'),
-('Laporan Tahunan Kelurahan 2023', 'Laporan lengkap kegiatan dan capaian program Kelurahan Pulomerak sepanjang tahun 2023.', 'Laporan Tahunan', '2024-01-31');
+('Profil Kecamatan Pulomerak 2024', 'Dokumen profil lengkap Kecamatan Pulomerak termasuk data kependudukan, potensi, dan program kerja.', 'Arsip Kelurahan', '2024-03-15'),
+('Laporan Tahunan Kelurahan 2023', 'Laporan lengkap kegiatan dan capaian program Kecamatan Pulomerak sepanjang tahun 2023.', 'Laporan Tahunan', '2024-01-31');
 
 -- ============================================================
 -- TABEL: bidang (Sekretariat, POKJA 1-4)
@@ -221,7 +221,7 @@ CREATE TABLE `bidang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `bidang` (`nama`, `slug`, `deskripsi`, `prestasi`, `program_unggulan`, `urutan`) VALUES
-('Sekretariat', 'sekretariat', 'Sekretariat bertugas mengoordinasikan seluruh administrasi, surat-menyurat, pendataan, dan pengelolaan informasi TP PKK Kelurahan Pulomerak. Sekretariat juga bertanggung jawab atas dokumentasi kegiatan dan penyusunan laporan berkala.', 'Pengelolaan administrasi terbaik tingkat Kecamatan Pulomerak tahun 2024.', '1. Penyusunan regulasi (Juknis/Panduan Kelembagaan PKK)\n2. Sinergitas Sistem Informasi Gerakan PKK melalui E-PKK\n3. Peningkatan kapasitas Kader PKK\n4. Pemberian bantuan kepada masyarakat\n5. Monitoring dan evaluasi', 1),
+('Sekretariat', 'sekretariat', 'Sekretariat bertugas mengoordinasikan seluruh administrasi, surat-menyurat, pendataan, dan pengelolaan informasi TP PKK Kecamatan Pulomerak. Sekretariat juga bertanggung jawab atas dokumentasi kegiatan dan penyusunan laporan berkala.', 'Pengelolaan administrasi terbaik tingkat Kecamatan Pulomerak tahun 2024.', '1. Penyusunan regulasi (Juknis/Panduan Kelembagaan PKK)\n2. Sinergitas Sistem Informasi Gerakan PKK melalui E-PKK\n3. Peningkatan kapasitas Kader PKK\n4. Pemberian bantuan kepada masyarakat\n5. Monitoring dan evaluasi', 1),
 ('POKJA I - Pembinaan Karakter Keluarga', 'pokja-1', 'POKJA I bertanggung jawab atas program Penghayatan dan Pengamalan Pancasila serta Gotong Royong. Fokus pada pembinaan karakter keluarga, kegiatan keagamaan, dan penguatan nilai-nilai moral masyarakat.', 'Juara 2 Lomba Posyandu Tingkat Kota Cilegon 2024.', '1. Program PAREDI (Pola Asuh Anak dan Remaja di Era Digital)\n2. Pengamalan Butir-Butir Pancasila\n3. Pembinaan Gotong Royong Masyarakat', 2),
 ('POKJA II - Pendidikan & Ekonomi Keluarga', 'pokja-2', 'POKJA II mengelola program Pendidikan dan Keterampilan serta Pengembangan Kehidupan Berkoperasi. Bertanggung jawab atas pelatihan keterampilan, pembinaan UMKM, dan pengembangan ekonomi kreatif keluarga.', 'Program UP2K berhasil membina 35 kelompok UMKM aktif.', '1. Pemberdayaan Ekonomi Keluarga (UP2K)\n2. Pembentukan Toko PKK / Koperasi\n3. Peningkatan Minat Baca melalui Taman Bacaan', 3),
 ('POKJA III - Ketahanan Keluarga', 'pokja-3', 'POKJA III menangani program Pangan, Sandang, Perumahan, dan Tata Laksana Rumah Tangga. Fokus pada ketahanan pangan keluarga, pengelolaan pekarangan, dan peningkatan gizi masyarakat.', 'Pemanfaatan pekarangan terbaik se-Kecamatan Pulomerak 2024.', '1. Gerakan HATINYA PKK (Halaman Asri Teratur Indah dan Nyaman)\n2. Sosialisasi Pangan Beragam Bergizi Seimbang dan Aman (B2SA)\n3. Pembinaan Pengelolaan Rumah Tangga Layak Huni', 4),

@@ -12,12 +12,12 @@
                         <img src="<?= SITE_URL ?>/assets/img/logo.png" alt="Logo" onerror="this.style.display='none'">
                     </div>
                     <div>
-                        <h3>Kelurahan Pulomerak</h3>
+                        <h3>Kecamatan Pulomerak</h3>
                         <p class="footer-tagline">Kota Cilegon · Banten</p>
                     </div>
                 </div>
                 <p class="footer-desc">
-                    Portal resmi Kelurahan Pulomerak sebagai pusat informasi masyarakat,
+                    Portal resmi Kecamatan Pulomerak sebagai pusat informasi masyarakat,
                     transparansi pemerintahan, dan pelayanan publik berbasis digital.
                 </p>
                 <div class="footer-social">
@@ -33,7 +33,7 @@
                 <h4 class="footer-heading">Menu Cepat</h4>
                 <ul class="footer-links">
                     <li><a href="<?= SITE_URL ?>/"><i class="fas fa-angle-right"></i> Beranda</a></li>
-                    <li><a href="<?= SITE_URL ?>/profil.php"><i class="fas fa-angle-right"></i> Profil Kelurahan</a></li>
+                    <li><a href="<?= SITE_URL ?>/profil.php"><i class="fas fa-angle-right"></i> Profil Kecamatan</a></li>
                     <li><a href="<?= SITE_URL ?>/berita.php"><i class="fas fa-angle-right"></i> Berita Terbaru</a></li>
                     <li><a href="<?= SITE_URL ?>/kegiatan.php"><i class="fas fa-angle-right"></i> Kegiatan</a></li>
                     <li><a href="<?= SITE_URL ?>/laporan.php"><i class="fas fa-angle-right"></i> Laporan</a></li>
@@ -61,7 +61,7 @@
                 <ul class="footer-contact">
                     <li>
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>Jl. Raya Merak, Kelurahan Pulomerak, Kec. Pulomerak, Kota Cilegon, Banten 42438</span>
+                        <span>Jl. Raya Merak, Kecamatan Pulomerak, Kota Cilegon, Banten 42438</span>
                     </li>
                     <li>
                         <i class="fas fa-phone-alt"></i>
@@ -69,7 +69,7 @@
                     </li>
                     <li>
                         <i class="fas fa-envelope"></i>
-                        <span>kel.pulomerak@cilegon.go.id</span>
+                        <span>kec.pulomerak@cilegon.go.id</span>
                     </li>
                     <li>
                         <i class="fas fa-clock"></i>
@@ -87,8 +87,8 @@
     <!-- Footer Bottom -->
     <div class="footer-bottom">
         <div class="container footer-bottom-inner">
-            <p>&copy; <?= date('Y') ?> <strong>Kelurahan Pulomerak</strong> — Kota Cilegon, Banten. Hak Cipta Dilindungi.</p>
-            <p>Dikembangkan oleh Tim IT Kelurahan Pulomerak</p>
+            <p>&copy; <?= date('Y') ?> <strong>Kecamatan Pulomerak</strong> — Kota Cilegon, Banten. Hak Cipta Dilindungi.</p>
+            <p>Dikembangkan oleh Tim IT Kecamatan Pulomerak</p>
         </div>
     </div>
 </footer>

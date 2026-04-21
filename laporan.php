@@ -32,7 +32,7 @@ include 'include/header.php';
             <a href="<?= SITE_URL ?>/">Beranda</a> <i class="fas fa-chevron-right"></i> <span>Laporan</span>
         </div>
         <h1><i class="fas fa-file-alt"></i> Laporan Kegiatan</h1>
-        <p>Laporan kegiatan dan program Kelurahan Pulomerak yang dapat diunduh oleh masyarakat.</p>
+        <p>Laporan kegiatan dan program Kecamatan Pulomerak yang dapat diunduh oleh masyarakat.</p>
     </div>
 </div>
 

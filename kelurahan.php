@@ -1,7 +1,7 @@
 <?php
 require_once 'include/config.php';
 require_once 'include/functions.php';
-$pageTitle = 'Kelurahan';
+$pageTitle = 'Kecamatan';
 
 $stmt = $conn->prepare("SELECT * FROM kelurahan ORDER BY nama ASC");
 $stmt->execute();
@@ -15,8 +15,8 @@ include 'include/header.php';
         <div class="breadcrumb">
             <a href="<?= SITE_URL ?>/">Beranda</a> <i class="fas fa-chevron-right"></i> <span>Kelurahan</span>
         </div>
-        <h1><i class="fas fa-city"></i> Wilayah Kelurahan Pulomerak</h1>
-        <p>Informasi detail tentang wilayah, inovasi, dan kegiatan di setiap RW/lingkungan Kelurahan Pulomerak.</p>
+        <h1><i class="fas fa-city"></i> Wilayah Kecamatan Pulomerak</h1>
+        <p>Informasi detail tentang wilayah, inovasi, dan kegiatan di setiap kelurahan/lingkungan Kecamatan Pulomerak.</p>
     </div>
 </div>
 
@@ -24,8 +24,8 @@ include 'include/header.php';
     <div class="container">
         <div class="section-header">
             <div class="section-label"><i class="fas fa-map"></i> Wilayah</div>
-            <h2 class="section-title">Daftar <span>Kelurahan / RW</span></h2>
-            <p class="section-desc">Kelurahan Pulomerak terdiri dari 8 Rukun Warga (RW) yang tersebar di wilayahnya.</p>
+            <h2 class="section-title">Daftar <span>Kelurahan</span></h2>
+            <p class="section-desc">Kecamatan Pulomerak terdiri dari berbagai kelurahan yang tersebar di wilayahnya.</p>
         </div>
 
         <?php if ($list->num_rows === 0): ?>
@@ -74,7 +74,7 @@ include 'include/header.php';
         <div class="section-header">
             <div class="section-label"><i class="fas fa-sitemap"></i> Struktur Organisasi</div>
             <h2 class="section-title">Ketua TP PKK <span>Wilayah</span></h2>
-            <p class="section-desc">Daftar Ketua TP PKK Tingkat Kecamatan dan Kelurahan se-Pulomerak.</p>
+            <p class="section-desc">Daftar Ketua TP PKK Tingkat Kecamatan dan Kelurahan se-Kecamatan Pulomerak.</p>
         </div>
 
         <style>
@@ -153,8 +153,8 @@ include 'include/header.php';
     <div class="container">
         <div class="section-header">
             <div class="section-label"><i class="fas fa-lightbulb"></i> Program Unggulan</div>
-            <h2 class="section-title">Inovasi <span>Kelurahan</span></h2>
-            <p class="section-desc">Program-program inovatif yang dikembangkan oleh Kelurahan Pulomerak untuk meningkatkan kesejahteraan masyarakat.</p>
+            <h2 class="section-title">Inovasi <span>Kecamatan</span></h2>
+            <p class="section-desc">Program-program inovatif yang dikembangkan oleh Kecamatan Pulomerak untuk meningkatkan kesejahteraan masyarakat.</p>
         </div>
         <div class="grid-3">
             <div class="card reveal">
