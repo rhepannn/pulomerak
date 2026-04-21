@@ -31,6 +31,9 @@ $adminName = $_SESSION['admin_name'] ?? 'Admin';
         <a href="<?= SITE_URL ?>/admin/index.php" class="sidebar-link <?= $adminPage === 'index' ? 'active' : '' ?>">
             <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
+        <a href="<?= SITE_URL ?>/admin/konten.php" class="sidebar-link <?= $adminPage === 'konten' ? 'active' : '' ?>">
+            <i class="fas fa-edit"></i> Editor Konten
+        </a>
 
         <div class="sidebar-label" style="margin-top:12px;">Konten</div>
         <a href="<?= SITE_URL ?>/admin/berita.php" class="sidebar-link <?= str_starts_with($adminPage,'berita') ? 'active' : '' ?>">

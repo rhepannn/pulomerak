@@ -154,4 +154,69 @@ function paginate($total, $page, $perPage, $url = '?') {
     $html .= '</div>';
     return $html;
 }
+/**
+ * Ambil satu setting dari tabel site_settings
+ */
+function getSetting($conn, $key, $default = '') {
+    static $cache = [];
+    if (isset($cache[$key])) return $cache[$key];
+    
+    $stmt = $conn->prepare("SELECT setting_value FROM site_settings WHERE setting_key = ?");
+    if (!$stmt) return $default;
+    $stmt->bind_param("s", $key);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $stmt->close();
+    
+    $val = $row ? ($row['setting_value'] ?? $default) : $default;
+    $cache[$key] = $val;
+    return $val;
+}
+
+/**
+ * Set satu setting
+ */
+function setSetting($conn, $key, $value) {
+    $stmt = $conn->prepare("UPDATE site_settings SET setting_value = ? WHERE setting_key = ?");
+    $stmt->bind_param("ss", $value, $key);
+    $stmt->execute();
+    $stmt->close();
+}
+
+/**
+ * Ambil semua settings sekaligus (untuk performa halaman)
+ */
+function getAllSettings($conn, $group = null) {
+    $settings = [];
+    if ($group) {
+        $stmt = $conn->prepare("SELECT setting_key, setting_value FROM site_settings WHERE setting_group = ?");
+        $stmt->bind_param("s", $group);
+    } else {
+        $stmt = $conn->prepare("SELECT setting_key, setting_value FROM site_settings");
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $settings[$row['setting_key']] = $row['setting_value'] ?? '';
+    }
+    $stmt->close();
+    return $settings;
+}
+
+/**
+ * Ambil semua settings dengan info lengkap (untuk admin editor)
+ */
+function getSettingsByGroup($conn, $group) {
+    $settings = [];
+    $stmt = $conn->prepare("SELECT * FROM site_settings WHERE setting_group = ? ORDER BY setting_key");
+    $stmt->bind_param("s", $group);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $settings[] = $row;
+    }
+    $stmt->close();
+    return $settings;
+}
 ?>

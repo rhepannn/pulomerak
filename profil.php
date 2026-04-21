@@ -2,19 +2,40 @@
 require_once 'include/config.php';
 require_once 'include/functions.php';
 $pageTitle = 'Profil Kecamatan';
+
+// Ambil semua settings
+$S = getAllSettings($conn);
+
+// Resolve uploaded images
+function settingImg($S, $key, $default = '') {
+    $f = $S[$key] ?? '';
+    if ($f) {
+        $p = __DIR__ . '/uploads/settings/' . $f;
+        if (file_exists($p)) return SITE_URL . '/uploads/settings/' . $f;
+    }
+    return $default;
+}
+
+$profilHeroBg  = settingImg($S, 'profil_hero_image',    SITE_URL.'/assets/img/foto-profil.jpg');
+$profilFoto    = settingImg($S, 'profil_tentang_image', SITE_URL.'/assets/img/foto-profil.jpg');
+
+// Org photos (returns '' if no upload, template shows FA icon as fallback)
+for ($i=1; $i<=4; $i++) $orgKasiFoto[$i] = settingImg($S, 'org_kasi_'.$i.'_foto', '');
+$orgCamatFoto  = settingImg($S, 'org_camat_foto',  '');
+$orgSekcamFoto = settingImg($S, 'org_sekcam_foto', '');
+
 include 'include/header.php';
 ?>
 
 <!-- ═══════════════════════════════════════════════════════
      HERO SECTION
 ═══════════════════════════════════════════════════════ -->
-<section class="hero" style="background-image: url('<?= SITE_URL ?>/assets/img/foto-profil.jpg');">
+<section class="hero" style="background-image: url('<?= $profilHeroBg ?>');">
     <div class="hero-overlay"></div>
     <div class="container hero-content animate-fade-up">
-        <h1>Mewujudkan Masyarakat<br><span>Maju & Sejahtera</span></h1>
+        <h1><?= $S['profil_hero_title'] ?? 'Mewujudkan Masyarakat<br><span>Maju & Sejahtera</span>' ?></h1>
         <p>
-            Mengenal lebih dekat visi, misi, dan struktur organisasi 
-            Pemerintah Kecamatan Pulomerak dalam melayani masyarakat Kota Cilegon.
+            <?= e($S['profil_hero_subtitle'] ?? '') ?>
         </p>
         <div class="hero-actions">
             <a href="#visi-misi" class="btn btn-primary">
@@ -32,7 +53,7 @@ include 'include/header.php';
     <div class="container">
         <div class="profil-intro reveal">
             <div class="profil-img">
-                <img src="<?= SITE_URL ?>/assets/img/foto-profil.jpg"
+                <img src="<?= $profilFoto ?>"
                      alt="Kantor Kecamatan Pulomerak"
                      onerror="this.src='https://placehold.co/600x420/1a4fa0/ffffff?text=Kecamatan+Pulomerak'">
             </div>
@@ -40,26 +61,26 @@ include 'include/header.php';
                 <div class="section-label"><i class="fas fa-info-circle"></i> Tentang Kami</div>
                 <h2>Kecamatan <span>Pulomerak</span></h2>
                 <p>
-                    Kecamatan Pulomerak adalah salah satu kecamatan yang berada di wilayah Kota Cilegon, Provinsi Banten. Terletak di ujung barat Pulau Jawa, Pulomerak dikenal sebagai gerbang penyeberangan utama Jawa–Sumatera melalui Pelabuhan Merak.
+                    <?= e($S['profil_tentang_1'] ?? '') ?>
                 </p>
                 <p>
-                    Dengan luas wilayah yang strategis, kecamatan ini dihuni oleh ribuan jiwa yang terbagi dalam berbagai kelurahan dan lingkungan. Masyarakatnya yang heterogen menjadikan Pulomerak sebagai wilayah yang dinamis dan kaya akan keberagaman budaya.
+                    <?= e($S['profil_tentang_2'] ?? '') ?>
                 </p>
                 <p>
-                    Pemerintah Kecamatan Pulomerak berkomitmen untuk memberikan pelayanan terbaik kepada masyarakat melalui program-program inovatif dan transparansi informasi publik.
+                    <?= e($S['profil_tentang_3'] ?? '') ?>
                 </p>
                 <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;">
                     <div style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--gray);">
                         <i class="fas fa-map-marker-alt" style="color:var(--primary, #0054A6)"></i>
-                        Kec. Pulomerak, Kota Cilegon
+                        <?= e($S['profil_lokasi'] ?? 'Kec. Pulomerak, Kota Cilegon') ?>
                     </div>
                     <div style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--gray);">
                         <i class="fas fa-expand-arrows-alt" style="color:var(--primary, #0054A6)"></i>
-                        Luas ±3,2 km²
+                        Luas <?= e($S['profil_luas'] ?? '±3,2 km²') ?>
                     </div>
                     <div style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--gray);">
                         <i class="fas fa-users" style="color:var(--primary, #0054A6)"></i>
-                        ±12.450 Jiwa
+                        <?= e($S['profil_penduduk_info'] ?? '±12.450 Jiwa') ?>
                     </div>
                 </div>
             </div>
@@ -80,20 +101,21 @@ include 'include/header.php';
                     <div class="vm-icon"><i class="fas fa-eye"></i></div>
                 <h3>Visi</h3>
                 <p>
-                    <strong>"Terwujudnya Kecamatan Pulomerak yang Maju, Bersih, dan Sejahtera
-                    Melalui Pelayanan Prima Berbasis Teknologi dan Partisipasi Masyarakat."</strong>
+                    <strong><?= e($S['profil_visi'] ?? '') ?></strong>
                 </p>
             </div>
                 <div class="vm-card">
                     <div class="vm-icon"><i class="fas fa-rocket"></i></div>
                 <h3>Misi</h3>
                 <ul>
-                    <li>Meningkatkan kualitas pelayanan administrasi yang cepat, tepat, and transparan.</li>
-                    <li>Mendorong partisipasi aktif masyarakat dalam pembangunan kecamatan.</li>
-                    <li>Mengembangkan potensi ekonomi lokal dan UMKM masyarakat Pulomerak.</li>
-                    <li>Menjaga ketertiban, keamanan, dan kerukunan antar warga.</li>
-                    <li>Meningkatkan kualitas lingkungan hidup yang bersih, sehat, dan nyaman.</li>
-                    <li>Memanfaatkan teknologi informasi untuk transparansi pemerintahan.</li>
+                    <?php
+                    $misiItems = array_filter(explode("\n", $S['profil_misi'] ?? ''));
+                    foreach ($misiItems as $misi):
+                        $misi = trim($misi);
+                        if ($misi):
+                    ?>
+                        <li><?= e($misi) ?></li>
+                    <?php endif; endforeach; ?>
                 </ul>
             </div>
         </div>
@@ -110,12 +132,18 @@ include 'include/header.php';
         </div>
 
         <div class="org-chart reveal">
-            <!-- Level 1: Lurah -->
+            <!-- Level 1: Camat -->
             <div class="org-level">
                 <div class="org-card chief">
-                    <div class="org-avatar"><i class="fas fa-user-tie"></i></div>
-                    <div class="org-name">H. Ahmad Fauzi, S.IP</div>
-                    <div class="org-role">Camat Pulomerak</div>
+                    <div class="org-avatar">
+                        <?php if ($orgCamatFoto): ?>
+                            <img src="<?= $orgCamatFoto ?>" alt="<?= e($S['org_camat_nama'] ?? '') ?>" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+                        <?php else: ?>
+                            <i class="fas fa-user-tie"></i>
+                        <?php endif; ?>
+                    </div>
+                    <div class="org-name"><?= e($S['org_camat_nama'] ?? 'H. Ahmad Fauzi, S.IP') ?></div>
+                    <div class="org-role"><?= e($S['org_camat_jabatan'] ?? 'Camat Pulomerak') ?></div>
                 </div>
             </div>
             <div class="org-connector"></div>
@@ -123,76 +151,59 @@ include 'include/header.php';
             <!-- Level 2: Sekretaris Camat -->
             <div class="org-level">
                 <div class="org-card" style="border-color:var(--primary-light, #2563EB);">
-                    <div class="org-avatar"><i class="fas fa-user"></i></div>
-                    <div class="org-name">Drs. Suharno</div>
-                    <div class="org-role">Sekretaris Camat</div>
+                    <div class="org-avatar">
+                        <?php if ($orgSekcamFoto): ?>
+                            <img src="<?= $orgSekcamFoto ?>" alt="<?= e($S['org_sekcam_nama'] ?? '') ?>" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+                        <?php else: ?>
+                            <i class="fas fa-user"></i>
+                        <?php endif; ?>
+                    </div>
+                    <div class="org-name"><?= e($S['org_sekcam_nama'] ?? 'Drs. Suharno') ?></div>
+                    <div class="org-role"><?= e($S['org_sekcam_jabatan'] ?? 'Sekretaris Camat') ?></div>
                 </div>
             </div>
             <div class="org-connector"></div>
 
             <!-- Level 3: Kasi-kasi -->
             <div class="org-level">
+                <?php for ($i = 1; $i <= 4; $i++): ?>
                 <div class="org-card">
-                    <div class="org-avatar"><i class="fas fa-user"></i></div>
-                    <div class="org-name">Siti Rahayu, S.E</div>
-                    <div class="org-role">Kasi Pemerintahan</div>
+                    <div class="org-avatar">
+                        <?php if (!empty($orgKasiFoto[$i])): ?>
+                            <img src="<?= $orgKasiFoto[$i] ?>" alt="<?= e($S['org_kasi_'.$i.'_nama'] ?? '') ?>" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+                        <?php else: ?>
+                            <i class="fas fa-user"></i>
+                        <?php endif; ?>
+                    </div>
+                    <div class="org-name"><?= e($S["org_kasi_{$i}_nama"] ?? '') ?></div>
+                    <div class="org-role"><?= e($S["org_kasi_{$i}_jabatan"] ?? '') ?></div>
                 </div>
-                <div class="org-card">
-                    <div class="org-avatar"><i class="fas fa-user"></i></div>
-                    <div class="org-name">Budi Santoso, S.H</div>
-                    <div class="org-role">Kasi Pemberdayaan</div>
-                </div>
-                <div class="org-card">
-                    <div class="org-avatar"><i class="fas fa-user"></i></div>
-                    <div class="org-name">Rini Kusuma, A.Md</div>
-                    <div class="org-role">Kasi Kesejahteraan</div>
-                </div>
-                <div class="org-card">
-                    <div class="org-avatar"><i class="fas fa-user"></i></div>
-                    <div class="org-name">Eko Prasetyo</div>
-                    <div class="org-role">Kasi Ketentraman</div>
-                </div>
+                <?php endfor; ?>
             </div>
         </div>
 
         <!-- INFO WILAYAH -->
         <div class="grid-4" style="margin-top:52px;">
-            <div class="card reveal">
+            <?php
+            $batasArr = [
+                ['label' => 'Batas Utara',   'key' => 'batas_utara'],
+                ['label' => 'Batas Selatan',  'key' => 'batas_selatan'],
+                ['label' => 'Batas Barat',   'key' => 'batas_barat'],
+                ['label' => 'Batas Timur',   'key' => 'batas_timur'],
+            ];
+            $delays = ['', 'animate-delay-1', 'animate-delay-2', 'animate-delay-3'];
+            foreach ($batasArr as $idx => $batas):
+            ?>
+            <div class="card reveal <?= $delays[$idx] ?>">
                 <div class="card-body" style="text-align:center;">
                     <div class="shortcut-icon" style="margin:0 auto 14px;width:52px;height:52px;font-size:1.3rem">
                         <i class="fas fa-map"></i>
                     </div>
-                    <h3 style="font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:6px">Batas Utara</h3>
-                    <p style="font-size:0.875rem;color:var(--gray)">Selat Sunda</p>
+                    <h3 style="font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:6px"><?= $batas['label'] ?></h3>
+                    <p style="font-size:0.875rem;color:var(--gray)"><?= e($S[$batas['key']] ?? '') ?></p>
                 </div>
             </div>
-            <div class="card reveal animate-delay-1">
-                <div class="card-body" style="text-align:center;">
-                    <div class="shortcut-icon" style="margin:0 auto 14px;width:52px;height:52px;font-size:1.3rem">
-                        <i class="fas fa-map"></i>
-                    </div>
-                    <h3 style="font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:6px">Batas Selatan</h3>
-                    <p style="font-size:0.875rem;color:var(--gray)">Kel. Suralaya</p>
-                </div>
-            </div>
-            <div class="card reveal animate-delay-2">
-                <div class="card-body" style="text-align:center;">
-                    <div class="shortcut-icon" style="margin:0 auto 14px;width:52px;height:52px;font-size:1.3rem">
-                        <i class="fas fa-map"></i>
-                    </div>
-                    <h3 style="font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:6px">Batas Barat</h3>
-                    <p style="font-size:0.875rem;color:var(--gray)">Selat Sunda</p>
-                </div>
-            </div>
-            <div class="card reveal animate-delay-3">
-                <div class="card-body" style="text-align:center;">
-                    <div class="shortcut-icon" style="margin:0 auto 14px;width:52px;height:52px;font-size:1.3rem">
-                        <i class="fas fa-map"></i>
-                    </div>
-                    <h3 style="font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:6px">Batas Timur</h3>
-                    <p style="font-size:0.875rem;color:var(--gray)">Kel. Lebak Gede</p>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>

@@ -1,3 +1,14 @@
+<?php
+// Ambil settings footer
+$footerS = getAllSettings($conn, 'footer');
+
+// Resolve logo
+$footerLogo = SITE_URL . '/assets/img/logo.png';
+if (!empty($footerS['site_logo'])) {
+    $lp = __DIR__ . '/../uploads/settings/' . $footerS['site_logo'];
+    if (file_exists($lp)) $footerLogo = SITE_URL . '/uploads/settings/' . $footerS['site_logo'];
+}
+?>
 <!-- FOOTER -->
 <footer class="footer">
     <div class="footer-wave">
@@ -9,7 +20,7 @@
             <div class="footer-col">
                 <div class="footer-brand">
                     <div class="footer-logo-wrap">
-                        <img src="<?= SITE_URL ?>/assets/img/logo.png" alt="Logo" onerror="this.style.display='none'">
+                        <img src="<?= $footerLogo ?>" alt="Logo" onerror="this.style.display='none'">
                     </div>
                     <div>
                         <h3>Kecamatan Pulomerak</h3>
@@ -17,8 +28,7 @@
                     </div>
                 </div>
                 <p class="footer-desc">
-                    Portal resmi Kecamatan Pulomerak sebagai pusat informasi masyarakat,
-                    transparansi pemerintahan, dan pelayanan publik berbasis digital.
+                    <?= e($footerS['footer_deskripsi'] ?? 'Portal resmi Kecamatan Pulomerak sebagai pusat informasi masyarakat, transparansi pemerintahan, dan pelayanan publik berbasis digital.') ?>
                 </p>
                 <div class="footer-social">
                     <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -61,19 +71,15 @@
                 <ul class="footer-contact">
                     <li>
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>Jl. Raya Merak, Kecamatan Pulomerak, Kota Cilegon, Banten 42438</span>
+                        <span><?= e($footerS['footer_alamat'] ?? 'Jl. Raya Merak, Kecamatan Pulomerak, Kota Cilegon, Banten 42438') ?></span>
                     </li>
                     <li>
                         <i class="fas fa-phone-alt"></i>
-                        <span>(0254) 571234</span>
+                        <span><?= e($footerS['footer_telepon'] ?? '(0254) 571234') ?></span>
                     </li>
                     <li>
                         <i class="fas fa-envelope"></i>
-                        <span>kec.pulomerak@cilegon.go.id</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-clock"></i>
-                        <span>Senin–Jumat: 08.00–16.00 WIB</span>
+                        <span><?= e($footerS['footer_email'] ?? 'kec.pulomerak@cilegon.go.id') ?></span>
                     </li>
                 </ul>
 
@@ -85,7 +91,6 @@
     <div class="footer-bottom">
         <div class="container footer-bottom-inner">
             <p>&copy; <?= date('Y') ?> <strong>Kecamatan Pulomerak</strong> — Kota Cilegon, Banten. Hak Cipta Dilindungi.</p>
-            <p>Dikembangkan oleh Tim IT Kecamatan Pulomerak</p>
         </div>
     </div>
 </footer>

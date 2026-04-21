@@ -3,6 +3,16 @@ require_once 'include/config.php';
 require_once 'include/functions.php';
 $pageTitle = 'Beranda';
 
+// Ambil semua settings sekaligus
+$S = getAllSettings($conn);
+
+// Hero background image
+$heroImg = SITE_URL . '/assets/img/foto-beranda.jpg';
+if (!empty($S['beranda_hero_image'])) {
+    $heroPath = __DIR__ . '/uploads/settings/' . $S['beranda_hero_image'];
+    if (file_exists($heroPath)) $heroImg = SITE_URL . '/uploads/settings/' . $S['beranda_hero_image'];
+}
+
 // Ambil berita terbaru
 $stmtB = $conn->prepare("SELECT * FROM berita ORDER BY tgl_post DESC LIMIT 5");
 $stmtB->execute();
@@ -19,14 +29,13 @@ include 'include/header.php';
 <!-- ═══════════════════════════════════════════════════════
      HERO SECTION
 ═══════════════════════════════════════════════════════ -->
-<section class="hero" style="background-image: url('<?= SITE_URL ?>/assets/img/foto-beranda.jpg');">
+<section class="hero" style="background-image: url('<?= $heroImg ?>');">
     <div class="hero-overlay"></div>
     <div class="container hero-content animate-fade-up">
 
-        <h1>Bersama Membangun Keluarga<br><span>Sejahtera & Mandiri</span></h1>
+        <h1><?= $S['beranda_hero_title'] ?? 'Bersama Membangun Keluarga<br><span>Sejahtera & Mandiri</span>' ?></h1>
         <p>
-            Pusat informasi kegiatan, program inovasi, dan dinamika masyarakat
-            yang mendukung pemberdayaan dan kesejahteraan keluarga di Kecamatan Pulomerak, Kota Cilegon.
+            <?= e($S['beranda_hero_subtitle'] ?? '') ?>
         </p>
         <div class="hero-actions">
             <a href="profil.php" class="btn btn-primary">
@@ -44,19 +53,19 @@ include 'include/header.php';
     <div class="container">
         <div class="hero-stats">
             <div class="hero-stat">
-                <span class="hero-stat-num" data-count="12450">0</span>
+                <span class="hero-stat-num" data-count="<?= e($S['stat_penduduk'] ?? '12450') ?>">0</span>
                 <span class="hero-stat-label">Jiwa Penduduk</span>
             </div>
             <div class="hero-stat">
-                <span class="hero-stat-num" data-count="8">0</span>
+                <span class="hero-stat-num" data-count="<?= e($S['stat_rw'] ?? '8') ?>">0</span>
                 <span class="hero-stat-label">Rukun Warga (RW)</span>
             </div>
             <div class="hero-stat">
-                <span class="hero-stat-num" data-count="32">0</span>
+                <span class="hero-stat-num" data-count="<?= e($S['stat_rt'] ?? '32') ?>">0</span>
                 <span class="hero-stat-label">Rukun Tetangga (RT)</span>
             </div>
             <div class="hero-stat">
-                <span class="hero-stat-num" data-count="5">0</span>
+                <span class="hero-stat-num" data-count="<?= e($S['stat_inovasi'] ?? '5') ?>">0</span>
                 <span class="hero-stat-label">Program Inovasi</span>
             </div>
         </div>
@@ -117,7 +126,7 @@ include 'include/header.php';
                     <i class="fas fa-info-circle"></i> Pengertian Gerakan PKK
                 </h3>
                 <p style="color:var(--text-secondary); line-height:1.9; font-size:1.1rem; text-align:justify;">
-                    Gerakan Nasional dalam pembangunan masyarakat yang tumbuh dari bawah, yang pengelolaannya dari, oleh, dan untuk masyarakat menuju terwujudnya keluarga yang beriman dan bertaqwa kepada Tuhan Yang Maha Esa, berakhlak mulia dan berbudi luhur, sehat sejahtera, maju dan mandiri, kesetaraan dan keadilan gender serta kesadaran hukum dan lingkungan.
+                    <?= e($S['pkk_pengertian'] ?? '') ?>
                 </p>
             </div>
             <div class="reveal animate-delay-1">
@@ -125,7 +134,7 @@ include 'include/header.php';
                     <i class="fas fa-bullseye"></i> Tujuan Gerakan PKK
                 </h3>
                 <p style="color:var(--text-secondary); line-height:1.9; font-size:1.1rem; text-align:justify;">
-                    Memberdayakan keluarga untuk meningkatkan kesejahteraannya menuju terwujudnya keluarga yang beriman dan bertaqwa kepada Tuhan Yang Maha Esa, berakhlak mulia dan berbudi luhur, sehat sejahtera, maju dan mandiri, kesetaraan dan keadilan gender serta kesadaran hukum dan lingkungan.
+                    <?= e($S['pkk_tujuan'] ?? '') ?>
                 </p>
             </div>
         </div>
@@ -187,18 +196,18 @@ include 'include/header.php';
             <div style="background:var(--gray-50); padding:2rem; border-radius:16px; border-left:4px solid var(--primary);">
                 <h3 style="color:var(--primary); font-size:1.3rem; margin-bottom:1rem;"><i class="fas fa-users-viewfinder"></i> Sasaran Gerakan PKK</h3>
                 <p style="font-size:0.95rem; color:var(--text-secondary); line-height:1.7;">
-                    Keluarga di pedesaan maupun perkotaan yang perlu ditingkatkan dan dikembangkan kemampuan serta kepribadiannya dalam bidang:
+                    <?= e($S['pkk_sasaran'] ?? '') ?>
                 </p>
                 <ul style="margin-top:10px; font-size:0.9rem; color:var(--text-secondary); display:flex; flex-direction:column; gap:8px;">
-                    <li><i class="fas fa-check-circle" style="color:var(--primary); font-size:0.8rem;"></i> <strong>Mental Spiritual:</strong> Sikap dan perilaku sebagai insan hamba Tuhan dan warga negara yang dinamis.</li>
-                    <li><i class="fas fa-check-circle" style="color:var(--primary); font-size:0.8rem;"></i> <strong>Fisik Material:</strong> Pangan, sandang, papan, kesehatan, dan lingkungan hidup yang sehat.</li>
+                    <li><i class="fas fa-check-circle" style="color:var(--primary); font-size:0.8rem;"></i> <strong>Mental Spiritual:</strong> <?= e($S['pkk_sasaran_mental'] ?? '') ?></li>
+                    <li><i class="fas fa-check-circle" style="color:var(--primary); font-size:0.8rem;"></i> <strong>Fisik Material:</strong> <?= e($S['pkk_sasaran_fisik'] ?? '') ?></li>
                 </ul>
             </div>
             <!-- Tugas & Fungsi -->
             <div style="background:var(--gray-50); padding:2rem; border-radius:16px; border-left:4px solid var(--accent-light);">
                 <h3 style="color:var(--primary); font-size:1.3rem; margin-bottom:1rem;"><i class="fas fa-list-check"></i> Tugas TP PKK Kecamatan</h3>
                 <p style="font-size:0.95rem; color:var(--text-secondary); line-height:1.7;">
-                    Tanggung jawab utama meliputi koordinasi TP PKK Desa/Kelurahan, penyuluhan kepada keluarga, pembinaan program kerja, serta pelaporan hasil kegiatan secara berkala kepada tingkat Kota.
+                    <?= e($S['pkk_tugas'] ?? '') ?>
                 </p>
                 <div style="margin-top:15px;">
                     <a href="profil.php" class="btn btn-outline btn-sm" style="background:#fff;">Lihat Detail Fungsi <i class="fas fa-arrow-right"></i></a>
@@ -287,22 +296,22 @@ include 'include/header.php';
         <div class="counter-grid">
             <div class="counter-item">
                 <div class="counter-icon"><i class="fas fa-home"></i></div>
-                <div class="counter-num"><span data-count="3200">0</span><span class="suffix">+</span></div>
+                <div class="counter-num"><span data-count="<?= e($S['counter_kk'] ?? '3200') ?>">0</span><span class="suffix">+</span></div>
                 <div class="counter-label">Kepala Keluarga</div>
             </div>
             <div class="counter-item">
                 <div class="counter-icon"><i class="fas fa-graduation-cap"></i></div>
-                <div class="counter-num"><span data-count="4">0</span></div>
+                <div class="counter-num"><span data-count="<?= e($S['counter_sekolah'] ?? '4') ?>">0</span></div>
                 <div class="counter-label">Sekolah Aktif</div>
             </div>
             <div class="counter-item">
                 <div class="counter-icon"><i class="fas fa-hospital"></i></div>
-                <div class="counter-num"><span data-count="3">0</span></div>
+                <div class="counter-num"><span data-count="<?= e($S['counter_kesehatan'] ?? '3') ?>">0</span></div>
                 <div class="counter-label">Fasilitas Kesehatan</div>
             </div>
             <div class="counter-item">
                 <div class="counter-icon"><i class="fas fa-mosque"></i></div>
-                <div class="counter-num"><span data-count="12">0</span></div>
+                <div class="counter-num"><span data-count="<?= e($S['counter_ibadah'] ?? '12') ?>">0</span></div>
                 <div class="counter-label">Tempat Ibadah</div>
             </div>
         </div>
@@ -359,15 +368,29 @@ include 'include/header.php';
             <h2 class="section-title">Layanan <span>Unggulan</span></h2>
             <p class="section-desc">Berbagai layanan dan program unggulan Kecamatan Pulomerak untuk masyarakat.</p>
         </div>
+        <?php
+        // Helper: resolve layanan icon (image upload takes priority over FA icon)
+        function layananIcon($S, $n, $defaultIcon) {
+            $imgFile = $S['layanan_'.$n.'_image'] ?? '';
+            if ($imgFile) {
+                $p = __DIR__ . '/uploads/settings/' . $imgFile;
+                if (file_exists($p)) {
+                    return '<img src="'.SITE_URL.'/uploads/settings/'.htmlspecialchars($imgFile, ENT_QUOTES).'"
+                           alt="icon" style="width:40px;height:40px;object-fit:contain;">';
+                }
+            }
+            return '<i class="'.htmlspecialchars($S['layanan_'.$n.'_icon'] ?? $defaultIcon, ENT_QUOTES).'"></i>';
+        }
+        ?>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem;" class="reveal">
             <!-- Layanan 1 -->
             <div style="background:#fff; padding:3rem 2rem; border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,0.04); border:1px solid var(--border); text-align:center; transition:var(--transition); position:relative; overflow:hidden;" class="service-card">
                 <div style="width:60px; height:60px; background:var(--primary-glow); color:var(--primary); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 1.5rem;">
-                    <i class="fas fa-file-alt"></i>
+                    <?= layananIcon($S, 1, 'fas fa-file-alt') ?>
                 </div>
-                <h3 style="color:var(--text-dark); font-size:1.3rem; margin-bottom:1rem;">Administrasi Kependudukan</h3>
+                <h3 style="color:var(--text-dark); font-size:1.3rem; margin-bottom:1rem;"><?= e($S['layanan_1_title'] ?? 'Administrasi Kependudukan') ?></h3>
                 <p style="color:var(--text-secondary); line-height:1.7; font-size:0.95rem; margin-bottom:2rem;">
-                    Pelayanan surat keterangan domisili, pengantar KTP, KK, dan dokumen kependudukan lainnya secara cepat dan tertib.
+                    <?= e($S['layanan_1_desc'] ?? '') ?>
                 </p>
                 <a href="laporan.php" class="btn btn-ghost btn-sm" style="width:100%; justify-content:center;">Selengkapnya <i class="fas fa-arrow-right"></i></a>
             </div>
@@ -375,11 +398,11 @@ include 'include/header.php';
             <!-- Layanan 2 -->
             <div style="background:#fff; padding:3rem 2rem; border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,0.04); border:1px solid var(--border); text-align:center; transition:var(--transition);" class="service-card">
                 <div style="width:60px; height:60px; background:var(--primary-glow); color:var(--primary); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 1.5rem;">
-                    <i class="fas fa-lightbulb"></i>
+                    <?= layananIcon($S, 2, 'fas fa-lightbulb') ?>
                 </div>
-                <h3 style="color:var(--text-dark); font-size:1.3rem; margin-bottom:1rem;">Program Inovasi</h3>
+                <h3 style="color:var(--text-dark); font-size:1.3rem; margin-bottom:1rem;"><?= e($S['layanan_2_title'] ?? 'Program Inovasi') ?></h3>
                 <p style="color:var(--text-secondary); line-height:1.7; font-size:0.95rem; margin-bottom:2rem;">
-                    Berbagai program inovasi untuk meningkatkan kualitas hidup dan pemberdayaan masyarakat Pulomerak yang berkelanjutan.
+                    <?= e($S['layanan_2_desc'] ?? '') ?>
                 </p>
                 <a href="kelurahan.php#inovasi" class="btn btn-ghost btn-sm" style="width:100%; justify-content:center;">Selengkapnya <i class="fas fa-arrow-right"></i></a>
             </div>
@@ -387,11 +410,11 @@ include 'include/header.php';
             <!-- Layanan 3 -->
             <div style="background:#fff; padding:3rem 2rem; border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,0.04); border:1px solid var(--border); text-align:center; transition:var(--transition);" class="service-card">
                 <div style="width:60px; height:60px; background:var(--primary-glow); color:var(--primary); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 1.5rem;">
-                    <i class="fas fa-book-open"></i>
+                    <?= layananIcon($S, 3, 'fas fa-book-open') ?>
                 </div>
-                <h3 style="color:var(--text-dark); font-size:1.3rem; margin-bottom:1rem;">Perpustakaan Digital</h3>
+                <h3 style="color:var(--text-dark); font-size:1.3rem; margin-bottom:1rem;"><?= e($S['layanan_3_title'] ?? 'Perpustakaan Digital') ?></h3>
                 <p style="color:var(--text-secondary); line-height:1.7; font-size:0.95rem; margin-bottom:2rem;">
-                    Akses dokumen, arsip, dan referensi digital yang dapat diunduh oleh masyarakat secara gratis dan mudah.
+                    <?= e($S['layanan_3_desc'] ?? '') ?>
                 </p>
                 <a href="perpustakaan.php" class="btn btn-ghost btn-sm" style="width:100%; justify-content:center;">Selengkapnya <i class="fas fa-arrow-right"></i></a>
             </div>
