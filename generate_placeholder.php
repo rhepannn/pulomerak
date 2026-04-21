@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// GENERATE PLACEHOLDER IMAGE - Portal Kelurahan Pulomerak
+// GENERATE PLACEHOLDER IMAGE - Portal Kecamatan Pulomerak
 // Jalankan sekali: php generate_placeholder.php
 // ============================================================
 
@@ -28,7 +28,7 @@ imageellipse($img,  50, 220, 150, 150, imagecolorallocatealpha($img, 39,174,96, 
 
 // Teks
 $font = 5;
-$text1 = 'Kelurahan Pulomerak';
+$text1 = 'Kecamatan Pulomerak';
 $text2 = 'Kota Cilegon';
 $tw1 = strlen($text1) * imagefontwidth($font);
 $tw2 = strlen($text2) * imagefontwidth($font);

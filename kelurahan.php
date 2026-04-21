@@ -10,14 +10,11 @@ $list = $stmt->get_result();
 include 'include/header.php';
 ?>
 
-<div class="page-hero">
-    <div class="container page-hero-content">
-        <div class="breadcrumb">
-            <a href="<?= SITE_URL ?>/">Beranda</a> <i class="fas fa-chevron-right"></i> <span>Kelurahan</span>
-        </div>
-        <h1><i class="fas fa-city"></i> Wilayah Kecamatan Pulomerak</h1>
-        <p>Informasi detail tentang wilayah, inovasi, dan kegiatan di setiap kelurahan/lingkungan Kecamatan Pulomerak.</p>
-    </div>
+<!-- PAGE HERO -->
+<style>
+    .page-hero.with-bg::before, .page-hero.with-bg::after { display: none !important; }
+</style>
+<div class="page-hero with-bg" style="background-image: url('<?= SITE_URL ?>/assets/img/1.png'); background-size: cover; background-position: center; position: relative; min-height: 400px;">
 </div>
 
 <section class="section">

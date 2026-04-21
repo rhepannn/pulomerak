@@ -35,14 +35,11 @@ $kats = $conn->query("SELECT DISTINCT kategori FROM berita WHERE kategori IS NOT
 include 'include/header.php';
 ?>
 
-<div class="page-hero">
-    <div class="container page-hero-content">
-        <div class="breadcrumb">
-            <a href="<?= SITE_URL ?>/">Beranda</a> <i class="fas fa-chevron-right"></i> <span>Berita</span>
-        </div>
-        <h1><i class="fas fa-newspaper"></i> Berita & Informasi</h1>
-        <p>Kumpulan berita, informasi, dan pengumuman terbaru dari Kelurahan Pulomerak.</p>
-    </div>
+<!-- PAGE HERO -->
+<style>
+    .page-hero.with-bg::before, .page-hero.with-bg::after { display: none !important; }
+</style>
+<div class="page-hero with-bg" style="background-image: url('<?= SITE_URL ?>/assets/img/7.png'); background-size: cover; background-position: center; position: relative; min-height: 400px;">
 </div>
 
 <section class="section">

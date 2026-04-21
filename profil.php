@@ -9,17 +9,7 @@ include 'include/header.php';
 <style>
     .page-hero.with-bg::before, .page-hero.with-bg::after { display: none !important; }
 </style>
-<div class="page-hero with-bg" style="background-image: url('<?= SITE_URL ?>/assets/img/foto-profil.jpg'); background-size: cover; background-position: center; position: relative; min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center;">
-    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(10, 25, 47, 0.6) 0%, rgba(10, 25, 47, 0.85) 100%);"></div>
-    <div class="container page-hero-content" style="position: relative; z-index: 2;">
-        <div class="breadcrumb" style="justify-content: center;">
-            <a href="<?= SITE_URL ?>/">Beranda</a>
-            <i class="fas fa-chevron-right"></i>
-            <span>Profil</span>
-        </div>
-        <h1 style="font-size: clamp(2.5rem, 6vw, 4rem);"><i class="fas fa-landmark"></i> Profil <br><span>Kecamatan Pulomerak</span></h1>
-        <p style="margin: 0 auto; font-size: 1.2rem; max-width: 700px; color: rgba(255,255,255,0.95);">Mengenal lebih dekat Kecamatan Pulomerak — sejarah, visi misi, dan struktur organisasi pemerintahan.</p>
-    </div>
+<div class="page-hero with-bg" style="background-image: url('<?= SITE_URL ?>/assets/img/foto-profil.jpg'); background-size: cover; background-position: center; position: relative; min-height: 400px;">
 </div>
 
 <!-- TENTANG PULOMERAK -->

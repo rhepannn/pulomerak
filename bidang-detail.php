@@ -22,17 +22,23 @@ $anggota = $stmt->get_result();
 
 $currentPage = 'bidang-detail';
 include 'include/header.php';
+
+// Mapping banner images based on slug
+$banner_map = [
+    'sekretariat' => '2.png',
+    'pokja-1'     => '3.png',
+    'pokja-2'     => '4.png',
+    'pokja-3'     => '5.png',
+    'pokja-4'     => '6.png',
+];
+$banner_img = $banner_map[$slug] ?? '2.png';
 ?>
 
-<div class="page-hero" style="padding: 60px 0; min-height: auto;">
-    <div class="container">
-        <div class="breadcrumb" style="margin-bottom: 15px; opacity: 0.8; font-size: 0.85rem;">
-            <a href="<?= SITE_URL ?>/">Beranda</a> <i class="fas fa-chevron-right" style="font-size: 0.7rem; margin: 0 5px;"></i> 
-            <span><?= e($bidang['nama']) ?></span>
-        </div>
-        <h1 style="font-size: 2.2rem; margin-bottom: 10px;"><?= e($bidang['nama']) ?></h1>
-        <p style="max-width: 700px; opacity: 0.85; font-size: 1rem;">Mengenal pengurus dan program kerja unggulan bidang kami.</p>
-    </div>
+<!-- PAGE HERO -->
+<style>
+    .page-hero.with-bg::before, .page-hero.with-bg::after { display: none !important; }
+</style>
+<div class="page-hero with-bg" style="background-image: url('<?= SITE_URL ?>/assets/img/<?= $banner_img ?>'); background-size: cover; background-position: center; position: relative; min-height: 400px;">
 </div>
 
 <section class="section" style="padding: 60px 0;">

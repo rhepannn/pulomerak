@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// FUNGSI HELPER - Portal Informasi Kelurahan Pulomerak
+// FUNGSI HELPER - Portal Informasi Kecamatan Pulomerak
 // ============================================================
 
 /**

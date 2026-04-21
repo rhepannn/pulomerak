@@ -26,14 +26,11 @@ $list = $stmtL->get_result();
 include 'include/header.php';
 ?>
 
-<div class="page-hero">
-    <div class="container page-hero-content">
-        <div class="breadcrumb">
-            <a href="<?= SITE_URL ?>/">Beranda</a> <i class="fas fa-chevron-right"></i> <span>Laporan</span>
-        </div>
-        <h1><i class="fas fa-file-alt"></i> Laporan Kegiatan</h1>
-        <p>Laporan kegiatan dan program Kecamatan Pulomerak yang dapat diunduh oleh masyarakat.</p>
-    </div>
+<!-- PAGE HERO -->
+<style>
+    .page-hero.with-bg::before, .page-hero.with-bg::after { display: none !important; }
+</style>
+<div class="page-hero with-bg" style="background-image: url('<?= SITE_URL ?>/assets/img/9.png'); background-size: cover; background-position: center; position: relative; min-height: 400px;">
 </div>
 
 <section class="section">

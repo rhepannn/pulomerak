@@ -10,11 +10,11 @@ CREATE TABLE IF NOT EXISTS pengaturan (
 $conn->query($sql);
 
 $defaults = [
-    'site_name' => 'Portal Informasi Kelurahan Pulomerak',
-    'site_desc' => 'Pusat Informasi Masyarakat Kelurahan Pulomerak, Kota Cilegon',
-    'hero_badge' => 'Portal Resmi Tim Penggerak PKK Kelurahan Pulomerak',
+    'site_name' => 'Portal Informasi Kecamatan Pulomerak',
+    'site_desc' => 'Pusat Informasi Masyarakat Kecamatan Pulomerak, Kota Cilegon',
+    'hero_badge' => 'Portal Resmi Tim Penggerak PKK Kecamatan Pulomerak',
     'hero_title' => 'Bersama Membangun Keluarga<br><span>Sejahtera & Mandiri</span>',
-    'hero_desc' => 'Pusat informasi kegiatan, program inovasi, dan dinamika masyarakat yang mendukung pemberdayaan dan kesejahteraan keluarga di Kelurahan Pulomerak, Kota Cilegon.',
+    'hero_desc' => 'Pusat informasi kegiatan, program inovasi, dan dinamika masyarakat yang mendukung pemberdayaan dan kesejahteraan keluarga di Kecamatan Pulomerak, Kota Cilegon.',
     'stat1_num' => '12450', 'stat1_label' => 'Jiwa Penduduk',
     'stat2_num' => '8', 'stat2_label' => 'Rukun Warga (RW)',
     'stat3_num' => '32', 'stat3_label' => 'Rukun Tetangga (RT)',
