@@ -9,12 +9,12 @@ define('DB_USER',     'root');            // Username database (InfinityFree: us
 define('DB_PASS',     '');                // Password database
 define('DB_NAME',     'pulomerak');    // Nama database
 
-define('SITE_URL',    'http://localhost/PuloMerak/pulomerak'); // Ganti dengan domain Anda
+define('SITE_URL',    'http://localhost/pulomerak'); // Ganti dengan domain Anda
 define('SITE_NAME',   'Portal Informasi Kelurahan Pulomerak');
 define('SITE_DESC',   'Pusat Informasi Masyarakat Kelurahan Pulomerak, Kota Cilegon');
 
 // Karena MySQL di XAMPP ini jalan di port 3307, kita tambahkan port-nya
-$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, 3307);
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, 3306);
 
 // Cek koneksi
 if ($conn->connect_error) {

@@ -101,6 +101,57 @@ include 'include/header.php';
 </div>
 
 <!-- ═══════════════════════════════════════════════════════
+     TENTANG GERAKAN PKK
+═══════════════════════════════════════════════════════ -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label"><i class="fas fa-info-circle"></i> Tentang PKK</div>
+            <h2 class="section-title">Informasi <span>Gerakan PKK</span></h2>
+            <p class="section-desc">Mengenal lebih dekat tentang Gerakan Pemberdayaan dan Kesejahteraan Keluarga.</p>
+        </div>
+        
+        <div class="pkk-article reveal" style="background:#fff; border-radius:16px; padding:2.5rem; box-shadow:0 10px 30px rgba(0,0,0,0.05); text-align:left;">
+            
+            <!-- Baris 1: Pengertian (Kiri) dan Tujuan (Kanan) -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; margin-bottom: 2rem;">
+                <!-- Kiri: Pengertian -->
+                <div>
+                    <h3 style="color:var(--primary, #1a4fa0); font-size:1.4rem; margin-bottom:1rem; text-align:center;">Pengertian Gerakan PKK</h3>
+                    <p style="color:var(--gray, #555); line-height:1.8; font-size:1.05rem; margin:0; text-align:justify;">Gerakan nasional dalam pembangunan masyarakat yang tumbuh dari bawah, pengelolaannya dari, oleh, dan untuk masyarakat menuju terwujudnya keluarga yang beriman dan bertaqwa kepada Tuhan Yang Maha Esa, berakhlak mulia dan berbudi luhur, sehat sejahtera, maju dan mandiri, kesetaraan dan keadilan gender serta kesadaran hukum dan lingkungan.</p>
+                </div>
+                
+                <!-- Kanan: Tujuan -->
+                <div>
+                    <h3 style="color:var(--primary, #1a4fa0); font-size:1.4rem; margin-bottom:1rem; text-align:center;">Tujuan Gerakan PKK</h3>
+                    <p style="color:var(--gray, #555); line-height:1.8; font-size:1.05rem; margin:0; text-align:justify;">Memberdayakan keluarga untuk meningkatkan kesejahteraannya menuju terwujudnya keluarga yang beriman dan bertaqwa kepada Tuhan Yang Maha Esa, berakhlak mulia dan berbudi luhur, sehat sejahtera, maju dan mandiri, kesetaraan dan keadilan gender serta kesadaran hukum dan lingkungan.</p>
+                </div>
+            </div>
+
+            <!-- Full Width: Sasaran Gerakan PKK -->
+            <div style="margin-bottom: 2rem;">
+                <h3 style="color:var(--primary, #1a4fa0); font-size:1.4rem; margin-bottom:1rem; text-align:center;">Sasaran Gerakan PKK</h3>
+                <p style="color:var(--gray, #555); line-height:1.8; font-size:1.05rem; margin:0; text-align:justify;">Keluarga, baik di pedesaan maupun perkotaan yang perlu ditingkatkan dan dikembangkan kemampuan dan kepribadiannya dalam berbagai bidang sesuai dengan 10 Program Pokok PKK.</p>
+            </div>
+
+            <!-- Full Width: Tugas dan Fungsi TP PKK Kecamatan -->
+            <div style="margin-bottom: 2rem;">
+                <h3 style="color:var(--primary, #1a4fa0); font-size:1.4rem; margin-bottom:1rem; text-align:center;">Tugas dan Fungsi TP PKK Kecamatan</h3>
+                <p style="color:var(--gray, #555); line-height:1.8; font-size:1.05rem; margin:0; text-align:justify;">Mengkoordinasikan Tim Penggerak PKK Tingkat Desa/Kelurahan dalam pelaksanaan program-program PKK. Melaksanakan pembinaan, penyuluhan, dan penggerakan keluarga untuk berpartisipasi aktif dalam kegiatan melalui 10 Program Pokok PKK, serta merencanakan, melaksanakan, dan mengevaluasi program tersebut.</p>
+            </div>
+
+            <!-- Full Width: Kebijakan Program -->
+            <div style="margin-bottom: 0;">
+                <h3 style="color:var(--primary, #1a4fa0); font-size:1.4rem; margin-bottom:1rem; text-align:center;">Kebijakan Program</h3>
+                <p style="color:var(--gray, #555); line-height:1.8; font-size:1.05rem; margin:0; text-align:justify;">Pedoman teknis dan strategis yang ditetapkan untuk mengarahkan pelaksanaan program kerja TP PKK agar berjalan dengan efektif, efisien, terarah, dan selaras dengan prioritas pembangunan pemerintah daerah maupun nasional.</p>
+            </div>
+
+        </div>
+        
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
      BERITA TERBARU
 ═══════════════════════════════════════════════════════ -->
 <section class="section">
@@ -249,33 +300,34 @@ include 'include/header.php';
             <h2 class="section-title">Layanan <span>Unggulan</span></h2>
             <p class="section-desc">Berbagai layanan dan program unggulan Kelurahan Pulomerak untuk masyarakat.</p>
         </div>
-        <div class="layanan-list">
-            <div class="layanan-item reveal">
-                <div class="layanan-icon"><i class="fas fa-file-alt"></i></div>
-                <div class="layanan-content">
-                    <h3>Administrasi Kependudukan</h3>
-                    <p>Pelayanan surat keterangan domisili, pengantar KTP, KK, dan dokumen kependudukan lainnya secara cepat dan tertib.</p>
-                    <a href="laporan.php" class="layanan-link">Selengkapnya <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
+        <div class="pkk-article reveal" style="background:#fff; border-radius:16px; padding:2.5rem; box-shadow:0 10px 30px rgba(0,0,0,0.05); text-align:center;">
             
-            <div class="layanan-item reveal animate-delay-1">
-                <div class="layanan-icon"><i class="fas fa-lightbulb"></i></div>
-                <div class="layanan-content">
-                    <h3>Program Inovasi Kelurahan</h3>
-                    <p>Berbagai program inovasi untuk meningkatkan kualitas hidup dan pemberdayaan masyarakat Pulomerak yang berkelanjutan.</p>
-                    <a href="kelurahan.php#inovasi" class="layanan-link">Selengkapnya <i class="fas fa-arrow-right"></i></a>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; margin-bottom: 2rem;">
+                <div>
+                    <h3 style="color:var(--primary, #1a4fa0); font-size:1.4rem; margin-bottom:1rem; text-align:center;"><i class="fas fa-file-alt" style="margin-right:8px; color:var(--accent, #f39c12);"></i> Administrasi Kependudukan</h3>
+                    <p style="color:var(--gray, #555); line-height:1.8; font-size:1.05rem; margin:0; text-align:center;">Pelayanan surat keterangan domisili, pengantar KTP, KK, dan dokumen kependudukan lainnya secara cepat dan tertib.</p>
+                    <div style="text-align:center; margin-top:1.5rem;">
+                        <a href="laporan.php" class="btn btn-outline" style="padding:0.5rem 1rem; font-size:0.9rem; border-radius:8px;">Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="color:var(--primary, #1a4fa0); font-size:1.4rem; margin-bottom:1rem; text-align:center;"><i class="fas fa-lightbulb" style="margin-right:8px; color:var(--accent, #f39c12);"></i> Program Inovasi Kelurahan</h3>
+                    <p style="color:var(--gray, #555); line-height:1.8; font-size:1.05rem; margin:0; text-align:center;">Berbagai program inovasi untuk meningkatkan kualitas hidup dan pemberdayaan masyarakat Pulomerak yang berkelanjutan.</p>
+                    <div style="text-align:center; margin-top:1.5rem;">
+                        <a href="kelurahan.php#inovasi" class="btn btn-outline" style="padding:0.5rem 1rem; font-size:0.9rem; border-radius:8px;">Selengkapnya <i class="fas fa-arrow-right"></i></a>
+                    </div>
                 </div>
             </div>
-            
-            <div class="layanan-item reveal animate-delay-2">
-                <div class="layanan-icon"><i class="fas fa-book-open"></i></div>
-                <div class="layanan-content">
-                    <h3>Perpustakaan Digital</h3>
-                    <p>Akses dokumen, arsip, dan referensi digital yang dapat diunduh oleh masyarakat secara gratis dan mudah.</p>
-                    <a href="perpustakaan.php" class="layanan-link">Selengkapnya <i class="fas fa-arrow-right"></i></a>
+
+            <div style="margin-bottom: 0;">
+                <h3 style="color:var(--primary, #1a4fa0); font-size:1.4rem; margin-bottom:1rem; text-align:center;"><i class="fas fa-book-open" style="margin-right:8px; color:var(--accent, #f39c12);"></i> Perpustakaan Digital</h3>
+                <p style="color:var(--gray, #555); line-height:1.8; font-size:1.05rem; margin:0; text-align:center;">Akses dokumen, arsip, dan referensi digital yang dapat diunduh oleh masyarakat secara gratis dan mudah.</p>
+                <div style="text-align:center; margin-top:1.5rem;">
+                    <a href="perpustakaan.php" class="btn btn-outline" style="padding:0.5rem 1rem; font-size:0.9rem; border-radius:8px;">Selengkapnya <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
