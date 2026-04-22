@@ -251,7 +251,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 4000);
     };
 
-
     // ══════════════════════════════════════════════════════════
     // REALTIME ENGINE
     // - Public pages: notification banner on new berita/kegiatan
@@ -261,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const isAdmin  = window.location.pathname.includes('/admin/');
         const siteUrl  = window.SITE_URL || '';
         const apiUrl   = siteUrl + '/api/realtime.php';
-        const INTERVAL = 15000; // 15 detik (Batas aman agar tidak kena blokir Anti-DDoS InfinityFree)
+        const INTERVAL = 5000; // 5 detik sesuai request
 
         // ── PUBLIC: Notification Banner ──────────────────────
         let banner = null;
@@ -289,9 +288,9 @@ document.addEventListener('DOMContentLoaded', function () {
             window._rtBanner = banner;
         }
 
-        // Tracked IDs (seeded from PHP)
-        let knownBerita   = window.RT_BERITA   || 0;
-        let knownKegiatan = window.RT_KEGIATAN || 0;
+        // Tracked Version
+        let knownVersion = 0;
+        let isFirstPoll  = true;
 
         // ── ADMIN: Live stat elements (pakai data-stat attribute) ─
         function animateNum(el, to) {
@@ -311,7 +310,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.querySelectorAll(`[data-stat="${key}"]`).forEach(el => animateNum(el, val));
             });
         }
-
 
         // ── TOAST (admin) ─────────────────────────────────────
         function showToast(msg, type = 'info') {
@@ -338,29 +336,31 @@ document.addEventListener('DOMContentLoaded', function () {
                 const res  = await fetch(apiUrl, { cache: 'no-store' });
                 if (!res.ok) return;
                 const data = await res.json();
+                
+                if (isFirstPoll) {
+                    knownVersion = data.version;
+                    isFirstPoll = false;
+                    return; // skip first check
+                }
 
-                if (!isAdmin) {
-                    // ── PUBLIC side ──
-                    if (data.berita && data.berita.id > knownBerita) {
-                        if (knownBerita > 0) showBanner(`Berita baru: <strong>${data.berita.judul}</strong>`, siteUrl + '/berita.php');
-                        knownBerita = data.berita.id;
-                    }
-                    if (data.kegiatan && data.kegiatan.id > knownKegiatan) {
-                        if (knownKegiatan > 0) showBanner(`Kegiatan baru: <strong>${data.kegiatan.judul}</strong>`, siteUrl + '/kegiatan.php');
-                        knownKegiatan = data.kegiatan.id;
-                    }
-                } else {
-                    // ── ADMIN side ──
-                    if (data.counts) {
-                        updateAdminStats(data.counts);
-                    }
-                    if (data.berita && data.berita.id > knownBerita) {
-                        if (knownBerita > 0) showToast(`📰 Berita baru ditambahkan: <b>${data.berita.judul}</b>`, 'success');
-                        knownBerita = data.berita.id;
-                    }
-                    if (data.kegiatan && data.kegiatan.id > knownKegiatan) {
-                        if (knownKegiatan > 0) showToast(`📅 Kegiatan baru: <b>${data.kegiatan.judul}</b>`, 'info');
-                        knownKegiatan = data.kegiatan.id;
+                if (isAdmin && data.counts) {
+                    updateAdminStats(data.counts);
+                }
+
+                // Jika ada perubahan versi (berarti ada input/edit/hapus data di DB)
+                if (data.version > knownVersion) {
+                    knownVersion = data.version;
+                    
+                    const path = window.location.pathname;
+                    // Jangan refresh jika user sedang mengetik di form
+                    if (!path.includes('-add.php') && !path.includes('-edit.php')) {
+                        if (isAdmin) {
+                            showToast('🔄 Memperbarui data...', 'info');
+                        } else {
+                            showBanner('Ada pembaruan data, memuat ulang...', '#');
+                        }
+                        // Refresh otomatis dalam 1.5 detik
+                        setTimeout(() => window.location.reload(), 1500);
                     }
                 }
             } catch (e) { /* silent fail */ }
@@ -372,3 +372,4 @@ document.addEventListener('DOMContentLoaded', function () {
     })();
 
 });
+

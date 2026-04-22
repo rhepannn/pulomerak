@@ -378,36 +378,88 @@ input, textarea, select { font-family: inherit; }
     flex-wrap: wrap;
 }
 
-/* HERO STATS STRIP */
-.hero-stats-strip {
+/* HERO STATS FINAL (Exact Image Layout, Compact & White) */
+.hero-stats-final {
     background: var(--white);
-    padding: 32px 0;
+    padding: 30px 0;
+    color: var(--text-dark);
     border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
 }
-.hero-stats-strip .hero-stats {
+.stats-final-flex {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
+    align-items: center;
+    gap: 40px;
     flex-wrap: wrap;
 }
-.hero-stat {
+.stats-final-box {
+    flex: 1.2;
+    text-align: center;
+    border-right: 1px solid var(--border);
+    padding-right: 40px;
+}
+.box-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+    color: var(--primary);
+    text-transform: uppercase;
+}
+.box-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.box-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+.box-num {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--text-dark);
+}
+.box-total {
+    margin-top: 15px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+.stats-final-side {
+    display: flex;
+    gap: 30px;
+    flex: 1;
+    justify-content: flex-end;
+}
+.side-item {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    align-items: center;
 }
-.hero-stat-num {
-    font-size: 2.2rem;
+.side-num {
+    font-size: 1.6rem;
     font-weight: 800;
     color: var(--primary);
-    line-height: 1;
 }
-.hero-stat-label {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    font-weight: 600;
+.side-label {
+    font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 992px) {
+    .stats-final-box { border: none; padding: 0; margin-bottom: 20px; flex: 1 1 100%; }
+    .stats-final-side { justify-content: center; flex: 1 1 100%; }
 }
 
 /* ─── BUTTONS ────────────────────────────────────────────────── */

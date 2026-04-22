@@ -15,6 +15,7 @@ $data = [
     'laporan'  => null,
     'counts'   => [],
     'ts'       => time(),
+    'version'  => file_exists(__DIR__ . '/rt_version.txt') ? (int)file_get_contents(__DIR__ . '/rt_version.txt') : 0,
 ];
 
 // Latest IDs

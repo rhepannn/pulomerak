@@ -17,7 +17,7 @@ if ($search) { $whereClause .= " AND judul LIKE ?"; $params[] = "%$search%"; $ty
 if ($kat)    { $whereClause .= " AND kategori = ?"; $params[] = $kat; $types .= 's'; }
 
 $stmtC = $conn->prepare("SELECT COUNT(*) FROM berita WHERE $whereClause");
-if ($params) $stmtC->bind_param($types, ...$params);
+if ($params) bindParamsSafe($stmtC, $types, $params);
 $stmtC->execute();
 $total = $stmtC->get_result()->fetch_row()[0];
 
@@ -25,7 +25,7 @@ $total = $stmtC->get_result()->fetch_row()[0];
 $stmtL = $conn->prepare("SELECT * FROM berita WHERE $whereClause ORDER BY tgl_post DESC LIMIT ? OFFSET ?");
 $params2 = array_merge($params, [$perPage, $offset]);
 $types2  = $types . 'ii';
-$stmtL->bind_param($types2, ...$params2);
+bindParamsSafe($stmtL, $types2, $params2);
 $stmtL->execute();
 $beritaList = $stmtL->get_result();
 

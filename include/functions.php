@@ -91,6 +91,10 @@ function redirect($url) {
  */
 function setFlash($type, $msg) {
     $_SESSION['flash'] = ['type' => $type, 'msg' => $msg];
+    // Global realtime hook: bump version on any successful DB modification
+    if ($type === 'success' && stripos($msg, 'Selamat datang') === false) {
+        @file_put_contents(__DIR__ . '/../api/rt_version.txt', time());
+    }
 }
 
 function getFlash() {
@@ -218,5 +222,13 @@ function getSettingsByGroup($conn, $group) {
     }
     $stmt->close();
     return $settings;
+}
+
+/**
+ * Bind parameters to a statement safely from an array
+ */
+function bindParamsSafe($stmt, $types, $params) {
+    if (!$params) return;
+    $stmt->bind_param($types, ...$params);
 }
 ?>

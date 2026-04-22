@@ -12,14 +12,14 @@ $where = '1=1'; $params = []; $types = '';
 if ($search) { $where .= " AND (judul LIKE ? OR deskripsi LIKE ?)"; $params[] = "%$search%"; $params[] = "%$search%"; $types .= 'ss'; }
 
 $stmtC = $conn->prepare("SELECT COUNT(*) FROM laporan WHERE $where");
-if ($params) $stmtC->bind_param($types, ...$params);
+if ($params) bindParamsSafe($stmtC, $types, $params);
 $stmtC->execute();
 $total = $stmtC->get_result()->fetch_row()[0];
 
 $stmtL = $conn->prepare("SELECT * FROM laporan WHERE $where ORDER BY tgl_upload DESC LIMIT ? OFFSET ?");
 $p2 = array_merge($params, [$perPage, $offset]);
 $t2 = $types . 'ii';
-$stmtL->bind_param($t2, ...$p2);
+bindParamsSafe($stmtL, $t2, $p2);
 $stmtL->execute();
 $list = $stmtL->get_result();
 

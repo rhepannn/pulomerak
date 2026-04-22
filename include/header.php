@@ -107,6 +107,11 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                     <li><a href="<?= SITE_URL ?>/perpustakaan.php"><i class="fas fa-book-open"></i> Perpustakaan Digital</a></li>
                 </ul>
             </li>
+            <li class="nav-item" style="margin-left: 10px;">
+                <a href="<?= SITE_URL ?>/admin/login.php" class="btn btn-primary btn-sm" style="box-shadow: none;">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+            </li>
         </ul>
 
         <div class="nav-overlay" id="navOverlay"></div>

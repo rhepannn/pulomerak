@@ -148,20 +148,6 @@ include 'include/header.php';
             </div>
             <div class="org-connector"></div>
 
-            <!-- Level 2: Sekretaris Camat -->
-            <div class="org-level">
-                <div class="org-card" style="border-color:var(--primary-light, #2563EB);">
-                    <div class="org-avatar">
-                        <?php if ($orgSekcamFoto): ?>
-                            <img src="<?= $orgSekcamFoto ?>" alt="<?= e($S['org_sekcam_nama'] ?? '') ?>" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
-                        <?php else: ?>
-                            <i class="fas fa-user"></i>
-                        <?php endif; ?>
-                    </div>
-                    <div class="org-name"><?= e($S['org_sekcam_nama'] ?? 'Drs. Suharno') ?></div>
-                    <div class="org-role"><?= e($S['org_sekcam_jabatan'] ?? 'Sekretaris Camat') ?></div>
-                </div>
-            </div>
             <div class="org-connector"></div>
 
             <!-- Level 3: Kasi-kasi -->

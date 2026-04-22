@@ -19,14 +19,14 @@ if ($kat)    { $where .= " AND kategori = ?"; $params[] = $kat; $types .= 's'; }
 if ($search) { $where .= " AND judul LIKE ?"; $params[] = "%$search%"; $types .= 's'; }
 
 $stmtC = $conn->prepare("SELECT COUNT(*) FROM kegiatan WHERE $where");
-if ($params) $stmtC->bind_param($types, ...$params);
+if ($params) bindParamsSafe($stmtC, $types, $params);
 $stmtC->execute();
 $total = $stmtC->get_result()->fetch_row()[0];
 
 $stmtL = $conn->prepare("SELECT * FROM kegiatan WHERE $where ORDER BY tgl_kegiatan DESC LIMIT ? OFFSET ?");
 $p2 = array_merge($params, [$perPage, $offset]);
 $t2 = $types . 'ii';
-$stmtL->bind_param($t2, ...$p2);
+bindParamsSafe($stmtL, $t2, $p2);
 $stmtL->execute();
 $list = $stmtL->get_result();
 

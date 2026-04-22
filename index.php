@@ -27,6 +27,16 @@ $kegiatanList = $stmtK->get_result();
 $rtBerita   = $conn->query("SELECT MAX(id) FROM berita")->fetch_row()[0] ?? 0;
 $rtKegiatan = $conn->query("SELECT MAX(id) FROM kegiatan")->fetch_row()[0] ?? 0;
 
+// Ambil statistik real dari tabel kelurahan
+$statQ = $conn->query("SELECT SUM(penduduk) as sum_penduduk, SUM(penduduk_l) as sum_l, SUM(penduduk_p) as sum_p, SUM(jumlah_rw) as sum_rw, SUM(jumlah_rt) as sum_rt, SUM(IF(inovasi IS NOT NULL AND inovasi != '', 1, 0)) as sum_inovasi FROM kelurahan");
+$statD = $statQ->fetch_assoc();
+$stat_penduduk = $statD['sum_penduduk'] ?: 0;
+$stat_l = $statD['sum_l'] ?: 0;
+$stat_p = $statD['sum_p'] ?: 0;
+$stat_rw = $statD['sum_rw'] ?: 0;
+$stat_rt = $statD['sum_rt'] ?: 0;
+$stat_inovasi = $statD['sum_inovasi'] ?: 0;
+
 include 'include/header.php'; ?>
 <script>
 window.SITE_URL   = '<?= SITE_URL ?>';
@@ -57,25 +67,42 @@ window.RT_PAGE    = 'beranda';
     </div>
 </section>
 
-<!-- STATISTIK STRIP (Moved under hero to be flat) -->
-<div class="hero-stats-strip">
+<!-- STATISTIK STRIP -->
+<div class="hero-stats-final reveal">
     <div class="container">
-        <div class="hero-stats">
-            <div class="hero-stat">
-                <span class="hero-stat-num" data-count="<?= e($S['stat_penduduk'] ?? '12450') ?>">0</span>
-                <span class="hero-stat-label">Jiwa Penduduk</span>
+        <div class="stats-final-flex">
+            <!-- Group 1: Exact layout from image but smaller -->
+            <div class="stats-final-box">
+                <div class="box-title">JIWA PENDUDUK</div>
+                <div class="box-grid">
+                    <div class="box-item">
+                        <div class="box-label">LAKI-LAKI</div>
+                        <div class="box-num" data-count="<?= $stat_l ?>">0</div>
+                    </div>
+                    <div class="box-item">
+                        <div class="box-label">PEREMPUAN</div>
+                        <div class="box-num" data-count="<?= $stat_p ?>">0</div>
+                    </div>
+                </div>
+                <div class="box-total">
+                    TOTAL: <span data-count="<?= $stat_penduduk ?>">0</span>
+                </div>
             </div>
-            <div class="hero-stat">
-                <span class="hero-stat-num" data-count="<?= e($S['stat_rw'] ?? '8') ?>">0</span>
-                <span class="hero-stat-label">Rukun Warga (RW)</span>
-            </div>
-            <div class="hero-stat">
-                <span class="hero-stat-num" data-count="<?= e($S['stat_rt'] ?? '32') ?>">0</span>
-                <span class="hero-stat-label">Rukun Tetangga (RT)</span>
-            </div>
-            <div class="hero-stat">
-                <span class="hero-stat-num" data-count="<?= e($S['stat_inovasi'] ?? '5') ?>">0</span>
-                <span class="hero-stat-label">Program Inovasi</span>
+
+            <!-- Group 2: Admin & Inovasi (Side) -->
+            <div class="stats-final-side">
+                <div class="side-item">
+                    <span class="side-num" data-count="<?= $stat_rw ?>">0</span>
+                    <span class="side-label">RW</span>
+                </div>
+                <div class="side-item">
+                    <span class="side-num" data-count="<?= $stat_rt ?>">0</span>
+                    <span class="side-label">RT</span>
+                </div>
+                <div class="side-item">
+                    <span class="side-num" data-count="<?= $stat_inovasi ?>">0</span>
+                    <span class="side-label">Inovasi</span>
+                </div>
             </div>
         </div>
     </div>
@@ -264,35 +291,6 @@ window.RT_PAGE    = 'beranda';
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════
-     STATISTIK COUNTER
-═══════════════════════════════════════════════════════ -->
-<div class="counter-section">
-    <div class="container">
-        <div class="counter-grid">
-            <div class="counter-item">
-                <div class="counter-icon"><i class="fas fa-home"></i></div>
-                <div class="counter-num"><span data-count="<?= e($S['counter_kk'] ?? '3200') ?>">0</span><span class="suffix">+</span></div>
-                <div class="counter-label">Kepala Keluarga</div>
-            </div>
-            <div class="counter-item">
-                <div class="counter-icon"><i class="fas fa-graduation-cap"></i></div>
-                <div class="counter-num"><span data-count="<?= e($S['counter_sekolah'] ?? '4') ?>">0</span></div>
-                <div class="counter-label">Sekolah Aktif</div>
-            </div>
-            <div class="counter-item">
-                <div class="counter-icon"><i class="fas fa-hospital"></i></div>
-                <div class="counter-num"><span data-count="<?= e($S['counter_kesehatan'] ?? '3') ?>">0</span></div>
-                <div class="counter-label">Fasilitas Kesehatan</div>
-            </div>
-            <div class="counter-item">
-                <div class="counter-icon"><i class="fas fa-mosque"></i></div>
-                <div class="counter-num"><span data-count="<?= e($S['counter_ibadah'] ?? '12') ?>">0</span></div>
-                <div class="counter-label">Tempat Ibadah</div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- ═══════════════════════════════════════════════════════
      KEGIATAN TERBARU

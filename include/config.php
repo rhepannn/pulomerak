@@ -65,13 +65,16 @@ function _ensureSchema($conn) {
     if (!in_array('field_type', $cols)) $conn->query("ALTER TABLE `site_settings` ADD `field_type` VARCHAR(20)  DEFAULT 'text' AFTER `label`");
     if (!in_array('updated_at', $cols)) $conn->query("ALTER TABLE `site_settings` ADD `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `field_type`");
 
-    // 3. Kolom ketua_pkk di tabel kelurahan
+    // 3. Kolom tambahan di tabel kelurahan
     $tables = $conn->query("SHOW TABLES LIKE 'kelurahan'");
     if ($tables && $tables->num_rows > 0) {
-        $chk = $conn->query("SHOW COLUMNS FROM `kelurahan` LIKE 'ketua_pkk'");
-        if ($chk && $chk->num_rows === 0) {
-            $conn->query("ALTER TABLE `kelurahan` ADD `ketua_pkk` VARCHAR(255) DEFAULT NULL AFTER `nama`");
-        }
+        $res = $conn->query("SHOW COLUMNS FROM `kelurahan` ");
+        $cols = [];
+        while ($r = $res->fetch_assoc()) $cols[] = $r['Field'];
+
+        if (!in_array('ketua_pkk',      $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `ketua_pkk`      VARCHAR(255) DEFAULT NULL AFTER `nama` ");
+        if (!in_array('penduduk_l',     $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `penduduk_l`     INT(11)      DEFAULT 0    AFTER `penduduk` ");
+        if (!in_array('penduduk_p',     $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `penduduk_p`     INT(11)      DEFAULT 0    AFTER `penduduk_l` ");
     }
 
     // 4. Seed default settings (INSERT IGNORE = skip jika sudah ada)

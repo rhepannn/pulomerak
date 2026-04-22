@@ -14,14 +14,14 @@ if ($search) { $where .= " AND (judul LIKE ? OR deskripsi LIKE ?)"; $params[] = 
 if ($kat)    { $where .= " AND kategori = ?"; $params[] = $kat; $types .= 's'; }
 
 $stmtC = $conn->prepare("SELECT COUNT(*) FROM perpustakaan WHERE $where");
-if ($params) $stmtC->bind_param($types, ...$params);
+if ($params) bindParamsSafe($stmtC, $types, $params);
 $stmtC->execute();
 $total = $stmtC->get_result()->fetch_row()[0];
 
 $stmtL = $conn->prepare("SELECT * FROM perpustakaan WHERE $where ORDER BY tgl_upload DESC LIMIT ? OFFSET ?");
 $p2 = array_merge($params, [$perPage, $offset]);
 $t2 = $types . 'ii';
-$stmtL->bind_param($t2, ...$p2);
+bindParamsSafe($stmtL, $t2, $p2);
 $stmtL->execute();
 $list = $stmtL->get_result();
 
@@ -75,20 +75,24 @@ include 'include/header.php';
 
         <!-- LIST DOKUMEN -->
         <?php if ($list->num_rows === 0): ?>
-            <div class="empty-state">
-                <i class="fas fa-book-open"></i>
+            <div class="empty-state" style="text-align: center; padding: 50px 0;">
+                <i class="fas fa-book-open" style="font-size: 4rem; color: #ccc; margin-bottom: 20px;"></i>
                 <h3>Dokumen Tidak Ditemukan</h3>
                 <p>Coba kata kunci lain atau lihat semua dokumen.</p>
             </div>
+        <?php else: ?>
             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 40px;">
                 <?php while ($p = $list->fetch_assoc()):
-                    $ext = strtolower(pathinfo($p['file'] ?? '', PATHINFO_EXTENSION));
+                    $ext = '';
+                    if (!empty($p['file'])) {
+                        $ext = strtolower(pathinfo($p['file'], PATHINFO_EXTENSION));
+                    }
                     $icon   = $ext === 'pdf' ? 'fa-file-pdf' : ($ext === 'xls' || $ext === 'xlsx' ? 'fa-file-excel' : 'fa-file-word');
                     $color  = $ext === 'pdf' ? '#e74c3c' : ($ext === 'xls' || $ext === 'xlsx' ? '#27ae60' : '#2980b9');
                 ?>
                     <div class="book-card reveal" style="display: flex; flex-direction: column; gap: 15px;">
                         <div class="book-cover" style="position: relative; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; background: #eee; box-shadow: 0 15px 30px rgba(0,0,0,0.1); transition: 0.4s;">
-                            <?php if ($p['gambar']): ?>
+                            <?php if (!empty($p['gambar'])): ?>
                                 <img src="<?= SITE_URL ?>/uploads/perpustakaan/<?= e($p['gambar']) ?>" alt="<?= e($p['judul']) ?>" style="width: 100%; height: 100%; object-fit: cover;">
                             <?php else: ?>
                                 <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 15px; background: linear-gradient(135deg, var(--primary) 0%, #001a33 100%); color: rgba(255,255,255,0.2); padding: 20px; text-align: center;">
@@ -96,24 +100,30 @@ include 'include/header.php';
                                     <span style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.6);">PKK Digital Archive</span>
                                 </div>
                             <?php endif; ?>
-                            <div style="position: absolute; top: 15px; left: 15px; background: <?= $color ?>; color: white; padding: 5px 12px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; font-family: sans-serif;"><?= strtoupper($ext) ?></div>
+                            <?php if ($ext): ?>
+                                <div style="position: absolute; top: 15px; left: 15px; background: <?= $color ?>; color: white; padding: 5px 12px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; font-family: sans-serif;"><?= strtoupper($ext) ?></div>
+                            <?php endif; ?>
                         </div>
                         <div class="book-info">
-                            <div style="color: var(--accent); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 5px;"><?= e($p['kategori'] ?: 'Dokumen') ?></div>
+                            <div style="color: var(--accent); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 5px;"><?= !empty($p['kategori']) ? e($p['kategori']) : 'Dokumen' ?></div>
                             <h4 style="font-size: 1rem; color: var(--primary); line-height: 1.4; font-weight: 700; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.8em;" title="<?= e($p['judul']) ?>"><?= e($p['judul']) ?></h4>
                             <div style="display: flex; gap: 8px;">
-                                <a href="<?= SITE_URL ?>/uploads/perpustakaan/<?= e($p['file']) ?>" target="_blank" style="flex: 1.5; background: var(--primary); color: white; text-align: center; padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px;">
-                                    <i class="fas fa-eye"></i> Baca
-                                </a>
-                                <a href="<?= SITE_URL ?>/uploads/perpustakaan/<?= e($p['file']) ?>" download style="flex: 1; background: var(--gray-100); color: var(--text-secondary); text-align: center; padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; transition: 0.3s;" title="Unduh">
-                                    <i class="fas fa-download"></i>
-                                </a>
+                                <?php if (!empty($p['file'])): ?>
+                                    <a href="<?= SITE_URL ?>/uploads/perpustakaan/<?= e($p['file']) ?>" target="_blank" style="flex: 1.5; background: var(--primary); color: white; text-align: center; padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                                        <i class="fas fa-eye"></i> Baca
+                                    </a>
+                                    <a href="<?= SITE_URL ?>/uploads/perpustakaan/<?= e($p['file']) ?>" download style="flex: 1; background: var(--gray-100); color: var(--text-secondary); text-align: center; padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; transition: 0.3s;" title="Unduh">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                <?php else: ?>
+                                    <div style="flex: 1; background: var(--gray-100); color: var(--text-secondary); text-align: center; padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 700;">File Tidak Tersedia</div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
                 <?php endwhile; ?>
             </div>
-
+            
             <?php
             $bu = 'perpustakaan.php?';
             if ($kat)    $bu .= 'kat='.urlencode($kat).'&';
