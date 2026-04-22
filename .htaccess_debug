@@ -1,0 +1,12 @@
+# Sederhanakan HTACCESS untuk Debugging 500 Error
+# Jika setelah upload ini website jalan, berarti masalah ada di settingan security/cache sebelumnya.
+
+RewriteEngine On
+RewriteBase /
+
+# Hilangkan .php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+# Silakan upload file ini menggantikan .htaccess yang lama

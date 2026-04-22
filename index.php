@@ -23,8 +23,17 @@ $stmtK = $conn->prepare("SELECT * FROM kegiatan ORDER BY tgl_kegiatan DESC LIMIT
 $stmtK->execute();
 $kegiatanList = $stmtK->get_result();
 
-include 'include/header.php';
-?>
+// ID terbaru untuk realtime tracking
+$rtBerita   = $conn->query("SELECT MAX(id) FROM berita")->fetch_row()[0] ?? 0;
+$rtKegiatan = $conn->query("SELECT MAX(id) FROM kegiatan")->fetch_row()[0] ?? 0;
+
+include 'include/header.php'; ?>
+<script>
+window.SITE_URL   = '<?= SITE_URL ?>';
+window.RT_BERITA  = <?= (int)$rtBerita ?>;
+window.RT_KEGIATAN = <?= (int)$rtKegiatan ?>;
+window.RT_PAGE    = 'beranda';
+</script>
 
 <!-- ═══════════════════════════════════════════════════════
      HERO SECTION
@@ -72,39 +81,6 @@ include 'include/header.php';
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════
-     SHORTCUT MENU
-═══════════════════════════════════════════════════════ -->
-<div class="shortcuts">
-    <div class="container">
-        <div class="shortcuts-grid">
-            <a href="profil.php" class="shortcut-card">
-                <div class="shortcut-icon blue"><i class="fas fa-landmark"></i></div>
-                <span class="shortcut-label">Profil</span>
-            </a>
-            <a href="berita.php" class="shortcut-card">
-                <div class="shortcut-icon green"><i class="fas fa-newspaper"></i></div>
-                <span class="shortcut-label">Berita</span>
-            </a>
-            <a href="kegiatan.php" class="shortcut-card">
-                <div class="shortcut-icon orange"><i class="fas fa-calendar-check"></i></div>
-                <span class="shortcut-label">Kegiatan</span>
-            </a>
-            <a href="laporan.php" class="shortcut-card">
-                <div class="shortcut-icon red"><i class="fas fa-file-alt"></i></div>
-                <span class="shortcut-label">Laporan</span>
-            </a>
-            <a href="dinamika.php" class="shortcut-card">
-                <div class="shortcut-icon purple"><i class="fas fa-users"></i></div>
-                <span class="shortcut-label">Dinamika</span>
-            </a>
-            <a href="perpustakaan.php" class="shortcut-card">
-                <div class="shortcut-icon teal"><i class="fas fa-book-open"></i></div>
-                <span class="shortcut-label">Perpustakaan</span>
-            </a>
-        </div>
-    </div>
-</div>
 
 <!-- ═══════════════════════════════════════════════════════
      TENTANG GERAKAN PKK
@@ -358,69 +334,5 @@ include 'include/header.php';
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════
-     LAYANAN UNGGULAN
-═══════════════════════════════════════════════════════ -->
-<section class="section">
-    <div class="container">
-        <div class="section-header">
-            <div class="section-label"><i class="fas fa-cog"></i> Layanan</div>
-            <h2 class="section-title">Layanan <span>Unggulan</span></h2>
-            <p class="section-desc">Berbagai layanan dan program unggulan Kecamatan Pulomerak untuk masyarakat.</p>
-        </div>
-        <?php
-        // Helper: resolve layanan icon (image upload takes priority over FA icon)
-        function layananIcon($S, $n, $defaultIcon) {
-            $imgFile = $S['layanan_'.$n.'_image'] ?? '';
-            if ($imgFile) {
-                $p = __DIR__ . '/uploads/settings/' . $imgFile;
-                if (file_exists($p)) {
-                    return '<img src="'.SITE_URL.'/uploads/settings/'.htmlspecialchars($imgFile, ENT_QUOTES).'"
-                           alt="icon" style="width:40px;height:40px;object-fit:contain;">';
-                }
-            }
-            return '<i class="'.htmlspecialchars($S['layanan_'.$n.'_icon'] ?? $defaultIcon, ENT_QUOTES).'"></i>';
-        }
-        ?>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem;" class="reveal">
-            <!-- Layanan 1 -->
-            <div style="background:#fff; padding:3rem 2rem; border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,0.04); border:1px solid var(--border); text-align:center; transition:var(--transition); position:relative; overflow:hidden;" class="service-card">
-                <div style="width:60px; height:60px; background:var(--primary-glow); color:var(--primary); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 1.5rem;">
-                    <?= layananIcon($S, 1, 'fas fa-file-alt') ?>
-                </div>
-                <h3 style="color:var(--text-dark); font-size:1.3rem; margin-bottom:1rem;"><?= e($S['layanan_1_title'] ?? 'Administrasi Kependudukan') ?></h3>
-                <p style="color:var(--text-secondary); line-height:1.7; font-size:0.95rem; margin-bottom:2rem;">
-                    <?= e($S['layanan_1_desc'] ?? '') ?>
-                </p>
-                <a href="laporan.php" class="btn btn-ghost btn-sm" style="width:100%; justify-content:center;">Selengkapnya <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <!-- Layanan 2 -->
-            <div style="background:#fff; padding:3rem 2rem; border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,0.04); border:1px solid var(--border); text-align:center; transition:var(--transition);" class="service-card">
-                <div style="width:60px; height:60px; background:var(--primary-glow); color:var(--primary); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 1.5rem;">
-                    <?= layananIcon($S, 2, 'fas fa-lightbulb') ?>
-                </div>
-                <h3 style="color:var(--text-dark); font-size:1.3rem; margin-bottom:1rem;"><?= e($S['layanan_2_title'] ?? 'Program Inovasi') ?></h3>
-                <p style="color:var(--text-secondary); line-height:1.7; font-size:0.95rem; margin-bottom:2rem;">
-                    <?= e($S['layanan_2_desc'] ?? '') ?>
-                </p>
-                <a href="kelurahan.php#inovasi" class="btn btn-ghost btn-sm" style="width:100%; justify-content:center;">Selengkapnya <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <!-- Layanan 3 -->
-            <div style="background:#fff; padding:3rem 2rem; border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,0.04); border:1px solid var(--border); text-align:center; transition:var(--transition);" class="service-card">
-                <div style="width:60px; height:60px; background:var(--primary-glow); color:var(--primary); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 1.5rem;">
-                    <?= layananIcon($S, 3, 'fas fa-book-open') ?>
-                </div>
-                <h3 style="color:var(--text-dark); font-size:1.3rem; margin-bottom:1rem;"><?= e($S['layanan_3_title'] ?? 'Perpustakaan Digital') ?></h3>
-                <p style="color:var(--text-secondary); line-height:1.7; font-size:0.95rem; margin-bottom:2rem;">
-                    <?= e($S['layanan_3_desc'] ?? '') ?>
-                </p>
-                <a href="perpustakaan.php" class="btn btn-ghost btn-sm" style="width:100%; justify-content:center;">Selengkapnya <i class="fas fa-arrow-right"></i></a>
-            </div>
-        </div>
-
-    </div>
-</section>
 
 <?php include 'include/footer.php'; ?>

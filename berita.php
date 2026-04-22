@@ -32,8 +32,16 @@ $beritaList = $stmtL->get_result();
 // Kategori untuk filter
 $kats = $conn->query("SELECT DISTINCT kategori FROM berita WHERE kategori IS NOT NULL AND kategori != '' ORDER BY kategori");
 
-include 'include/header.php';
-?>
+// ID terbaru untuk realtime
+$rtBerita = $conn->query("SELECT MAX(id) FROM berita")->fetch_row()[0] ?? 0;
+
+include 'include/header.php'; ?>
+<script>
+window.SITE_URL  = '<?= SITE_URL ?>';
+window.RT_BERITA = <?= (int)$rtBerita ?>;
+window.RT_PAGE   = 'berita';
+</script>
+
 
 <!-- PAGE HERO -->
 <style>

@@ -251,52 +251,124 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 4000);
     };
 
-    // ── REALTIME ENGINE ────────────────────────────────────
-    function initRealtime() {
-        const isAdmin = window.location.pathname.includes('/admin/');
-        if (!isAdmin) return;
 
-        const pollInterval = 20000; // 20 detik
-        let lastBeritaId   = localStorage.getItem('last_berita_id');
-        let lastKegiatanId = localStorage.getItem('last_kegiatan_id');
+    // ══════════════════════════════════════════════════════════
+    // REALTIME ENGINE
+    // - Public pages: notification banner on new berita/kegiatan
+    // - Admin pages : live stat counters + toast notifications
+    // ══════════════════════════════════════════════════════════
+    (function initRealtime() {
+        const isAdmin  = window.location.pathname.includes('/admin/');
+        const siteUrl  = window.SITE_URL || '';
+        const apiUrl   = siteUrl + '/api/realtime.php';
+        const INTERVAL = 15000; // 15 detik (Batas aman agar tidak kena blokir Anti-DDoS InfinityFree)
 
-        async function poll() {
-            try {
-                const res  = await fetch('../admin/api-admin.php');
-                const data = await res.json();
-                
-                if (data.status === 'success') {
-                    // Update stats if on dashboard
-                    const statNums = document.querySelectorAll('.stat-num');
-                    if (statNums.length > 0) {
-                        if(document.querySelector('.stat-label + .stat-num') === null) {
-                            // Map stats to UI if possible (simple version)
-                            // This depends on the order, we could add IDs to stat-nums
-                        }
-                    }
-
-                    // Check for new content
-                    if (lastBeritaId && data.latest.berita && data.latest.berita.id > lastBeritaId) {
-                        showToast(`Halo ka, ada berita baru nih: ${data.latest.berita.judul}`, 'success');
-                    }
-                    if (lastKegiatanId && data.latest.kegiatan && data.latest.kegiatan.id > lastKegiatanId) {
-                        showToast(`Ada info kegiatan baru lho: ${data.latest.kegiatan.judul}`, 'info');
-                    }
-
-                    // Update last seen
-                    if (data.latest.berita) localStorage.setItem('last_berita_id', data.latest.berita.id);
-                    if (data.latest.kegiatan) localStorage.setItem('last_kegiatan_id', data.latest.kegiatan.id);
-                    lastBeritaId = localStorage.getItem('last_berita_id');
-                    lastKegiatanId = localStorage.getItem('last_kegiatan_id');
-                }
-            } catch (e) { console.warn('Polling failed', e); }
+        // ── PUBLIC: Notification Banner ──────────────────────
+        let banner = null;
+        function showBanner(text, href) {
+            if (banner) return; // only one at a time
+            banner = document.createElement('div');
+            banner.id = 'rt-banner';
+            banner.innerHTML = `
+                <span><i class="fas fa-circle" style="color:#22c55e;font-size:.55rem;animation:pulse 1.5s infinite;"></i> ${text}</span>
+                <div style="display:flex;gap:8px;align-items:center;">
+                    <a href="${href}" style="background:#fff;color:#0054A6;padding:5px 14px;border-radius:20px;font-weight:700;font-size:.8rem;text-decoration:none;">Lihat</a>
+                    <button onclick="document.getElementById('rt-banner').remove();window._rtBanner=null;" style="background:transparent;border:none;color:#fff;font-size:1.1rem;cursor:pointer;padding:0 4px;">×</button>
+                </div>`;
+            Object.assign(banner.style, {
+                position:'fixed', top:'0', left:'0', right:'0', zIndex:'99999',
+                background:'linear-gradient(135deg,#0054A6,#0077e6)',
+                color:'#fff', display:'flex', alignItems:'center',
+                justifyContent:'space-between', padding:'10px 20px',
+                fontSize:'.88rem', boxShadow:'0 2px 16px rgba(0,0,0,0.18)',
+                transform:'translateY(-100%)', transition:'transform .35s ease',
+                fontFamily:'inherit'
+            });
+            document.body.appendChild(banner);
+            setTimeout(() => banner && (banner.style.transform = 'translateY(0)'), 50);
+            window._rtBanner = banner;
         }
 
-        // Jalankan poll pertama dan set interval
-        setTimeout(poll, 2000); // Tunggu sebentar setelah load
-        setInterval(poll, pollInterval);
-    }
+        // Tracked IDs (seeded from PHP)
+        let knownBerita   = window.RT_BERITA   || 0;
+        let knownKegiatan = window.RT_KEGIATAN || 0;
 
-    initRealtime();
+        // ── ADMIN: Live stat elements (pakai data-stat attribute) ─
+        function animateNum(el, to) {
+            const from = parseInt(el.textContent.replace(/\./g, '')) || 0;
+            if (from === to) return;
+            const dur = 600, step = 16;
+            const inc = (to - from) / (dur / step);
+            let cur = from;
+            const t = setInterval(() => {
+                cur += inc;
+                el.textContent = Math.round(cur >= to ? to : cur).toLocaleString('id-ID');
+                if (cur >= to) clearInterval(t);
+            }, step);
+        }
+        function updateAdminStats(counts) {
+            Object.entries(counts).forEach(([key, val]) => {
+                document.querySelectorAll(`[data-stat="${key}"]`).forEach(el => animateNum(el, val));
+            });
+        }
+
+
+        // ── TOAST (admin) ─────────────────────────────────────
+        function showToast(msg, type = 'info') {
+            const colors = { info:'#0077e6', success:'#16a34a', warn:'#d97706' };
+            const t = document.createElement('div');
+            t.innerHTML = msg;
+            Object.assign(t.style, {
+                position:'fixed', bottom:'24px', right:'24px', zIndex:'99999',
+                background: colors[type] || colors.info,
+                color:'#fff', padding:'12px 20px', borderRadius:'12px',
+                fontSize:'.88rem', boxShadow:'0 4px 20px rgba(0,0,0,.2)',
+                maxWidth:'320px', lineHeight:'1.5',
+                transform:'translateY(20px)', opacity:'0',
+                transition:'all .3s ease', fontFamily:'inherit'
+            });
+            document.body.appendChild(t);
+            setTimeout(() => { t.style.transform='translateY(0)'; t.style.opacity='1'; }, 10);
+            setTimeout(() => { t.style.opacity='0'; setTimeout(() => t.remove(), 400); }, 5000);
+        }
+
+        // ── POLL ─────────────────────────────────────────────
+        async function poll() {
+            try {
+                const res  = await fetch(apiUrl, { cache: 'no-store' });
+                if (!res.ok) return;
+                const data = await res.json();
+
+                if (!isAdmin) {
+                    // ── PUBLIC side ──
+                    if (data.berita && data.berita.id > knownBerita) {
+                        if (knownBerita > 0) showBanner(`Berita baru: <strong>${data.berita.judul}</strong>`, siteUrl + '/berita.php');
+                        knownBerita = data.berita.id;
+                    }
+                    if (data.kegiatan && data.kegiatan.id > knownKegiatan) {
+                        if (knownKegiatan > 0) showBanner(`Kegiatan baru: <strong>${data.kegiatan.judul}</strong>`, siteUrl + '/kegiatan.php');
+                        knownKegiatan = data.kegiatan.id;
+                    }
+                } else {
+                    // ── ADMIN side ──
+                    if (data.counts) {
+                        updateAdminStats(data.counts);
+                    }
+                    if (data.berita && data.berita.id > knownBerita) {
+                        if (knownBerita > 0) showToast(`📰 Berita baru ditambahkan: <b>${data.berita.judul}</b>`, 'success');
+                        knownBerita = data.berita.id;
+                    }
+                    if (data.kegiatan && data.kegiatan.id > knownKegiatan) {
+                        if (knownKegiatan > 0) showToast(`📅 Kegiatan baru: <b>${data.kegiatan.judul}</b>`, 'info');
+                        knownKegiatan = data.kegiatan.id;
+                    }
+                }
+            } catch (e) { /* silent fail */ }
+        }
+
+        // Start: 3s delay lalu interval
+        setTimeout(poll, 3000);
+        setInterval(poll, INTERVAL);
+    })();
 
 });

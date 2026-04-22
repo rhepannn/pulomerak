@@ -30,8 +30,15 @@ $stmtL->bind_param($t2, ...$p2);
 $stmtL->execute();
 $list = $stmtL->get_result();
 
-include 'include/header.php';
-?>
+$rtKegiatan = $conn->query("SELECT MAX(id) FROM kegiatan")->fetch_row()[0] ?? 0;
+
+include 'include/header.php'; ?>
+<script>
+window.SITE_URL    = '<?= SITE_URL ?>';
+window.RT_KEGIATAN = <?= (int)$rtKegiatan ?>;
+window.RT_PAGE     = 'kegiatan';
+</script>
+
 
 <!-- PAGE HERO -->
 <style>

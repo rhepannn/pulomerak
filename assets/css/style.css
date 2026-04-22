@@ -1381,8 +1381,8 @@ input, textarea, select { font-family: inherit; }
 .footer-main { padding: 72px 0 44px; }
 .footer-grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1.3fr;
-    gap: 52px;
+    grid-template-columns: 2fr 1.3fr;
+    gap: 80px;
 }
 .footer-brand {
     display: flex;

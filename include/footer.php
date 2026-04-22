@@ -38,35 +38,10 @@ if (!empty($footerS['site_logo'])) {
                 </div>
             </div>
 
-            <!-- Kolom 2: Menu Cepat -->
-            <div class="footer-col">
-                <h4 class="footer-heading">Menu Cepat</h4>
-                <ul class="footer-links">
-                    <li><a href="<?= SITE_URL ?>/"><i class="fas fa-angle-right"></i> Beranda</a></li>
-                    <li><a href="<?= SITE_URL ?>/profil.php"><i class="fas fa-angle-right"></i> Profil Kecamatan</a></li>
-                    <li><a href="<?= SITE_URL ?>/berita.php"><i class="fas fa-angle-right"></i> Berita Terbaru</a></li>
-                    <li><a href="<?= SITE_URL ?>/kegiatan.php"><i class="fas fa-angle-right"></i> Kegiatan</a></li>
-                    <li><a href="<?= SITE_URL ?>/laporan.php"><i class="fas fa-angle-right"></i> Laporan</a></li>
-                    <li><a href="<?= SITE_URL ?>/dinamika.php"><i class="fas fa-angle-right"></i> Dinamika Masyarakat</a></li>
-                    <li><a href="<?= SITE_URL ?>/perpustakaan.php"><i class="fas fa-angle-right"></i> Perpustakaan Digital</a></li>
-                </ul>
-            </div>
+            <!-- Kolom 2: Kontak -->
 
-            <!-- Kolom 3: Layanan -->
             <div class="footer-col">
-                <h4 class="footer-heading">Layanan Masyarakat</h4>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-angle-right"></i> Pelayanan Administrasi</a></li>
-                    <li><a href="#"><i class="fas fa-angle-right"></i> Surat Keterangan Domisili</a></li>
-                    <li><a href="#"><i class="fas fa-angle-right"></i> Surat Pengantar RT/RW</a></li>
-                    <li><a href="#"><i class="fas fa-angle-right"></i> Pengajuan Bantuan</a></li>
-                    <li><a href="<?= SITE_URL ?>/perpustakaan.php"><i class="fas fa-angle-right"></i> Dokumen & Arsip</a></li>
-                    <li><a href="<?= SITE_URL ?>/admin/login.php"><i class="fas fa-lock"></i> Admin Panel</a></li>
-                </ul>
-            </div>
 
-            <!-- Kolom 4: Kontak -->
-            <div class="footer-col">
                 <h4 class="footer-heading">Kontak Kami</h4>
                 <ul class="footer-contact">
                     <li>
