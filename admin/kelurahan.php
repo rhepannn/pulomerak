@@ -2,6 +2,10 @@
 require_once '../include/config.php';
 require_once '../include/functions.php';
 requireAdmin();
+if (!isSuperAdmin()) {
+    setFlash('error', 'Halaman ini hanya dapat diakses oleh Superadmin.');
+    redirect(SITE_URL . '/admin/index.php');
+}
 $pageTitle = 'Manajemen Kelurahan';
 $list = $conn->query("SELECT * FROM kelurahan ORDER BY nama");
 include 'header.php';

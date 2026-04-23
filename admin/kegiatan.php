@@ -5,8 +5,11 @@ requireAdmin();
 $pageTitle = 'Manajemen Kegiatan';
 
 $page = max(1,(int)($_GET['page']??1)); $perPage=15; $offset=($page-1)*$perPage;
-$total = $conn->query("SELECT COUNT(*) FROM kegiatan")->fetch_row()[0];
-$stmt  = $conn->prepare("SELECT * FROM kegiatan ORDER BY tgl_kegiatan DESC LIMIT ? OFFSET ?");
+$kelId   = getKelurahanId();
+$where   = isSuperAdmin() ? "" : " WHERE kelurahan_id = " . (int)$kelId;
+
+$total = $conn->query("SELECT COUNT(*) FROM kegiatan" . $where)->fetch_row()[0];
+$stmt  = $conn->prepare("SELECT * FROM kegiatan" . $where . " ORDER BY tgl_kegiatan DESC LIMIT ? OFFSET ?");
 $stmt->bind_param('ii',$perPage,$offset); $stmt->execute();
 $list  = $stmt->get_result();
 include 'header.php';

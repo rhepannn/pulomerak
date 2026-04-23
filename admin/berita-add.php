@@ -25,8 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
         if (empty($error)) {
-            $stmt = $conn->prepare("INSERT INTO berita (judul, isi, kategori, gambar, tgl_post, url_sumber) VALUES (?,?,?,?,?,?)");
-            $stmt->bind_param('ssssss', $judul, $isi, $kategori, $gambar, $tgl_post, $url_src);
+            $kelId = (int)getKelurahanId(); // Default 0 jika superadmin
+            $stmt = $conn->prepare("INSERT INTO berita (judul, isi, kategori, gambar, tgl_post, url_sumber, kelurahan_id) VALUES (?,?,?,?,?,?,?)");
+            $stmt->bind_param('ssssssi', $judul, $isi, $kategori, $gambar, $tgl_post, $url_src, $kelId);
             if ($stmt->execute()) {
                 setFlash('success', 'Berita berhasil ditambahkan!');
                 redirect(SITE_URL . '/admin/berita.php');

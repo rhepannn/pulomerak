@@ -130,6 +130,34 @@ function requireAdmin() {
 }
 
 /**
+ * Mendapatkan ID Kelurahan admin yang sedang login
+ * Return NULL jika Superadmin, INT jika Admin Kelurahan
+ */
+function getKelurahanId() {
+    return $_SESSION['admin_kelurahan'] ?? null;
+}
+
+function isSuperAdmin() {
+    return getKelurahanId() === null;
+}
+
+function isKelurahanAdmin() {
+    return getKelurahanId() !== null;
+}
+
+/**
+ * Proteksi akses data agar hanya bisa diedit pemiliknya (atau superadmin)
+ */
+function checkOwnership($data_kelurahan_id) {
+    if (isSuperAdmin()) return true;
+    if ((int)getKelurahanId() === (int)$data_kelurahan_id) return true;
+    
+    setFlash('error', 'Anda tidak memiliki akses ke data ini.');
+    redirect(SITE_URL . '/admin/index.php');
+    return false;
+}
+
+/**
  * Ambil gambar atau default
  */
 function getImg($file, $subdir = 'berita') {

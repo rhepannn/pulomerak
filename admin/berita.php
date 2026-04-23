@@ -8,11 +8,15 @@ $page    = max(1, (int)($_GET['page'] ?? 1));
 $perPage = 15;
 $offset  = ($page - 1) * $perPage;
 
-$total = $conn->query("SELECT COUNT(*) FROM berita")->fetch_row()[0];
-$stmt  = $conn->prepare("SELECT * FROM berita ORDER BY tgl_post DESC LIMIT ? OFFSET ?");
+$kelId   = getKelurahanId();
+$where   = isSuperAdmin() ? "" : " WHERE kelurahan_id = " . (int)$kelId;
+
+$total   = $conn->query("SELECT COUNT(*) FROM berita" . $where)->fetch_row()[0];
+$sql     = "SELECT * FROM berita" . $where . " ORDER BY tgl_post DESC LIMIT ? OFFSET ?";
+$stmt    = $conn->prepare($sql);
 $stmt->bind_param('ii', $perPage, $offset);
 $stmt->execute();
-$list  = $stmt->get_result();
+$list    = $stmt->get_result();
 
 include 'header.php';
 ?>

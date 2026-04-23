@@ -4,16 +4,17 @@
 // ============================================================
 
 // ── DATABASE ─────────────────────────────────────────────────
-define('DB_HOST', 'sql113.infinityfree.com');
-define('DB_USER', 'if0_41713192');
-define('DB_PASS', 'arhVZ1OsEfc');
-define('DB_NAME', 'if0_41713192_pulomerak');
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'pulomerak');
 
 // ── SITE URL ─────────────────────────────────────────────────
-// Auto-detect protocol (http/https) supaya tidak kena mixed content block.
-// InfinityFree paksa HTTPS, jadi harus ikut protokol yang sedang aktif.
 $__p = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-define('SITE_URL',  $__p . '://tppkkkecamatanpulomerak.rf.gd');
+$__h = $_SERVER['HTTP_HOST'] ?? 'localhost';
+$__r = str_replace(str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']), '', str_replace('\\', '/', __DIR__));
+$__r = rtrim(dirname($__r), '/');
+define('SITE_URL', $__p . '://' . $__h . ($__r ? $__r : ''));
 define('SITE_NAME', 'Portal Informasi Kecamatan Pulomerak');
 define('SITE_DESC', 'Pusat Informasi Masyarakat Kecamatan Pulomerak, Kota Cilegon');
 unset($__p);
@@ -75,6 +76,45 @@ function _ensureSchema($conn) {
         if (!in_array('ketua_pkk',      $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `ketua_pkk`      VARCHAR(255) DEFAULT NULL AFTER `nama` ");
         if (!in_array('penduduk_l',     $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `penduduk_l`     INT(11)      DEFAULT 0    AFTER `penduduk` ");
         if (!in_array('penduduk_p',     $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `penduduk_p`     INT(11)      DEFAULT 0    AFTER `penduduk_l` ");
+        if (!in_array('jumlah_link',    $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `jumlah_link`    INT(11)      DEFAULT 0    AFTER `jumlah_rt` ");
+        if (!in_array('dasa_wisma',     $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `dasa_wisma`     INT(11)      DEFAULT 0    AFTER `jumlah_link` ");
+        if (!in_array('ibu_hamil',      $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `ibu_hamil`      INT(11)      DEFAULT 0    AFTER `dasa_wisma` ");
+        if (!in_array('ibu_melahirkan', $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `ibu_melahirkan` INT(11)      DEFAULT 0    AFTER `ibu_hamil` ");
+        if (!in_array('ibu_nifas',      $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `ibu_nifas`      INT(11)      DEFAULT 0    AFTER `ibu_melahirkan` ");
+        if (!in_array('ibu_meninggal',  $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `ibu_meninggal`  INT(11)      DEFAULT 0    AFTER `ibu_nifas` ");
+        if (!in_array('bayi_lahir_l',   $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `bayi_lahir_l`   INT(11)      DEFAULT 0    AFTER `ibu_meninggal` ");
+        if (!in_array('bayi_lahir_p',   $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `bayi_lahir_p`   INT(11)      DEFAULT 0    AFTER `bayi_lahir_l` ");
+        if (!in_array('akte_ada',       $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `akte_ada`       INT(11)      DEFAULT 0    AFTER `bayi_lahir_p` ");
+        if (!in_array('akte_tidak',     $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `akte_tidak`     INT(11)      DEFAULT 0    AFTER `akte_ada` ");
+        if (!in_array('bayi_meninggal_l',   $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `bayi_meninggal_l`   INT(11)      DEFAULT 0    AFTER `akte_tidak` ");
+        if (!in_array('bayi_meninggal_p',   $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `bayi_meninggal_p`   INT(11)      DEFAULT 0    AFTER `bayi_meninggal_l` ");
+        if (!in_array('balita_meninggal_l', $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `balita_meninggal_l` INT(11)      DEFAULT 0    AFTER `bayi_meninggal_p` ");
+        if (!in_array('balita_meninggal_p', $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `balita_meninggal_p` INT(11)      DEFAULT 0    AFTER `balita_meninggal_l` ");
+        
+        if (!in_array('sekretaris_pkk', $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `sekretaris_pkk` VARCHAR(255) DEFAULT NULL AFTER `ketua_pkk` ");
+        if (!in_array('bendahara_pkk',  $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `bendahara_pkk`  VARCHAR(255) DEFAULT NULL AFTER `sekretaris_pkk` ");
+        if (!in_array('pokja1_pkk',     $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `pokja1_pkk`     VARCHAR(255) DEFAULT NULL AFTER `bendahara_pkk` ");
+        if (!in_array('pokja2_pkk',     $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `pokja2_pkk`     VARCHAR(255) DEFAULT NULL AFTER `pokja1_pkk` ");
+        if (!in_array('pokja3_pkk',     $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `pokja3_pkk`     VARCHAR(255) DEFAULT NULL AFTER `pokja2_pkk` ");
+        if (!in_array('pokja4_pkk',     $cols)) $conn->query("ALTER TABLE `kelurahan` ADD `pokja4_pkk`     VARCHAR(255) DEFAULT NULL AFTER `pokja3_pkk` ");
+    }
+
+    // 5. Update tabel users untuk kelurahan_id
+    $res  = $conn->query("SHOW COLUMNS FROM `users` ");
+    $cols = [];
+    while ($r = $res->fetch_assoc()) $cols[] = $r['Field'];
+    if (!in_array('kelurahan_id', $cols)) $conn->query("ALTER TABLE `users` ADD `kelurahan_id` INT(11) DEFAULT NULL AFTER `role` ");
+
+    // 6. Update tabel berita & kegiatan untuk kelurahan_id
+    $tables_check = ['berita', 'kegiatan'];
+    foreach($tables_check as $tbl) {
+        $res = $conn->query("SHOW COLUMNS FROM `$tbl` ");
+        $cols = [];
+        while ($r = $res->fetch_assoc()) $cols[] = $r['Field'];
+        if (!in_array('kelurahan_id', $cols)) {
+            $conn->query("ALTER TABLE `$tbl` ADD `kelurahan_id` INT(11) DEFAULT 0 AFTER `id` ");
+            $conn->query("ALTER TABLE `$tbl` ADD INDEX (`kelurahan_id`) ");
+        }
     }
 
     // 4. Seed default settings (INSERT IGNORE = skip jika sudah ada)

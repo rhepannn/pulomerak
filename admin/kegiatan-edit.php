@@ -10,6 +10,9 @@ $stmt->bind_param('i',$id); $stmt->execute();
 $k = $stmt->get_result()->fetch_assoc();
 if (!$k) redirect(SITE_URL.'/admin/kegiatan.php');
 
+// CEK AKSES
+checkOwnership($k['kelurahan_id']);
+
 $pageTitle = 'Edit Kegiatan';
 $kels = $conn->query("SELECT id, nama FROM kelurahan ORDER BY nama");
 
@@ -19,7 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $kategori     = trim($_POST['kategori'] ?? '');
     $tgl_kegiatan = $_POST['tgl_kegiatan'] ?? date('Y-m-d');
     $lokasi       = trim($_POST['lokasi'] ?? '');
-    $kelurahan_id = (int)($_POST['kelurahan_id'] ?? 0);
+    $kelIdAssigned = getKelurahanId();
+    $kelurahan_id = isSuperAdmin() ? (int)($_POST['kelurahan_id'] ?? 0) : (int)$kelIdAssigned;
     $gambar       = $k['gambar'];
 
     if (empty($judul)) { $error = 'Judul wajib diisi!'; }
@@ -73,6 +77,7 @@ include 'header.php';
                     <input type="text" name="lokasi" class="form-control" value="<?=e($_POST['lokasi']??$k['lokasi'])?>">
                 </div>
             </div>
+            <?php if (isSuperAdmin()): ?>
             <div class="form-group">
                 <label class="form-label">Kelurahan / RW Terkait</label>
                 <select name="kelurahan_id" class="form-control">
@@ -82,6 +87,7 @@ include 'header.php';
                     <?php endwhile; ?>
                 </select>
             </div>
+            <?php endif; ?>
             <div class="form-group">
                 <label class="form-label">Deskripsi</label>
                 <textarea name="deskripsi" class="form-control" rows="6"><?=e($_POST['deskripsi']??$k['deskripsi'])?></textarea>

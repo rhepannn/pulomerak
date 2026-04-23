@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['admin_id']   = $user['id'];
             $_SESSION['admin_name'] = $user['nama'];
             $_SESSION['admin_role'] = $user['role'];
+            $_SESSION['admin_kelurahan'] = $user['kelurahan_id']; // NULL = Superadmin, INT = Kelurahan Admin
             setFlash('success', 'Selamat datang, ' . $user['nama'] . '!');
             redirect(SITE_URL . '/admin/index.php');
         } else {

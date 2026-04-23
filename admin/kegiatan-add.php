@@ -13,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $kategori     = trim($_POST['kategori'] ?? '');
     $tgl_kegiatan = $_POST['tgl_kegiatan'] ?? date('Y-m-d');
     $lokasi       = trim($_POST['lokasi'] ?? '');
-    $kelurahan_id = (int)($_POST['kelurahan_id'] ?? 0);
+    $kelIdAssigned = getKelurahanId();
+    $kelurahan_id = isSuperAdmin() ? (int)($_POST['kelurahan_id'] ?? 0) : (int)$kelIdAssigned;
 
     if (empty($judul)) { $error = 'Judul kegiatan wajib diisi!'; }
     else {
@@ -76,6 +77,7 @@ include 'header.php';
                     <input type="text" name="lokasi" class="form-control" value="<?=e($_POST['lokasi']??'')?>" placeholder="Nama lokasi kegiatan">
                 </div>
             </div>
+            <?php if (isSuperAdmin()): ?>
             <div class="form-group">
                 <label class="form-label">Kelurahan / RW Terkait</label>
                 <select name="kelurahan_id" class="form-control">
@@ -85,6 +87,7 @@ include 'header.php';
                     <?php endwhile; ?>
                 </select>
             </div>
+            <?php endif; ?>
             <div class="form-group">
                 <label class="form-label">Deskripsi Kegiatan</label>
                 <textarea name="deskripsi" class="form-control" rows="6" placeholder="Jelaskan kegiatan secara singkat..."><?=e($_POST['deskripsi']??'')?></textarea>

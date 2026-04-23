@@ -31,9 +31,15 @@ $adminName = $_SESSION['admin_name'] ?? 'Admin';
         <a href="<?= SITE_URL ?>/admin/index.php" class="sidebar-link <?= $adminPage === 'index' ? 'active' : '' ?>">
             <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
+        <?php if (isSuperAdmin()): ?>
         <a href="<?= SITE_URL ?>/admin/konten.php" class="sidebar-link <?= $adminPage === 'konten' ? 'active' : '' ?>">
             <i class="fas fa-edit"></i> Editor Konten
         </a>
+        <?php else: ?>
+        <a href="<?= SITE_URL ?>/admin/kelurahan-edit.php?id=<?= getKelurahanId() ?>" class="sidebar-link <?= $adminPage === 'kelurahan-edit' ? 'active' : '' ?>">
+            <i class="fas fa-city"></i> Data Kelurahan Saya
+        </a>
+        <?php endif; ?>
 
         <div class="sidebar-label" style="margin-top:12px;">Konten</div>
         <a href="<?= SITE_URL ?>/admin/berita.php" class="sidebar-link <?= str_starts_with($adminPage,'berita') ? 'active' : '' ?>">
@@ -53,9 +59,11 @@ $adminName = $_SESSION['admin_name'] ?? 'Admin';
         </a>
 
         <div class="sidebar-label" style="margin-top:12px;">Wilayah</div>
+        <?php if (isSuperAdmin()): ?>
         <a href="<?= SITE_URL ?>/admin/kelurahan.php" class="sidebar-link <?= str_starts_with($adminPage,'kelurahan') ? 'active' : '' ?>">
             <i class="fas fa-city"></i> Kelurahan / RW
         </a>
+        <?php endif; ?>
         <a href="<?= SITE_URL ?>/admin/bidang.php" class="sidebar-link <?= (str_starts_with($adminPage,'bidang') || str_starts_with($adminPage,'anggota')) ? 'active' : '' ?>">
             <i class="fas fa-sitemap"></i> Bidang & Pengurus
         </a>
@@ -64,6 +72,14 @@ $adminName = $_SESSION['admin_name'] ?? 'Admin';
         </a>
 
         <div class="sidebar-label" style="margin-top:12px;">Pengaturan</div>
+        <?php if (isSuperAdmin()): ?>
+        <a href="<?= SITE_URL ?>/admin/users.php" class="sidebar-link <?= str_starts_with($adminPage,'users') ? 'active' : '' ?>">
+            <i class="fas fa-user-shield"></i> Manajemen User
+        </a>
+        <a href="<?= SITE_URL ?>/admin/settings.php" class="sidebar-link <?= $adminPage === 'settings' ? 'active' : '' ?>">
+            <i class="fas fa-cog"></i> Pengaturan Web
+        </a>
+        <?php endif; ?>
         <a href="<?= SITE_URL ?>/" target="_blank" class="sidebar-link">
             <i class="fas fa-external-link-alt"></i> Lihat Website
         </a>

@@ -76,12 +76,11 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
             <li class="nav-item <?= $currentPage === 'profil' ? 'active' : '' ?>">
                 <a href="<?= SITE_URL ?>/profil.php" class="nav-link"><i class="fas fa-landmark"></i> Profil</a>
             </li>
-            <li class="nav-item has-dropdown <?= in_array($currentPage, ['kelurahan','kelurahan-detail']) ? 'active' : '' ?>">
-                <a href="<?= SITE_URL ?>/kelurahan.php" class="nav-link"><i class="fas fa-city"></i> Kelurahan <i class="fas fa-chevron-down arrow"></i></a>
-                <ul class="dropdown">
-                    <li><a href="<?= SITE_URL ?>/kelurahan.php"><i class="fas fa-list"></i> Daftar RW/RT</a></li>
-                    <li><a href="<?= SITE_URL ?>/kelurahan.php#inovasi"><i class="fas fa-lightbulb"></i> Inovasi</a></li>
-                </ul>
+            <li class="nav-item <?= $currentPage === 'rtrw' ? 'active' : '' ?>">
+                <a href="<?= SITE_URL ?>/rtrw.php" class="nav-link"><i class="fas fa-list"></i> Daftar RW/RT</a>
+            </li>
+            <li class="nav-item <?= $currentPage === 'inovasi' ? 'active' : '' ?>">
+                <a href="<?= SITE_URL ?>/inovasi.php" class="nav-link"><i class="fas fa-lightbulb"></i> Inovasi</a>
             </li>
             <li class="nav-item has-dropdown <?= in_array($currentPage, ['bidang-detail']) ? 'active' : '' ?>">
             <a href="<?= SITE_URL ?>/bidang-detail.php?slug=sekretariat" class="nav-link"><i class="fas fa-sitemap"></i> Bidang <i class="fas fa-chevron-down arrow"></i></a>
@@ -99,13 +98,8 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
             <li class="nav-item <?= $currentPage === 'kegiatan' ? 'active' : '' ?>">
                 <a href="<?= SITE_URL ?>/kegiatan.php" class="nav-link"><i class="fas fa-calendar-check"></i> Kegiatan</a>
             </li>
-            <li class="nav-item has-dropdown <?= in_array($currentPage, ['laporan','dinamika','perpustakaan']) ? 'active' : '' ?>">
-                <a href="#" class="nav-link"><i class="fas fa-folder-open"></i> Layanan <i class="fas fa-chevron-down arrow"></i></a>
-                <ul class="dropdown">
-                    <li><a href="<?= SITE_URL ?>/laporan.php"><i class="fas fa-file-alt"></i> Laporan</a></li>
-                    <li><a href="<?= SITE_URL ?>/dinamika.php"><i class="fas fa-users"></i> Dinamika Masyarakat</a></li>
-                    <li><a href="<?= SITE_URL ?>/perpustakaan.php"><i class="fas fa-book-open"></i> Perpustakaan Digital</a></li>
-                </ul>
+            <li class="nav-item <?= $currentPage === 'laporan' ? 'active' : '' ?>">
+                <a href="<?= SITE_URL ?>/laporan.php" class="nav-link"><i class="fas fa-file-alt"></i> Laporan</a>
             </li>
             <li class="nav-item" style="margin-left: 10px;">
                 <a href="<?= SITE_URL ?>/admin/login.php" class="btn btn-primary btn-sm" style="box-shadow: none;">

@@ -12,6 +12,9 @@ $stmt->execute();
 $berita = $stmt->get_result()->fetch_assoc();
 if (!$berita) redirect(SITE_URL . '/admin/berita.php');
 
+// CEK AKSES
+checkOwnership($berita['kelurahan_id']);
+
 $pageTitle = 'Edit Berita';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
