@@ -195,11 +195,8 @@ function getSetting($conn, $key, $default = '') {
     
     $stmt = $conn->prepare("SELECT setting_value FROM site_settings WHERE setting_key = ?");
     if (!$stmt) return $default;
-    $stmt->bind_param("s", $key);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    $stmt->close();
+    $stmt->execute([$key]);
+    $row = $stmt->fetch();
     
     $val = $row ? ($row['setting_value'] ?? $default) : $default;
     $cache[$key] = $val;
@@ -211,9 +208,7 @@ function getSetting($conn, $key, $default = '') {
  */
 function setSetting($conn, $key, $value) {
     $stmt = $conn->prepare("UPDATE site_settings SET setting_value = ? WHERE setting_key = ?");
-    $stmt->bind_param("ss", $value, $key);
-    $stmt->execute();
-    $stmt->close();
+    $stmt->execute([$value, $key]);
 }
 
 /**
@@ -223,16 +218,14 @@ function getAllSettings($conn, $group = null) {
     $settings = [];
     if ($group) {
         $stmt = $conn->prepare("SELECT setting_key, setting_value FROM site_settings WHERE setting_group = ?");
-        $stmt->bind_param("s", $group);
+        $stmt->execute([$group]);
     } else {
         $stmt = $conn->prepare("SELECT setting_key, setting_value FROM site_settings");
+        $stmt->execute();
     }
-    $stmt->execute();
-    $result = $stmt->get_result();
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $stmt->fetch()) {
         $settings[$row['setting_key']] = $row['setting_value'] ?? '';
     }
-    $stmt->close();
     return $settings;
 }
 
@@ -242,21 +235,18 @@ function getAllSettings($conn, $group = null) {
 function getSettingsByGroup($conn, $group) {
     $settings = [];
     $stmt = $conn->prepare("SELECT * FROM site_settings WHERE setting_group = ? ORDER BY setting_key");
-    $stmt->bind_param("s", $group);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    while ($row = $result->fetch_assoc()) {
+    $stmt->execute([$group]);
+    while ($row = $stmt->fetch()) {
         $settings[] = $row;
     }
-    $stmt->close();
     return $settings;
 }
 
 /**
- * Bind parameters to a statement safely from an array
+ * Bind parameters secara dinamis untuk PDO
  */
 function bindParamsSafe($stmt, $types, $params) {
     if (!$params) return;
-    $stmt->bind_param($types, ...$params);
+    $stmt->execute($params);
 }
 ?>

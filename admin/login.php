@@ -14,9 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Username dan password wajib diisi.';
     } else {
         $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? LIMIT 1");
-        $stmt->bind_param('s', $username);
-        $stmt->execute();
-        $user = $stmt->get_result()->fetch_assoc();
+        $stmt->execute([$username]);
+        $user = $stmt->fetch();
 
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['admin_id']   = $user['id'];
