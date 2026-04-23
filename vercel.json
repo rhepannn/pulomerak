@@ -6,6 +6,9 @@
     "admin/**/*.php": {
       "runtime": "vercel-php@0.7.0"
     },
+    "include/**/*.php": {
+      "runtime": "vercel-php@0.7.0"
+    },
     "*.php": {
       "runtime": "vercel-php@0.7.0"
     }
