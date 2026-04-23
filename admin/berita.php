@@ -11,12 +11,13 @@ $offset  = ($page - 1) * $perPage;
 $kelId   = getKelurahanId();
 $where   = isSuperAdmin() ? "" : " WHERE kelurahan_id = " . (int)$kelId;
 
-$total   = $conn->query("SELECT COUNT(*) FROM berita" . $where)->fetch_row()[0];
+$totalQuery = $conn->query("SELECT COUNT(*) FROM berita" . $where);
+$total      = $totalQuery->fetchColumn();
+
 $sql     = "SELECT * FROM berita" . $where . " ORDER BY tgl_post DESC LIMIT ? OFFSET ?";
 $stmt    = $conn->prepare($sql);
-$stmt->bind_param('ii', $perPage, $offset);
-$stmt->execute();
-$list    = $stmt->get_result();
+$stmt->execute([$perPage, $offset]);
+$list    = $stmt->fetchAll();
 
 include 'header.php';
 ?>
@@ -46,10 +47,10 @@ include 'header.php';
                 </tr>
             </thead>
             <tbody>
-                <?php if ($list->num_rows === 0): ?>
+                <?php if (empty($list)): ?>
                     <tr><td colspan="6" style="text-align:center;padding:32px;color:var(--gray)">Belum ada berita. <a href="berita-add.php" style="color:var(--p);font-weight:700">Tambah sekarang</a></td></tr>
                 <?php else: ?>
-                    <?php $no = $offset + 1; while ($b = $list->fetch_assoc()): ?>
+                    <?php $no = $offset + 1; foreach ($list as $b): ?>
                         <tr>
                             <td><?= $no++ ?></td>
                             <td>
@@ -78,7 +79,7 @@ include 'header.php';
                                 </div>
                             </td>
                         </tr>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                 <?php endif; ?>
             </tbody>
         </table>

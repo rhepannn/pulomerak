@@ -8,10 +8,12 @@ $page = max(1,(int)($_GET['page']??1)); $perPage=15; $offset=($page-1)*$perPage;
 $kelId   = getKelurahanId();
 $where   = isSuperAdmin() ? "" : " WHERE kelurahan_id = " . (int)$kelId;
 
-$total = $conn->query("SELECT COUNT(*) FROM kegiatan" . $where)->fetch_row()[0];
+$totalQuery = $conn->query("SELECT COUNT(*) FROM kegiatan" . $where);
+$total      = $totalQuery->fetchColumn();
+
 $stmt  = $conn->prepare("SELECT * FROM kegiatan" . $where . " ORDER BY tgl_kegiatan DESC LIMIT ? OFFSET ?");
-$stmt->bind_param('ii',$perPage,$offset); $stmt->execute();
-$list  = $stmt->get_result();
+$stmt->execute([$perPage, $offset]);
+$list  = $stmt->fetchAll();
 include 'header.php';
 ?>
 <div class="page-title">
@@ -24,9 +26,9 @@ include 'header.php';
         <table>
             <thead><tr><th>#</th><th>Gambar</th><th>Judul</th><th>Kategori</th><th>Tanggal</th><th>Lokasi</th><th>Aksi</th></tr></thead>
             <tbody>
-            <?php if($list->num_rows===0): ?>
+            <?php if (empty($list)): ?>
                 <tr><td colspan="7" style="text-align:center;padding:32px;color:var(--gray)">Belum ada kegiatan. <a href="kegiatan-add.php" style="color:var(--p);font-weight:700">Tambah sekarang</a></td></tr>
-            <?php else: $no=$offset+1; while($k=$list->fetch_assoc()): ?>
+            <?php else: $no=$offset+1; foreach ($list as $k): ?>
                 <tr>
                     <td><?=$no++?></td>
                     <td><img src="<?=getImg($k['gambar'],'kegiatan')?>" class="table-img" alt=""></td>
@@ -41,7 +43,7 @@ include 'header.php';
                         </div>
                     </td>
                 </tr>
-            <?php endwhile; endif; ?>
+            <?php endforeach; endif; ?>
             </tbody>
         </table>
     </div>
